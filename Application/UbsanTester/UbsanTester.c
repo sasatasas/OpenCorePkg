@@ -1,11 +1,13 @@
 #include "UbsanTester.h"
 
-// INT32 __attribute__((noinline)) f1() { }
+/*
+  INT32 __attribute__((noinline)) f1() { }
 
-// INT32 missing_return() {
-//     DEBUG((DEBUG_INFO, "UBT: Start testing cases with missing
-//     value-returning...")); return f(); DEBUG((DEBUG_INFO, "UBT: DONE..."));
-// }
+  INT32 missing_return() {
+    DEBUG((DEBUG_INFO, "UBT: Start testing cases with missing
+    value-returning...")); return f(); DEBUG((DEBUG_INFO, "UBT: DONE..."));
+  }
+*/
 
 __attribute__((nonnull)) INT32 f1(INT32 *nonnull, INT32 n) { return *nonnull; }
 
@@ -36,10 +38,9 @@ INT32 get_int(INT32 *const p __attribute__((pass_object_size(0))), INT32 i) {
   return p[i];
 }
 
-// INT32 get_double(double *const p __attribute__((pass_object_size(0))), INT32
-// i) {
-//     return p[i];
-// }
+INT32 get_float(float *const p __attribute__((pass_object_size(0))), INT32 i) {
+  return p[i];
+}
 
 INT32 get_int_from_multidem_arr(INT32 i, INT32 j, INT32 k) {
   INT32 arr[2][3][4] = {};
@@ -53,20 +54,24 @@ void bounds_check() {
   get_int(bar, i);
   DEBUG((DEBUG_WARN, "UBT: Index 2 out of bounds for type \'INT32 *\'...\n\n"));
 
-  // double baz[2];
-  // get_double(baz, i);
-  // DEBUG((DEBUG_WARN, "UBT: Index 2 out of bounds for type \'double *\'...\n\n"));
-
+  /* 
+    float baz[2];
+    get_float(baz, i);
+    DEBUG((DEBUG_WARN, "UBT: Index 2 out of bounds for type \'float
+    *\'...\n\n"));
+  */
 
   get_int_from_multidem_arr(i, j - 1, k - 1);
-  DEBUG((DEBUG_WARN, "UBT: Index 2 out of bounds for type \'INT32[2][3][4]\'...\n\n"));
+  DEBUG((DEBUG_WARN,
+         "UBT: Index 2 out of bounds for type \'INT32[2][3][4]\'...\n\n"));
   get_int_from_multidem_arr(i - 1, j, k - 1);
-  DEBUG((DEBUG_WARN, "UBT: Index 2 out of bounds for type \'INT32[3][4]\'...\n\n"));
+  DEBUG((DEBUG_WARN,
+         "UBT: Index 2 out of bounds for type \'INT32[3][4]\'...\n\n"));
   get_int_from_multidem_arr(i - 1, j - 1, k);
-  DEBUG((DEBUG_WARN, "UBT: Index 2 out of bounds for type \'INT32[4]\'...\n\n"));
+  DEBUG(
+      (DEBUG_WARN, "UBT: Index 2 out of bounds for type \'INT32[4]\'...\n\n"));
 
   DEBUG((DEBUG_INFO, "\nUBT: DONE...\n\n\n\n\n"));
-
 }
 
 void nonnull_check() {
@@ -143,10 +148,10 @@ void shift_out_of_bounds_check() {
 }
 
 // void builtin_check() {
-//     DEBUG((DEBUG_INFO, "UBT: Start testing cases with builtin...\n\n\n"));
-//     f6(0);
-//     f7(0);
-//     DEBUG((DEBUG_INFO, "\nUBT: DONE...\n\n\n\n\n"));
+//   DEBUG((DEBUG_INFO, "UBT: Start testing cases with builtin...\n\n\n"));
+//   f6(0);
+//   f7(0);
+//   DEBUG((DEBUG_INFO, "\nUBT: DONE...\n\n\n\n\n"));
 // }
 
 EFI_STATUS
@@ -154,22 +159,25 @@ EFIAPI
 UefiMain (
   IN EFI_HANDLE ImageHandle, 
   IN EFI_SYSTEM_TABLE *SystemTable
-  ) 
-{
-
+  ) {
   // missing_return(); -Werror,-Wreturn-type
+
   nonnull_check();
   shift_out_of_bounds_check();
   bounds_check();
+  pointer_check(); // abort after tests
 
+  /* 
+    Implicit conversion + Integer
+    Doesnt work with the tests above 
+  */
+  // check_convert_arithmetics_value();  
+   
   // builtin_check(); works but after abort
 
   // INT16 (*f) (INT16); -Wincompatible-function-pointer-types
   // f = f6;
 
-  pointer_check();
-  check_convert_arithmetics_value();  // Implicit conversion
-  
 
   return EFI_SUCCESS;
 }

@@ -4,7 +4,6 @@
 #include <Library/UefiApplicationEntryPoint.h>
 #include <Library/UefiBootServicesTableLib.h>
 #include <Library/UefiLib.h>
-
 #include <limits.h>
 #include <stdarg.h>
 #include <stdlib.h>
@@ -20,7 +19,7 @@
 #define INT64_MIN (INT64)0xFFFFFFFFFFFFFFFF
 #define INT32_MIN (INT32)0xFFFFFFFF
 #define INT16_MIN (INT16)0xFFFF
-#define INT8_MIN (INT8)0xFFa
+#define INT8_MIN (INT8)0xFF
 
 // Implicit conversion group of checks.
 void check_convert_arithmetics_value();
