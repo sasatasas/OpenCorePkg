@@ -74,9 +74,11 @@ struct S {
 };
 
 INT32 null_check_0(INT32 *p) { return *p; }
-void null_check_3(INT32 *p) {
-  *p = 1;
-  p = 0;
+
+INT32 null_check_3(void) {
+  INT32 q[] = {0, 1};
+  q[3] = 2;
+  return q[0];
 }
 
 // INT32* check_2 (INT32** p) {
@@ -105,7 +107,7 @@ void null_pointer_check() {
   // DEBUG ((DEBUG_WARN, "UBT: Reference binding to null pointer of type
   // 'INT32'\n\n"));
 
-  null_check_3(p);  // It works, but throws assert /:
+  null_check_3();  // It works, but throws assert /:
   //*p = 1;
   DEBUG((DEBUG_WARN, "UBT: Store to null pointer of type 'INT32'\n\n"));
 
