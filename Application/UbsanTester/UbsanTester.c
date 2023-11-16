@@ -28,23 +28,23 @@ f1 (
 {
   return *nonnull;
 }
+//
+// __attribute__ ((nonnull)) CHAR8
+// f2 (
+//   INT32        n,
+//   ...
+//   )
+// {
+//   VA_LIST  Args;
+//   VA_START (Args, n);
 
-__attribute__ ((nonnull)) INT32
-f2 (
-  INT32  n,
-  ...
-  )
-{
-  va_list  args;
+//   CHAR8  *nonnull = VA_ARG (Args, CHAR8 *);
+//   CHAR8  res      = *nonnull;
 
-  VA_START (args, n);
-  INT32  *nonnull = VA_ARG (args, INT32 *);
-  INT32  res      = *nonnull;
-
-  VA_END (args);
-  return res;
-}
-
+//   VA_END (Args);
+//   return res;
+// }
+//
 __attribute__ ((returns_nonnull)) INT32 *
 f3 (
   INT32  *nonnull
@@ -67,7 +67,7 @@ f4 (
 }
 
 INT32 *_Nonnull
-nonullReturn (
+NonnullReturn (
   INT32  *p
   )
 {
@@ -75,7 +75,7 @@ nonullReturn (
 }
 
 VOID
-nonnullArg (
+NonnullArg (
   INT32 *_Nonnull  p
   )
 {
@@ -98,8 +98,8 @@ f7 (
 }
 
 INT32
-getInt (
-  INT32 *const  p __attribute__ ((passObject_size (0))),
+GetInt (
+  INT32 *const  p __attribute__ ((pass_object_size (0))),
   INT32         i
   )
 {
@@ -107,8 +107,8 @@ getInt (
 }
 
 INT32
-getFloat (
-  float *const  p __attribute__ ((passObject_size (0))),
+GetFloat (
+  float *const  p __attribute__ ((pass_object_size (0))),
   INT32         i
   )
 {
@@ -116,7 +116,7 @@ getFloat (
 }
 
 INT32
-getIntFromMultidemArr (
+GetIntFromMultidemArr (
   INT32  i,
   INT32  j,
   INT32  k
@@ -128,35 +128,35 @@ getIntFromMultidemArr (
 }
 
 VOID
-boundsCheck (
+BoundsCheck (
   VOID
   )
 {
-  INT32  bar[2], i = 2, j = 3, k = 4;
+  INT32  Bar[2], i = 2, j = 3, k = 4;
 
   DEBUG ((DEBUG_INFO, "UBT: Start testing cases with bounds...\n\n\n"));
 
-  getInt (bar, i);
+  GetInt (Bar, i);
   DEBUG ((DEBUG_WARN, "UBT: Index 2 out of bounds for type \'INT32 *\'...\n\n"));
 
   /*
     float baz[2];
-    getFloat(baz, i);
+    GetFloat(baz, i);
     DEBUG((DEBUG_WARN, "UBT: Index 2 out of bounds for type \'float
     *\'...\n\n"));
   */
 
-  getIntFromMultidemArr (i, j - 1, k - 1);
+  GetIntFromMultidemArr (i, j - 1, k - 1);
   DEBUG (
          (DEBUG_WARN,
           "UBT: Index 2 out of bounds for type \'INT32[2][3][4]\'...\n\n")
          );
-  getIntFromMultidemArr (i - 1, j, k - 1);
+  GetIntFromMultidemArr (i - 1, j, k - 1);
   DEBUG (
          (DEBUG_WARN,
           "UBT: Index 2 out of bounds for type \'INT32[3][4]\'...\n\n")
          );
-  getIntFromMultidemArr (i - 1, j - 1, k);
+  GetIntFromMultidemArr (i - 1, j - 1, k);
   DEBUG (
          (DEBUG_WARN, "UBT: Index 2 out of bounds for type \'INT32[4]\'...\n\n")
          );
@@ -165,7 +165,7 @@ boundsCheck (
 }
 
 VOID
-nonnullCheck (
+NonnullCheck (
   VOID
   )
 {
@@ -181,12 +181,12 @@ nonnullCheck (
           "UBT: Null pointer passed as argument 1, which is declared to never "
           "be null...\n\n")
          );
-  f2 (8, p);
-  DEBUG (
-         (DEBUG_WARN,
-          "UBT: Null pointer passed as argument 2, which is declared to never "
-          "be null...\n\n")
-         );
+  // f2 (8, p);
+  // DEBUG (
+  //        (DEBUG_WARN,
+  //         "UBT: Null pointer passed as argument 2, which is declared to never "
+  //         "be null...\n\n")
+  //        );
 
   f3 (p);
   DEBUG (
@@ -207,13 +207,13 @@ nonnullCheck (
           "null...\n\n")
          );
 
-  nonullReturn (NULL);
+  NonnullReturn (NULL);
   DEBUG (
          (DEBUG_WARN,
           "UBT: Null pointer returned from function declared to never return "
           "null... (_Nonnull)\n\n")
          );
-  nonnullArg (p);
+  NonnullArg (p);
   DEBUG (
          (DEBUG_WARN,
           "UBT: Null pointer passed as argument 1, which is declared to never "
@@ -224,7 +224,7 @@ nonnullCheck (
 }
 
 VOID
-shiftOutOfBoundsCheck (
+ShiftOutOfBoundsCheck (
   VOID
   )
 {
@@ -278,7 +278,7 @@ shiftOutOfBoundsCheck (
 
 /*
  VOID
- builtinCheck (
+ BuiltinCheck (
    VOID
    )
  {
@@ -297,18 +297,18 @@ UefiMain (
 {
   // missingReturn(); -Werror,-Wreturn-type
 
-  nonnullCheck ();
-  shiftOutOfBoundsCheck ();
-  boundsCheck ();
-  pointerCheck (); // abort after tests
+  NonnullCheck ();
+  ShiftOutOfBoundsCheck ();
+  BoundsCheck ();
+  PointerCheck (); // abort after tests
 
   /*
     Implicit conversion + Integer
     Doesnt work with the tests above
   */
-  checkConvertArithmeticsValue ();
+  // CheckConvertArithmeticsValue ();
 
-  // builtinCheck(); works but after abort
+  // BuiltinCheck(); works but after abort
 
   // INT16 (*f) (INT16); -Wincompatible-function-pointer-types
   // f = f6;

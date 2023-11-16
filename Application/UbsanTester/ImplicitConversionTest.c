@@ -9,7 +9,7 @@
  * Use -fsanitize=implicit-conversion
  */
 UINT32
-convertUnsignedIntToUnsignedInt (
+ConvertUnsignedIntToUnsignedInt (
   UINT32  x
   )
 {
@@ -18,7 +18,7 @@ convertUnsignedIntToUnsignedInt (
 }
 
 UINT8
-convertUnsignedCharToUnsignedChar (
+ConvertUnsignedCharToUnsignedChar (
   UINT8  x
   )
 {
@@ -27,7 +27,7 @@ convertUnsignedCharToUnsignedChar (
 }
 
 INT32
-convertSignedIntToSignedInt (
+ConvertSignedIntToSignedInt (
   INT32  x
   )
 {
@@ -36,7 +36,7 @@ convertSignedIntToSignedInt (
 }
 
 INT8
-convertSignedCharToSignedChar (
+ConvertSignedCharToSignedChar (
   INT8  x
   )
 {
@@ -45,7 +45,7 @@ convertSignedCharToSignedChar (
 }
 
 UINT8
-convertUnsignedIntToUnsignedChar (
+ConvertUnsignedIntToUnsignedChar (
   UINT32  x
   )
 {
@@ -54,7 +54,7 @@ convertUnsignedIntToUnsignedChar (
 }
 
 UINT32
-convertUnsignedCharToUnsignedInt (
+ConvertUnsignedCharToUnsignedInt (
   UINT8  x
   )
 {
@@ -63,7 +63,7 @@ convertUnsignedCharToUnsignedInt (
 }
 
 INT32
-convertUnsignedCharToSignedInt (
+ConvertUnsignedCharToSignedInt (
   UINT8  x
   )
 {
@@ -72,7 +72,7 @@ convertUnsignedCharToSignedInt (
 }
 
 INT32
-convertSignedCharToSignedInt (
+ConvertSignedCharToSignedInt (
   INT8  x
   )
 {
@@ -81,7 +81,7 @@ convertSignedCharToSignedInt (
 }
 
 INT32
-convertUnsignedIntToSignedInt (
+ConvertUnsignedIntToSignedInt (
   UINT32  x
   )
 {
@@ -90,7 +90,7 @@ convertUnsignedIntToSignedInt (
 }
 
 UINT32
-convertSignedIntToUnsignedInt (
+ConvertSignedIntToUnsignedInt (
   INT32  x
   )
 {
@@ -99,7 +99,7 @@ convertSignedIntToUnsignedInt (
 }
 
 UINT8
-convertSignedIntToUnsignedChar (
+ConvertSignedIntToUnsignedChar (
   INT32  x
   )
 {
@@ -108,7 +108,7 @@ convertSignedIntToUnsignedChar (
 }
 
 UINT8
-convertSignedCharToUnsignedChar (
+ConvertSignedCharToUnsignedChar (
   INT8  x
   )
 {
@@ -117,7 +117,7 @@ convertSignedCharToUnsignedChar (
 }
 
 INT8
-convertUnsignedCharToSignedChar (
+ConvertUnsignedCharToSignedChar (
   UINT8  x
   )
 {
@@ -126,7 +126,7 @@ convertUnsignedCharToSignedChar (
 }
 
 UINT32
-convertSignedCharToUnsignedInt (
+ConvertSignedCharToUnsignedInt (
   INT8  x
   )
 {
@@ -135,7 +135,7 @@ convertSignedCharToUnsignedInt (
 }
 
 INT8
-convertUnsignedIntToSignedChar (
+ConvertUnsignedIntToSignedChar (
   UINT32  x
   )
 {
@@ -144,7 +144,7 @@ convertUnsignedIntToSignedChar (
 }
 
 INT8
-convertSignedIntToSignedChar (
+ConvertSignedIntToSignedChar (
   INT32  x
   )
 {
@@ -153,7 +153,7 @@ convertSignedIntToSignedChar (
 }
 
 VOID
-testUnsignedIncdec (
+TestUnsignedIncdec (
   VOID
   )
 {
@@ -207,7 +207,7 @@ testUnsignedIncdec (
 }
 
 VOID
-testSignedIncdec (
+TestSignedIncdec (
   VOID
   )
 {
@@ -273,16 +273,16 @@ testSignedIncdec (
 }
 
 VOID
-checkIncDec (
+CheckIncDec (
   VOID
   )
 {
-  testSignedIncdec ();
-  testUnsignedIncdec ();
+  TestSignedIncdec ();
+  TestUnsignedIncdec ();
 }
 
 VOID
-checkIntegerOverflowWithAbs (
+CheckIntegerOverflowWithAbs (
   VOID
   )
 {
@@ -308,15 +308,15 @@ checkIntegerOverflowWithAbs (
 
 // TODO: mb need to separate the cases
 VOID
-checkConvertArithmeticsValue (
+CheckConvertArithmeticsValue (
   VOID
   )
 {
   DEBUG ((DEBUG_INFO, "UBT: Start testing cases with implicit conversion..."));
 
-  checkIntegerOverflowWithAbs ();
+  CheckIntegerOverflowWithAbs ();
 
-  checkIncDec ();
+  CheckIncDec ();
 
   // All source bits set.
   DEBUG ((DEBUG_WARN, "UBT: Implicit-conversion when all source bits set\n"));
@@ -328,29 +328,29 @@ checkConvertArithmeticsValue (
       500, 1100
   */
 
-  convertUnsignedIntToUnsignedInt ((UINT32)UINT32_MAX);
-  convertUnsignedCharToUnsignedChar ((UINT8)UINT8_MAX);
-  convertSignedIntToSignedInt ((INT32)(UINT32)UINT32_MAX);
-  convertSignedCharToSignedChar ((INT8)UINT8_MAX);
-  convertUnsignedIntToUnsignedChar ((UINT32)UINT32_MAX);
-  convertUnsignedCharToUnsignedInt ((UINT8)UINT8_MAX);
-  convertUnsignedCharToSignedInt ((UINT8)UINT8_MAX);
-  convertSignedCharToSignedInt ((INT8)UINT8_MAX);
-  convertUnsignedIntToSignedInt ((UINT32)UINT32_MAX);
+  ConvertUnsignedIntToUnsignedInt ((UINT32)UINT32_MAX);
+  ConvertUnsignedCharToUnsignedChar ((UINT8)UINT8_MAX);
+  ConvertSignedIntToSignedInt ((INT32)(UINT32)UINT32_MAX);
+  ConvertSignedCharToSignedChar ((INT8)UINT8_MAX);
+  ConvertUnsignedIntToUnsignedChar ((UINT32)UINT32_MAX);
+  ConvertUnsignedCharToUnsignedInt ((UINT8)UINT8_MAX);
+  ConvertUnsignedCharToSignedInt ((UINT8)UINT8_MAX);
+  ConvertSignedCharToSignedInt ((INT8)UINT8_MAX);
+  ConvertUnsignedIntToSignedInt ((UINT32)UINT32_MAX);
   // 900: implicit conversion from type '{{.*}}' (aka 'unsigned int') of value 4294967295 (32-bit, unsigned) to type '{{.*}}' (aka 'int') changed the value to -1 (32-bit, signed)
-  convertSignedIntToUnsignedInt ((INT32)(UINT32)UINT32_MAX);
+  ConvertSignedIntToUnsignedInt ((INT32)(UINT32)UINT32_MAX);
   // 1000: implicit conversion from type '{{.*}}' (aka 'int') of value -1 (32-bit, signed) to type '{{.*}}' (aka 'unsigned int') changed the value to 4294967295 (32-bit, unsigned)
-  convertSignedIntToUnsignedChar ((INT32)(UINT32)UINT32_MAX);
+  ConvertSignedIntToUnsignedChar ((INT32)(UINT32)UINT32_MAX);
   // 1100: implicit conversion from type '{{.*}}' (aka 'int') of value -1 (32-bit, signed) to type '{{.*}}' (aka 'unsigned char') changed the value to 255 (8-bit, unsigned)
-  convertSignedCharToUnsignedChar ((INT8)UINT8_MAX);
+  ConvertSignedCharToUnsignedChar ((INT8)UINT8_MAX);
   // 1200: implicit conversion from type '{{.*}}' (aka '{{(signed )?}}char') of value -1 (8-bit, signed) to type '{{.*}}' (aka 'unsigned char') changed the value to 255 (8-bit, unsigned)
-  convertUnsignedCharToSignedChar ((UINT8)UINT8_MAX);
+  ConvertUnsignedCharToSignedChar ((UINT8)UINT8_MAX);
   // 1300: implicit conversion from type '{{.*}}' (aka 'unsigned char') of value 255 (8-bit, unsigned) to type '{{.*}}' (aka '{{(signed )?}}char') changed the value to -1 (8-bit, signed)
-  convertSignedCharToUnsignedInt ((INT8)UINT8_MAX);
+  ConvertSignedCharToUnsignedInt ((INT8)UINT8_MAX);
   // 1400:implicit conversion from type '{{.*}}' (aka '{{(signed )?}}char') of value -1 (8-bit, signed) to type '{{.*}}' (aka 'unsigned int') changed the value to 4294967295 (32-bit, unsigned)
-  convertUnsignedIntToSignedChar ((UINT32)UINT32_MAX);
+  ConvertUnsignedIntToSignedChar ((UINT32)UINT32_MAX);
   // 1500:implicit conversion from type '{{.*}}' (aka 'unsigned int') of value 4294967295 (32-bit, unsigned) to type '{{.*}}' (aka '{{(signed )?}}char') changed the value to -1 (8-bit, signed)
-  convertSignedIntToSignedChar ((INT32)(UINT32)UINT32_MAX);
+  ConvertSignedIntToSignedChar ((INT32)(UINT32)UINT32_MAX);
   DEBUG ((DEBUG_INFO, "UBT: Done.\n\n\n"));
 
   // Source 'Sign' bit set.
@@ -367,29 +367,29 @@ checkConvertArithmeticsValue (
      500, 1100, 1500, 1600
   */
 
-  convertUnsignedIntToUnsignedInt ((UINT32)INT32_MIN);
-  convertUnsignedCharToUnsignedChar ((UINT8)INT8_MIN);
-  convertSignedIntToSignedInt ((INT32)(UINT32)INT32_MIN);
-  convertSignedCharToSignedChar ((INT8)INT8_MIN);
-  convertUnsignedIntToUnsignedChar ((UINT32)INT32_MIN);
-  convertUnsignedCharToUnsignedInt ((UINT8)INT8_MIN);
-  convertUnsignedCharToSignedInt ((UINT8)INT8_MIN);
-  convertSignedCharToSignedInt ((INT8)INT8_MIN);
-  convertUnsignedIntToSignedInt ((UINT32)INT32_MIN);
+  ConvertUnsignedIntToUnsignedInt ((UINT32)INT32_MIN);
+  ConvertUnsignedCharToUnsignedChar ((UINT8)INT8_MIN);
+  ConvertSignedIntToSignedInt ((INT32)(UINT32)INT32_MIN);
+  ConvertSignedCharToSignedChar ((INT8)INT8_MIN);
+  ConvertUnsignedIntToUnsignedChar ((UINT32)INT32_MIN);
+  ConvertUnsignedCharToUnsignedInt ((UINT8)INT8_MIN);
+  ConvertUnsignedCharToSignedInt ((UINT8)INT8_MIN);
+  ConvertSignedCharToSignedInt ((INT8)INT8_MIN);
+  ConvertUnsignedIntToSignedInt ((UINT32)INT32_MIN);
   // 900: implicit conversion from type '{{.*}}' (aka 'unsigned int') of value 2147483648 (32-bit, unsigned) to type '{{.*}}' (aka 'int') changed the value to -2147483648 (32-bit, signed)
-  convertSignedIntToUnsignedInt ((INT32)(UINT32)INT32_MIN);
+  ConvertSignedIntToUnsignedInt ((INT32)(UINT32)INT32_MIN);
   // 1000: implicit conversion from type '{{.*}}' (aka 'int') of value -2147483648 (32-bit, signed) to type '{{.*}}' (aka 'unsigned int') changed the value to 2147483648 (32-bit, unsigned)
-  convertSignedIntToUnsignedChar ((INT32)(UINT32)INT32_MIN);
+  ConvertSignedIntToUnsignedChar ((INT32)(UINT32)INT32_MIN);
   // 1100: implicit conversion from type '{{.*}}' (aka 'int') of value -2147483648 (32-bit, signed) to type '{{.*}}' (aka 'unsigned char') changed the value to 0 (8-bit, unsigned)
-  convertSignedCharToUnsignedChar ((INT8)INT8_MIN);
+  ConvertSignedCharToUnsignedChar ((INT8)INT8_MIN);
   // 1200: implicit conversion from type '{{.*}}' (aka '{{(signed )?}}char') of value -128 (8-bit, signed) to type '{{.*}}' (aka 'unsigned char') changed the value to 128 (8-bit, unsigned)
-  convertUnsignedCharToSignedChar ((UINT8)INT8_MIN);
+  ConvertUnsignedCharToSignedChar ((UINT8)INT8_MIN);
   // 1300: implicit conversion from type '{{.*}}' (aka 'unsigned char') of value 128 (8-bit, unsigned) to type '{{.*}}' (aka '{{(signed )?}}char') changed the value to -128 (8-bit, signed)
-  convertSignedCharToUnsignedInt ((INT8)INT8_MIN);
+  ConvertSignedCharToUnsignedInt ((INT8)INT8_MIN);
   // 1400: implicit conversion from type '{{.*}}' (aka '{{(signed )?}}char') of value -128 (8-bit, signed) to type '{{.*}}' (aka 'unsigned int') changed the value to 4294967168 (32-bit, unsigned)
-  convertUnsignedIntToSignedChar ((UINT32)INT32_MIN);
+  ConvertUnsignedIntToSignedChar ((UINT32)INT32_MIN);
   // 1500: implicit conversion from type '{{.*}}' (aka 'unsigned int') of value 2147483648 (32-bit, unsigned) to type '{{.*}}' (aka '{{(signed )?}}char') changed the value to 0 (8-bit, signed)
-  convertSignedIntToSignedChar ((INT32)(UINT32)INT32_MIN);
+  ConvertSignedIntToSignedChar ((INT32)(UINT32)INT32_MIN);
   // 1600: implicit conversion from type '{{.*}}' (aka 'int') of value -2147483648 (32-bit, signed) to type '{{.*}}' (aka '{{(signed )?}}char') changed the value to 0 (8-bit, signed)
   DEBUG ((DEBUG_INFO, "UBT: Done.\n\n\n"));
 
@@ -403,24 +403,24 @@ checkConvertArithmeticsValue (
      500, 1100, 1500, 1600
   */
 
-  convertUnsignedIntToUnsignedInt ((UINT32)INT32_MAX);
-  convertUnsignedCharToUnsignedChar ((UINT8)INT8_MAX);
-  convertSignedIntToSignedInt ((INT32)(UINT32)INT32_MAX);
-  convertSignedCharToSignedChar ((INT8)INT8_MAX);
-  convertUnsignedIntToUnsignedChar ((UINT32)INT32_MAX);
-  convertUnsignedCharToUnsignedInt ((UINT8)INT8_MAX);
-  convertUnsignedCharToSignedInt ((UINT8)INT8_MAX);
-  convertSignedCharToSignedInt ((INT8)INT8_MAX);
-  convertUnsignedIntToSignedInt ((UINT32)INT32_MAX);
-  convertSignedIntToUnsignedInt ((INT32)(UINT32)INT32_MAX);
-  convertSignedIntToUnsignedChar ((INT32)(UINT32)INT32_MAX);
+  ConvertUnsignedIntToUnsignedInt ((UINT32)INT32_MAX);
+  ConvertUnsignedCharToUnsignedChar ((UINT8)INT8_MAX);
+  ConvertSignedIntToSignedInt ((INT32)(UINT32)INT32_MAX);
+  ConvertSignedCharToSignedChar ((INT8)INT8_MAX);
+  ConvertUnsignedIntToUnsignedChar ((UINT32)INT32_MAX);
+  ConvertUnsignedCharToUnsignedInt ((UINT8)INT8_MAX);
+  ConvertUnsignedCharToSignedInt ((UINT8)INT8_MAX);
+  ConvertSignedCharToSignedInt ((INT8)INT8_MAX);
+  ConvertUnsignedIntToSignedInt ((UINT32)INT32_MAX);
+  ConvertSignedIntToUnsignedInt ((INT32)(UINT32)INT32_MAX);
+  ConvertSignedIntToUnsignedChar ((INT32)(UINT32)INT32_MAX);
   // 1100: implicit conversion from type '{{.*}}' (aka 'int') of value 2147483647 (32-bit, signed) to type '{{.*}}' (aka 'unsigned char') changed the value to 255 (8-bit, unsigned)
-  convertSignedCharToUnsignedChar ((INT8)INT8_MAX);
-  convertUnsignedCharToSignedChar ((UINT8)INT8_MAX);
-  convertSignedCharToUnsignedInt ((INT8)INT8_MAX);
-  convertUnsignedIntToSignedChar ((UINT32)INT32_MAX);
+  ConvertSignedCharToUnsignedChar ((INT8)INT8_MAX);
+  ConvertUnsignedCharToSignedChar ((UINT8)INT8_MAX);
+  ConvertSignedCharToUnsignedInt ((INT8)INT8_MAX);
+  ConvertUnsignedIntToSignedChar ((UINT32)INT32_MAX);
   // 1500: implicit conversion from type '{{.*}}' (aka 'unsigned int') of value 2147483647 (32-bit, unsigned) to type '{{.*}}' (aka '{{(signed )?}}char') changed the value to -1 (8-bit, signed)
-  convertSignedIntToSignedChar ((INT32)(UINT32)INT32_MAX);
+  ConvertSignedIntToSignedChar ((INT32)(UINT32)INT32_MAX);
   // 1600: implicit conversion from type '{{.*}}' (aka 'int') of value 2147483647 (32-bit, signed) to type '{{.*}}' (aka '{{(signed )?}}char') changed the value to -1 (8-bit, signed)
   DEBUG ((DEBUG_INFO, "UBT: Done.\n\n\n"));
 
@@ -435,26 +435,26 @@ checkConvertArithmeticsValue (
 
   DEBUG ((DEBUG_WARN, "UBT: Implicit-conversion when all destination bits are set...\n"));
 
-  convertUnsignedIntToUnsignedInt ((UINT32)UINT8_MAX);
-  convertUnsignedCharToUnsignedChar ((UINT8)UINT8_MAX);
-  convertSignedIntToSignedInt ((INT32)(UINT32)UINT8_MAX);
-  convertSignedCharToSignedChar ((INT8)UINT8_MAX);
-  convertUnsignedIntToUnsignedChar ((UINT32)UINT8_MAX);
-  convertUnsignedCharToUnsignedInt ((UINT8)UINT8_MAX);
-  convertUnsignedCharToSignedInt ((UINT8)UINT8_MAX);
-  convertSignedCharToSignedInt ((INT8)UINT8_MAX);
-  convertUnsignedIntToSignedInt ((UINT32)UINT8_MAX);
-  convertSignedIntToUnsignedInt ((INT32)(UINT32)UINT8_MAX);
-  convertSignedIntToUnsignedChar ((INT32)(UINT32)UINT8_MAX);
-  convertSignedCharToUnsignedChar ((INT8)UINT8_MAX);
+  ConvertUnsignedIntToUnsignedInt ((UINT32)UINT8_MAX);
+  ConvertUnsignedCharToUnsignedChar ((UINT8)UINT8_MAX);
+  ConvertSignedIntToSignedInt ((INT32)(UINT32)UINT8_MAX);
+  ConvertSignedCharToSignedChar ((INT8)UINT8_MAX);
+  ConvertUnsignedIntToUnsignedChar ((UINT32)UINT8_MAX);
+  ConvertUnsignedCharToUnsignedInt ((UINT8)UINT8_MAX);
+  ConvertUnsignedCharToSignedInt ((UINT8)UINT8_MAX);
+  ConvertSignedCharToSignedInt ((INT8)UINT8_MAX);
+  ConvertUnsignedIntToSignedInt ((UINT32)UINT8_MAX);
+  ConvertSignedIntToUnsignedInt ((INT32)(UINT32)UINT8_MAX);
+  ConvertSignedIntToUnsignedChar ((INT32)(UINT32)UINT8_MAX);
+  ConvertSignedCharToUnsignedChar ((INT8)UINT8_MAX);
   // 1200: implicit conversion from type '{{.*}}' (aka '{{(signed )?}}char') of value -1 (8-bit, signed) to type '{{.*}}' (aka 'unsigned char') changed the value to 255 (8-bit, unsigned)
-  convertUnsignedCharToSignedChar ((UINT8)UINT8_MAX);
+  ConvertUnsignedCharToSignedChar ((UINT8)UINT8_MAX);
   // 1300: implicit conversion from type '{{.*}}' (aka 'unsigned char') of value 255 (8-bit, unsigned) to type '{{.*}}' (aka '{{(signed )?}}char') changed the value to -1 (8-bit, signed)
-  convertSignedCharToUnsignedInt ((INT8)UINT8_MAX);
+  ConvertSignedCharToUnsignedInt ((INT8)UINT8_MAX);
   // 1400: implicit conversion from type '{{.*}}' (aka '{{(signed )?}}char') of value -1 (8-bit, signed) to type '{{.*}}' (aka 'unsigned int') changed the value to 4294967295 (32-bit, unsigned)
-  convertUnsignedIntToSignedChar ((UINT32)UINT8_MAX);
+  ConvertUnsignedIntToSignedChar ((UINT32)UINT8_MAX);
   // 1500: implicit conversion from type '{{.*}}' (aka 'unsigned int') of value 255 (32-bit, unsigned) to type '{{.*}}' (aka '{{(signed )?}}char') changed the value to -1 (8-bit, signed)
-  convertSignedIntToSignedChar ((INT32)(UINT32)UINT8_MAX);
+  ConvertSignedIntToSignedChar ((INT32)(UINT32)UINT8_MAX);
   // 1600: implicit conversion from type '{{.*}}' (aka 'int') of value 255 (32-bit, signed) to type '{{.*}}' (aka '{{(signed )?}}char') changed the value to -1 (8-bit, signed)
   DEBUG ((DEBUG_INFO, "UBT: Done.\n\n\n"));
 
@@ -469,26 +469,26 @@ checkConvertArithmeticsValue (
 
   DEBUG ((DEBUG_WARN, "UBT: Implicit-conversion when destination \'Sign\' bit is set...\n"));
 
-  convertUnsignedIntToUnsignedInt ((UINT32)(UINT8)INT8_MIN);
-  convertUnsignedCharToUnsignedChar ((UINT8)(UINT8)INT8_MIN);
-  convertSignedIntToSignedInt ((INT32)(UINT32)(UINT8)INT8_MIN);
-  convertSignedCharToSignedChar ((INT8)(UINT8)INT8_MIN);
-  convertUnsignedIntToUnsignedChar ((UINT32)(UINT8)INT8_MIN);
-  convertUnsignedCharToUnsignedInt ((UINT8)(UINT8)INT8_MIN);
-  convertUnsignedCharToSignedInt ((UINT8)(UINT8)INT8_MIN);
-  convertSignedCharToSignedInt ((INT8)(UINT8)INT8_MIN);
-  convertUnsignedIntToSignedInt ((UINT32)(UINT8)INT8_MIN);
-  convertSignedIntToUnsignedInt ((INT32)(UINT32)(UINT8)INT8_MIN);
-  convertSignedIntToUnsignedChar ((INT32)(UINT32)(UINT8)INT8_MIN);
-  convertSignedCharToUnsignedChar ((INT8)(UINT8)INT8_MIN);
+  ConvertUnsignedIntToUnsignedInt ((UINT32)(UINT8)INT8_MIN);
+  ConvertUnsignedCharToUnsignedChar ((UINT8)(UINT8)INT8_MIN);
+  ConvertSignedIntToSignedInt ((INT32)(UINT32)(UINT8)INT8_MIN);
+  ConvertSignedCharToSignedChar ((INT8)(UINT8)INT8_MIN);
+  ConvertUnsignedIntToUnsignedChar ((UINT32)(UINT8)INT8_MIN);
+  ConvertUnsignedCharToUnsignedInt ((UINT8)(UINT8)INT8_MIN);
+  ConvertUnsignedCharToSignedInt ((UINT8)(UINT8)INT8_MIN);
+  ConvertSignedCharToSignedInt ((INT8)(UINT8)INT8_MIN);
+  ConvertUnsignedIntToSignedInt ((UINT32)(UINT8)INT8_MIN);
+  ConvertSignedIntToUnsignedInt ((INT32)(UINT32)(UINT8)INT8_MIN);
+  ConvertSignedIntToUnsignedChar ((INT32)(UINT32)(UINT8)INT8_MIN);
+  ConvertSignedCharToUnsignedChar ((INT8)(UINT8)INT8_MIN);
   // 1200: implicit conversion from type '{{.*}}' (aka '{{(signed )?}}char') of value -128 (8-bit, signed) to type '{{.*}}' (aka 'unsigned char') changed the value to 128 (8-bit, unsigned)
-  convertUnsignedCharToSignedChar ((UINT8)(UINT8)INT8_MIN);
+  ConvertUnsignedCharToSignedChar ((UINT8)(UINT8)INT8_MIN);
   // 1300: implicit conversion from type '{{.*}}' (aka 'unsigned char') of value 128 (8-bit, unsigned) to type '{{.*}}' (aka '{{(signed )?}}char') changed the value to -128 (8-bit, signed)
-  convertSignedCharToUnsignedInt ((INT8)(UINT8)INT8_MIN);
+  ConvertSignedCharToUnsignedInt ((INT8)(UINT8)INT8_MIN);
   // 1400: implicit conversion from type '{{.*}}' (aka '{{(signed )?}}char') of value -128 (8-bit, signed) to type '{{.*}}' (aka 'unsigned int') changed the value to 4294967168 (32-bit, unsigned)
-  convertUnsignedIntToSignedChar ((UINT32)(UINT8)INT8_MIN);
+  ConvertUnsignedIntToSignedChar ((UINT32)(UINT8)INT8_MIN);
   // 1500: implicit conversion from type '{{.*}}' (aka 'unsigned int') of value 128 (32-bit, unsigned) to type '{{.*}}' (aka '{{(signed )?}}char') changed the value to -128 (8-bit, signed)
-  convertSignedIntToSignedChar ((INT32)(UINT32)(UINT8)INT8_MIN);
+  ConvertSignedIntToSignedChar ((INT32)(UINT32)(UINT8)INT8_MIN);
   // 1600: implicit conversion from type '{{.*}}' (aka 'int') of value 128 (32-bit, signed) to type '{{.*}}' (aka '{{(signed )?}}char') changed the value to -128 (8-bit, signed)
   DEBUG ((DEBUG_INFO, "UBT: Done.\n\n\n"));
 
@@ -503,29 +503,29 @@ checkConvertArithmeticsValue (
 
   DEBUG ((DEBUG_WARN, "UBT: Implicit-conversion when all bits except the destination \'Sign\' bit are set...\n"));
 
-  convertUnsignedIntToUnsignedInt ((~((UINT32)(UINT8)INT8_MIN)));
-  convertUnsignedCharToUnsignedChar ((UINT8)(UINT8)INT8_MIN);
-  convertSignedIntToSignedInt ((INT32)(~((UINT32)(UINT8)INT8_MIN)));
-  convertSignedCharToSignedChar ((INT8)(UINT8)INT8_MIN);
-  convertUnsignedIntToUnsignedChar ((~((UINT32)(UINT8)INT8_MIN)));
-  convertUnsignedCharToUnsignedInt ((UINT8)(UINT8)INT8_MIN);
-  convertUnsignedCharToSignedInt ((UINT8)(UINT8)INT8_MIN);
-  convertSignedCharToSignedInt ((INT8)(UINT8)INT8_MIN);
-  convertUnsignedIntToSignedInt ((~((UINT32)(UINT8)INT8_MIN)));
+  ConvertUnsignedIntToUnsignedInt ((~((UINT32)(UINT8)INT8_MIN)));
+  ConvertUnsignedCharToUnsignedChar ((UINT8)(UINT8)INT8_MIN);
+  ConvertSignedIntToSignedInt ((INT32)(~((UINT32)(UINT8)INT8_MIN)));
+  ConvertSignedCharToSignedChar ((INT8)(UINT8)INT8_MIN);
+  ConvertUnsignedIntToUnsignedChar ((~((UINT32)(UINT8)INT8_MIN)));
+  ConvertUnsignedCharToUnsignedInt ((UINT8)(UINT8)INT8_MIN);
+  ConvertUnsignedCharToSignedInt ((UINT8)(UINT8)INT8_MIN);
+  ConvertSignedCharToSignedInt ((INT8)(UINT8)INT8_MIN);
+  ConvertUnsignedIntToSignedInt ((~((UINT32)(UINT8)INT8_MIN)));
   // 900: implicit conversion from type '{{.*}}' (aka 'unsigned int') of value 4294967167 (32-bit, unsigned) to type '{{.*}}' (aka 'int') changed the value to -129 (32-bit, signed)
-  convertSignedIntToUnsignedInt ((INT32)(~((UINT32)(UINT8)INT8_MIN)));
+  ConvertSignedIntToUnsignedInt ((INT32)(~((UINT32)(UINT8)INT8_MIN)));
   // 1000:implicit conversion from type '{{.*}}' (aka 'int') of value -129 (32-bit, signed) to type '{{.*}}' (aka 'unsigned int') changed the value to 4294967167 (32-bit, unsigned)
-  convertSignedIntToUnsignedChar ((INT32)(~((UINT32)(UINT8)INT8_MIN)));
+  ConvertSignedIntToUnsignedChar ((INT32)(~((UINT32)(UINT8)INT8_MIN)));
   // 1100: implicit conversion from type '{{.*}}' (aka 'int') of value -129 (32-bit, signed) to type '{{.*}}' (aka 'unsigned char') changed the value to 127 (8-bit, unsigned)
-  convertSignedCharToUnsignedChar ((INT8)(UINT8)INT8_MIN);
+  ConvertSignedCharToUnsignedChar ((INT8)(UINT8)INT8_MIN);
   // 1200: implicit conversion from type '{{.*}}' (aka '{{(signed )?}}char') of value -128 (8-bit, signed) to type '{{.*}}' (aka 'unsigned char') changed the value to 128 (8-bit, unsigned)
-  convertUnsignedCharToSignedChar ((UINT8)(UINT8)INT8_MIN);
+  ConvertUnsignedCharToSignedChar ((UINT8)(UINT8)INT8_MIN);
   // 1300: implicit conversion from type '{{.*}}' (aka 'unsigned char') of value 128 (8-bit, unsigned) to type '{{.*}}' (aka '{{(signed )?}}char') changed the value to -128 (8-bit, signed)
-  convertSignedCharToUnsignedInt ((INT8)(UINT8)INT8_MIN);
+  ConvertSignedCharToUnsignedInt ((INT8)(UINT8)INT8_MIN);
   // 1400: implicit conversion from type '{{.*}}' (aka '{{(signed )?}}char') of value -128 (8-bit, signed) to type '{{.*}}' (aka 'unsigned int') changed the value to 4294967168 (32-bit, unsigned)
-  convertUnsignedIntToSignedChar ((~((UINT32)(UINT8)INT8_MIN)));
+  ConvertUnsignedIntToSignedChar ((~((UINT32)(UINT8)INT8_MIN)));
   // 1500: implicit conversion from type '{{.*}}' (aka 'unsigned int') of value 4294967167 (32-bit, unsigned) to type '{{.*}}' (aka '{{(signed )?}}char') changed the value to 127 (8-bit, signed)
-  convertSignedIntToSignedChar ((INT32)(~((UINT32)(UINT8)INT8_MIN)));
+  ConvertSignedIntToSignedChar ((INT32)(~((UINT32)(UINT8)INT8_MIN)));
   // 1600: implicit conversion from type '{{.*}}' (aka 'int') of value -129 (32-bit, signed) to type '{{.*}}' (aka '{{(signed )?}}char') changed the value to 127 (8-bit, signed)
   DEBUG ((DEBUG_INFO, "UBT: Done.\n\n\n"));
 
@@ -544,29 +544,29 @@ checkConvertArithmeticsValue (
 
   DEBUG ((DEBUG_WARN, "UBT: Implicit-conversion when only the source and destination \'Sign\' bits are set...\n"));
 
-  convertUnsignedIntToUnsignedInt ((UINT32)INT32_MIN);
-  convertUnsignedCharToUnsignedChar ((UINT8)INT8_MIN);
-  convertSignedIntToSignedInt ((INT32)INT32_MIN);
-  convertSignedCharToSignedChar ((INT8)INT8_MIN);
-  convertUnsignedIntToUnsignedChar (((UINT32)INT32_MIN) | ((UINT32)(UINT8)INT8_MIN));
-  convertUnsignedCharToUnsignedInt ((UINT8)INT8_MIN);
-  convertUnsignedCharToSignedInt ((UINT8)INT8_MIN);
-  convertSignedCharToSignedInt ((INT8)INT8_MIN);
-  convertUnsignedIntToSignedInt ((UINT32)INT32_MIN);
+  ConvertUnsignedIntToUnsignedInt ((UINT32)INT32_MIN);
+  ConvertUnsignedCharToUnsignedChar ((UINT8)INT8_MIN);
+  ConvertSignedIntToSignedInt ((INT32)INT32_MIN);
+  ConvertSignedCharToSignedChar ((INT8)INT8_MIN);
+  ConvertUnsignedIntToUnsignedChar (((UINT32)INT32_MIN) | ((UINT32)(UINT8)INT8_MIN));
+  ConvertUnsignedCharToUnsignedInt ((UINT8)INT8_MIN);
+  ConvertUnsignedCharToSignedInt ((UINT8)INT8_MIN);
+  ConvertSignedCharToSignedInt ((INT8)INT8_MIN);
+  ConvertUnsignedIntToSignedInt ((UINT32)INT32_MIN);
   // 900: implicit conversion from type '{{.*}}' (aka 'unsigned int') of value 2147483648 (32-bit, unsigned) to type '{{.*}}' (aka 'int') changed the value to -2147483648 (32-bit, signed)
-  convertSignedIntToUnsignedInt ((INT32)INT32_MIN);
+  ConvertSignedIntToUnsignedInt ((INT32)INT32_MIN);
   // 1000: implicit conversion from type '{{.*}}' (aka 'int') of value -2147483648 (32-bit, signed) to type '{{.*}}' (aka 'unsigned int') changed the value to 2147483648 (32-bit, unsigned)
-  convertSignedIntToUnsignedChar ((INT32)(((UINT32)INT32_MIN) | ((UINT32)(UINT8)INT8_MIN)));
+  ConvertSignedIntToUnsignedChar ((INT32)(((UINT32)INT32_MIN) | ((UINT32)(UINT8)INT8_MIN)));
   // 1100: implicit conversion from type '{{.*}}' (aka 'int') of value -2147483520 (32-bit, signed) to type '{{.*}}' (aka 'unsigned char') changed the value to 128 (8-bit, unsigned)
-  convertSignedCharToUnsignedChar ((INT8)INT8_MIN);
+  ConvertSignedCharToUnsignedChar ((INT8)INT8_MIN);
   // 1200: implicit conversion from type '{{.*}}' (aka '{{(signed )?}}char') of value -128 (8-bit, signed) to type '{{.*}}' (aka 'unsigned char') changed the value to 128 (8-bit, unsigned)
-  convertUnsignedCharToSignedChar ((UINT8)INT8_MIN);
+  ConvertUnsignedCharToSignedChar ((UINT8)INT8_MIN);
   // 1300: implicit conversion from type '{{.*}}' (aka 'unsigned char') of value 128 (8-bit, unsigned) to type '{{.*}}' (aka '{{(signed )?}}char') changed the value to -128 (8-bit, signed)
-  convertSignedCharToUnsignedInt ((INT8)INT8_MIN);
+  ConvertSignedCharToUnsignedInt ((INT8)INT8_MIN);
   // 1400: implicit conversion from type '{{.*}}' (aka '{{(signed )?}}char') of value -128 (8-bit, signed) to type '{{.*}}' (aka 'unsigned int') changed the value to 4294967168 (32-bit, unsigned)
-  convertUnsignedIntToSignedChar ((((UINT32)INT32_MIN) | ((UINT32)(UINT8)INT8_MIN)));
+  ConvertUnsignedIntToSignedChar ((((UINT32)INT32_MIN) | ((UINT32)(UINT8)INT8_MIN)));
   // 1500: implicit conversion from type '{{.*}}' (aka 'unsigned int') of value 2147483776 (32-bit, unsigned) to type '{{.*}}' (aka '{{(signed )?}}char') changed the value to -128 (8-bit, signed)
-  convertSignedIntToSignedChar ((INT32)(((UINT32)INT32_MIN) | ((UINT32)(UINT8)INT8_MIN)));
+  ConvertSignedIntToSignedChar ((INT32)(((UINT32)INT32_MIN) | ((UINT32)(UINT8)INT8_MIN)));
   // 1600: implicit conversion from type '{{.*}}' (aka 'int') of value -2147483520 (32-bit, signed) to type '{{.*}}' (aka '{{(signed )?}}char') changed the value to -128 (8-bit, signed)
   DEBUG ((DEBUG_INFO, "UBT: Done.\n\n\n"));
 
@@ -583,24 +583,24 @@ checkConvertArithmeticsValue (
 
   DEBUG ((DEBUG_WARN, "UBT: Implicit-conversion when all bits except the source and destination \'Sign\' bits are set...\n"));
 
-  convertUnsignedIntToUnsignedInt ((UINT32)INT32_MAX);
-  convertUnsignedCharToUnsignedChar ((UINT8)INT8_MAX);
-  convertSignedIntToSignedInt ((INT32)INT32_MAX);
-  convertSignedCharToSignedChar ((INT8)INT8_MAX);
-  convertUnsignedIntToUnsignedChar (~(((UINT32)INT32_MIN) | ((UINT32)(UINT8)INT8_MIN)));
-  convertUnsignedCharToUnsignedInt ((UINT8)INT8_MAX);
-  convertUnsignedCharToSignedInt ((UINT8)INT8_MAX);
-  convertSignedCharToSignedInt ((INT8)INT8_MAX);
-  convertUnsignedIntToSignedInt ((UINT32)INT32_MAX);
-  convertSignedIntToUnsignedInt ((INT32)INT32_MAX);
-  convertSignedIntToUnsignedChar ((INT32)(~(((UINT32)INT32_MIN) | ((UINT32)(UINT8)INT8_MIN))));
+  ConvertUnsignedIntToUnsignedInt ((UINT32)INT32_MAX);
+  ConvertUnsignedCharToUnsignedChar ((UINT8)INT8_MAX);
+  ConvertSignedIntToSignedInt ((INT32)INT32_MAX);
+  ConvertSignedCharToSignedChar ((INT8)INT8_MAX);
+  ConvertUnsignedIntToUnsignedChar (~(((UINT32)INT32_MIN) | ((UINT32)(UINT8)INT8_MIN)));
+  ConvertUnsignedCharToUnsignedInt ((UINT8)INT8_MAX);
+  ConvertUnsignedCharToSignedInt ((UINT8)INT8_MAX);
+  ConvertSignedCharToSignedInt ((INT8)INT8_MAX);
+  ConvertUnsignedIntToSignedInt ((UINT32)INT32_MAX);
+  ConvertSignedIntToUnsignedInt ((INT32)INT32_MAX);
+  ConvertSignedIntToUnsignedChar ((INT32)(~(((UINT32)INT32_MIN) | ((UINT32)(UINT8)INT8_MIN))));
   // 1100: implicit conversion from type '{{.*}}' (aka 'int') of value 2147483519 (32-bit, signed) to type '{{.*}}' (aka 'unsigned char') changed the value to 127 (8-bit, unsigned)
-  convertSignedCharToUnsignedChar ((INT8)INT8_MAX);
-  convertUnsignedCharToSignedChar ((UINT8)INT8_MAX);
-  convertSignedCharToUnsignedInt ((INT8)INT8_MAX);
-  convertUnsignedIntToSignedChar (~(((UINT32)INT32_MIN) | ((UINT32)(UINT8)INT8_MIN)));
+  ConvertSignedCharToUnsignedChar ((INT8)INT8_MAX);
+  ConvertUnsignedCharToSignedChar ((UINT8)INT8_MAX);
+  ConvertSignedCharToUnsignedInt ((INT8)INT8_MAX);
+  ConvertUnsignedIntToSignedChar (~(((UINT32)INT32_MIN) | ((UINT32)(UINT8)INT8_MIN)));
   // 1500: implicit conversion from type '{{.*}}' (aka 'unsigned int') of value 2147483519 (32-bit, unsigned) to type '{{.*}}' (aka '{{(signed )?}}char') changed the value to 127 (8-bit, signed)
-  convertSignedIntToSignedChar ((INT32) ~(((UINT32)INT32_MIN) | ((UINT32)(UINT8)INT8_MIN)));
+  ConvertSignedIntToSignedChar ((INT32) ~(((UINT32)INT32_MIN) | ((UINT32)(UINT8)INT8_MIN)));
   // 1600: implicit conversion from type '{{.*}}' (aka 'int') of value 2147483519 (32-bit, signed) to type '{{.*}}' (aka '{{(signed )?}}char') changed the value to 127 (8-bit, signed)
   DEBUG ((DEBUG_INFO, "UBT: Done.\n\n\n"));
 
