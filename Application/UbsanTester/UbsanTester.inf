@@ -1,21 +1,14 @@
 ## @file
 #  Ubsan Tester
 #
-#  Copyright (c) 2020, #Brumbaer. All rights reserved.<BR>
-#
-#  This program and the accompanying materials
-#  are licensed and made available under the terms and conditions of the BSD License
-#  which accompanies this distribution.  The full text of the license may be found at
-#  http://opensource.org/licenses/bsd-license.php
-#  THE PROGRAM IS DISTRIBUTED UNDER THE BSD LICENSE ON AN "AS IS" BASIS,
-#  WITHOUT WARRANTIES OR REPRESENTATIONS OF ANY KIND, EITHER EXPRESS OR IMPLIED.
+#  TODO:
 #
 ##
 
 [Defines]
   INF_VERSION                    = 0x00010005
   BASE_NAME                      = UbsanTester
-  FILE_GUID                      = A779AF43-2D2E-4C9F-998E-CA1AE5DD248B //TODO:
+  FILE_GUID                      = 01F2E32B-C165-4D20-8933-2F90AF691DC6
 
   MODULE_TYPE                    = UEFI_APPLICATION
   VERSION_STRING                 = 1.0
