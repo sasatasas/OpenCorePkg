@@ -1,16 +1,16 @@
 #include "UbsanTester.h"
 
 STATIC INT8 *
-getelementpointerInbounds (
-  INT8    *base,
-  UINT64  offset
+GetelementpointerInbounds (
+  INT8    *Base,
+  UINT64  Offset
   )
 {
-  return base + offset;
+  return Base + Offset;
 }
 
 VOID
-pointerOverflowCheck (
+PointerOverflowCheck (
   VOID
   )
 {
@@ -18,71 +18,71 @@ pointerOverflowCheck (
 
   DEBUG ((DEBUG_WARN, "UBT: Pointer overflow\n\n\n"));
 
-  INT8  *base, *result;
+  INT8  *Base, *Result;
 
-  base   = (INT8 *)MAX_ADDRESS;
-  result = base + 1;
+  Base   = (INT8 *)MAX_ADDRESS;
+  Result = Base + 1;
   DEBUG (
          (DEBUG_WARN,
           "UBT: Applying non-zero offset to non-null pointer 0x%X produced null "
           "pointer\n\n",
-          base)
+          Base)
          );
 
-  base   = (INT8 *)MAX_ADDRESS;
-  result = base + 2;
+  Base   = (INT8 *)MAX_ADDRESS;
+  Result = Base + 2;
   DEBUG (
          (DEBUG_WARN,
           "UBT: Addition of unsigned offset from 0x%X overflowed to 0x%X\n\n",
-          base, result)
+          Base, Result)
          );
 
-  base   = (INT8 *)0;
-  result = base + 0;
+  Base   = (INT8 *)0;
+  Result = Base + 0;
 
   DEBUG ((DEBUG_WARN, "UBT: Applying zero offset to null pointer\n\n"));
 
-  base   = (INT8 *)0;
-  result = base + 1;
+  Base   = (INT8 *)0;
+  Result = Base + 1;
   DEBUG ((DEBUG_WARN, "UBT: Applying non-zero offset 1 to null pointer\n\n"));
 
-  base   = (INT8 *)1;
-  result = base - 1;
+  Base   = (INT8 *)1;
+  Result = Base - 1;
   DEBUG (
          (DEBUG_WARN,
           "UBT: Applying non-zero offset to non-null pointer 0x%X produced null "
           "pointer\n\n",
-          base)
+          Base)
          );
 
-  UINT64  offset = 2ULL;
+  UINT64  Offset = 2ULL;
 
-  base    = (INT8 *)0;
-  offset -= -1;
-  (VOID)getelementpointerInbounds (base, offset);
+  Base    = (INT8 *)0;
+  Offset -= -1;
+  (VOID)GetelementpointerInbounds (Base, Offset);
   DEBUG ((DEBUG_WARN, "UBT: Applying zero offset to null pointer\n\n"));
 
   INT8  c;
 
-  base = &c;
-  INT64  negOffset = -1;
+  Base = &c;
+  INT64  NegOffset = -1;
 
-  result = base + negOffset;  // doesn't work
+  Result = Base + NegOffset;  // doesn't work
   DEBUG (
          (DEBUG_WARN,
           "UBT: Addition of unsigned offset to 0x%X overflowed to 0x%X\n\n",
-          base, result)
+          Base, Result)
          );
 
-  result = base - negOffset;  // doesn't work
+  Result = Base - NegOffset;  // doesn't work
   DEBUG (
          (DEBUG_WARN,
           "UBT: Subtraction of unsigned offset from 0x%X overflowed to 0x%X\n\n",
-          base, result)
+          Base, Result)
          );
 
-  base   = NULL;
-  result = base - 1ULL;
+  Base   = NULL;
+  Result = Base - 1ULL;
   DEBUG ((DEBUG_WARN, "UBT: Applying non-zero offset -1 to null pointer\n\n"));
 
   DEBUG ((DEBUG_INFO, "\nUBT: Pointer overflow checks are done.\n\n\n"));
@@ -104,7 +104,7 @@ struct S {
 };
 
 INT32
-nullCheck0 (
+NullCheck0 (
   INT32  *p
   )
 {
@@ -112,7 +112,7 @@ nullCheck0 (
 }
 
 INT32
-nullCheck3 (
+NullCheck3 (
   VOID
   )
 {
@@ -123,14 +123,14 @@ nullCheck3 (
 }
 
 /*
-  INT32* check_2 (INT32** p) {
+  INT32* Check2 (INT32** p) {
       INT32 *r;
       r = *p;
       return r;
   }
 */
 INT32
-nullCheck1 (
+NullCheck1 (
   struct S  *s
   )
 {
@@ -138,7 +138,7 @@ nullCheck1 (
 }
 
 VOID
-nullPointerCheck (
+NullPointerCheck (
   VOID
   )
 {
@@ -149,19 +149,19 @@ nullPointerCheck (
   (VOID)*p;  // ok!
   DEBUG ((DEBUG_WARN, "UBT: Everything is fine here\n\n"));
 
-  nullCheck0 (p);
+  NullCheck0 (p);
   DEBUG ((DEBUG_WARN, "UBT: Load of null pointer of type 'INT32'\n\n"));
 
-  nullCheck1 (s);
+  NullCheck1 (s);
   DEBUG ((DEBUG_WARN, "UBT: Member access within null pointer of type 'S'\n\n"));
 
   /*
-    check_2(q); Only in c++?
+    Check2(q); Only in c++?
     DEBUG ((DEBUG_WARN, "UBT: Reference binding to null pointer of type
     'INT32'\n\n"));
   */
 
-  nullCheck3 ();  // It works, but throws assert /:
+  NullCheck3 ();  // It works, but throws assert /:
   // *p = 1;
   DEBUG ((DEBUG_WARN, "UBT: Store to null pointer of type 'INT32'\n\n"));
 
@@ -169,15 +169,14 @@ nullPointerCheck (
 }
 
 VOID
-pointerCheck (
+PointerCheck (
   VOID
   )
 {
   DEBUG ((DEBUG_INFO, "UBT: Start testing cases with pointers...\n"));
 
-  pointerOverflowCheck ();
-
-  nullPointerCheck ();
+  PointerOverflowCheck ();
+  NullPointerCheck ();
 
   DEBUG (
          (DEBUG_INFO, "UBT: Completing testing cases with pointers...\n\n\n\n\n")
