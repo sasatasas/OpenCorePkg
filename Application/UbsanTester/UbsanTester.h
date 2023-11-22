@@ -5,19 +5,27 @@
 #include <Library/UefiBootServicesTableLib.h>
 #include <Library/UefiLib.h>
 #include <limits.h>
-#include <stdarg.h>
 #include <stdlib.h>
 #include <stdint.h>
+#include <stdarg.h>
+#include <string.h>
 
 /* Implicit conversion group of checks. */
-void
+VOID
 CheckConvertArithmeticsValue (
   VOID
   );
 
-// TODO: __ubsan_handle_alignment_assumption hasn't yet been implemented
 /* Pointer overflow. */
-void
+VOID
 PointerCheck (
   VOID
   );
+/* Alignment. */
+VOID
+AlignmentCheck (
+  VOID
+  );
+
+// Avoid implementing memcpy as a function to avoid LTO conflicts.
+#define memcpy(Dst, Src, Size)  do { gBS->CopyMem(Dst, Src, Size); } while (0)

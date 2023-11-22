@@ -1,24 +1,22 @@
 #include "UbsanTester.h"
 
-/*
-  INT32 __attribute__ ((noinline))
-  f1 (
-    VOID
-    )
-  {
-  }
+// INT32 __attribute__ ((noinline))
+// f1 (
+//   VOID
+//   )
+// {
+// }
 
-  INT32
-  missingReturn (
-    VOID
-    )
-  {
-    DEBUG ((DEBUG_INFO, "UBT: Start testing cases with missing
-      value-returning..."));
-    return f (VOID);
-    DEBUG ((DEBUG_INFO, "UBT: DONE..."));
-  }
-*/
+// INT32
+// missingReturn (
+//   VOID
+//   )
+// {
+//   DEBUG ((DEBUG_INFO, "UBT: Start testing cases with missing
+//     value-returning..."));
+//   return f (VOID);
+//   DEBUG ((DEBUG_INFO, "UBT: DONE..."));
+// }
 
 __attribute__ ((nonnull)) INT32
 f1 (
@@ -28,7 +26,7 @@ f1 (
 {
   return *nonnull;
 }
-//
+
 // __attribute__ ((nonnull)) CHAR8
 // f2 (
 //   INT32        n,
@@ -44,7 +42,7 @@ f1 (
 //   VA_END (Args);
 //   return res;
 // }
-//
+
 __attribute__ ((returns_nonnull)) INT32 *
 f3 (
   INT32  *nonnull
@@ -277,16 +275,16 @@ ShiftOutOfBoundsCheck (
 }
 
 /*
- VOID
- BuiltinCheck (
-   VOID
-   )
- {
-   DEBUG ((DEBUG_INFO, "UBT: Start testing cases with builtin...\n\n\n"));
-   f6 (0);
-   f7 (0);
-   DEBUG ((DEBUG_INFO, "\nUBT: DONE...\n\n\n\n\n"));
- }
+VOID
+BuiltinCheck (
+  VOID
+  )
+{
+  DEBUG ((DEBUG_INFO, "UBT: Start testing cases with builtin...\n\n\n"));
+  f6 (0);
+  f7 (0);
+  DEBUG ((DEBUG_INFO, "\nUBT: DONE...\n\n\n\n\n"));
+}
 */
 EFI_STATUS
 EFIAPI
@@ -296,11 +294,11 @@ UefiMain (
   )
 {
   // missingReturn(); -Werror,-Wreturn-type
-
+  AlignmentCheck ();
   NonnullCheck ();
   ShiftOutOfBoundsCheck ();
   BoundsCheck ();
-  PointerCheck (); // abort after tests
+  PointerCheck ();   // abort after tests
 
   /*
     Implicit conversion + Integer
