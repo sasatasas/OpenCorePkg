@@ -1,30 +1,12 @@
 #include "UbsanTester.h"
 
-// INT32 __attribute__ ((noinline))
-// f1 (
-//   VOID
-//   )
-// {
-// }
-
-// INT32
-// missingReturn (
-//   VOID
-//   )
-// {
-//   DEBUG ((DEBUG_INFO, "UBT: Start testing cases with missing
-//     value-returning..."));
-//   return f (VOID);
-//   DEBUG ((DEBUG_INFO, "UBT: DONE..."));
-// }
-
 __attribute__ ((nonnull)) INT32
 f1 (
-  INT32  *nonnull,
+  INT32  *Nonnull,
   INT32  n
   )
 {
-  return *nonnull;
+  return *Nonnull;
 }
 
 // __attribute__ ((nonnull)) CHAR8
@@ -36,8 +18,8 @@ f1 (
 //   VA_LIST  Args;
 //   VA_START (Args, n);
 
-//   CHAR8  *nonnull = VA_ARG (Args, CHAR8 *);
-//   CHAR8  res      = *nonnull;
+//   CHAR8  *Nonnull = VA_ARG (Args, CHAR8 *);
+//   CHAR8  res      = *Nonnull;
 
 //   VA_END (Args);
 //   return res;
@@ -45,22 +27,22 @@ f1 (
 
 __attribute__ ((returns_nonnull)) INT32 *
 f3 (
-  INT32  *nonnull
+  INT32  *Nonnull
   )
 {
-  return nonnull;
+  return Nonnull;
 }
 
 __attribute__ ((returns_nonnull)) INT32 *
 f4 (
-  INT32  *nonnull,
+  INT32  *Nonnull,
   INT32  n
   )
 {
   if (n > 0) {
-    return nonnull;
+    return Nonnull;
   } else {
-    return nonnull;
+    return Nonnull;
   }
 }
 
@@ -84,7 +66,8 @@ f6 (
   INT32  n
   )
 {
-  return __builtin_ctzll (n);
+  n = __builtin_ctzll (n);
+  return 0;
 }
 
 INT64
@@ -92,21 +75,13 @@ f7 (
   INT64  n
   )
 {
-  return __builtin_ctzll (n);
+  n = __builtin_ctzll (n);
+  return 0;
 }
 
 INT32
 GetInt (
-  INT32 *const  p __attribute__ ((pass_object_size (0))),
-  INT32         i
-  )
-{
-  return p[i];
-}
-
-INT32
-GetFloat (
-  float *const  p __attribute__ ((pass_object_size (0))),
+  INT32 *CONST  p __attribute__ ((pass_object_size (0))),
   INT32         i
   )
 {
@@ -136,14 +111,6 @@ BoundsCheck (
 
   GetInt (Bar, i);
   DEBUG ((DEBUG_WARN, "UBT: Index 2 out of bounds for type \'INT32 *\'...\n\n"));
-
-  /*
-    float baz[2];
-    GetFloat(baz, i);
-    DEBUG((DEBUG_WARN, "UBT: Index 2 out of bounds for type \'float
-    *\'...\n\n"));
-  */
-
   GetIntFromMultidemArr (i, j - 1, k - 1);
   DEBUG (
          (DEBUG_WARN,
@@ -159,7 +126,7 @@ BoundsCheck (
          (DEBUG_WARN, "UBT: Index 2 out of bounds for type \'INT32[4]\'...\n\n")
          );
 
-  DEBUG ((DEBUG_INFO, "\nUBT: DONE...\n\n\n\n\n"));
+  DEBUG ((DEBUG_INFO, "\nUBT: Checks with bounds are done...\n\n\n\n\n"));
 }
 
 VOID
@@ -218,7 +185,7 @@ NonnullCheck (
           "be null... (_Nonnull)\n\n")
          );
 
-  DEBUG ((DEBUG_INFO, "\nUBT: DONE...\n\n\n\n\n"));
+  DEBUG ((DEBUG_INFO, "\nUBT: Checks with nonnull atribute are done...\n\n\n\n\n"));
 }
 
 VOID
@@ -271,10 +238,10 @@ ShiftOutOfBoundsCheck (
   q <<= i;
   DEBUG ((DEBUG_WARN, "UBT: Left shift of negative value -1\n\n"));
 
-  DEBUG ((DEBUG_INFO, "\nUBT: DONE...\n\n\n\n\n"));
+  DEBUG ((DEBUG_INFO, "\nUBT: Checks with shift out of bounds are done...\n\n\n\n\n"));
 }
 
-/*
+// /*
 VOID
 BuiltinCheck (
   VOID
@@ -283,9 +250,9 @@ BuiltinCheck (
   DEBUG ((DEBUG_INFO, "UBT: Start testing cases with builtin...\n\n\n"));
   f6 (0);
   f7 (0);
-  DEBUG ((DEBUG_INFO, "\nUBT: DONE...\n\n\n\n\n"));
+  DEBUG ((DEBUG_INFO, "\nUBT: Checks with builtin are done......\n\n\n\n\n"));
 }
-*/
+// */
 EFI_STATUS
 EFIAPI
 UefiMain (
@@ -293,12 +260,12 @@ UefiMain (
   IN EFI_SYSTEM_TABLE  *SystemTable
   )
 {
-  // missingReturn(); -Werror,-Wreturn-type
   AlignmentCheck ();
   NonnullCheck ();
   ShiftOutOfBoundsCheck ();
   BoundsCheck ();
-  PointerCheck ();   // abort after tests
+  PointerCheck ();
+  // BuiltinCheck (); // works but after abort
 
   /*
     Implicit conversion + Integer
@@ -306,10 +273,9 @@ UefiMain (
   */
   // CheckConvertArithmeticsValue ();
 
-  // BuiltinCheck(); works but after abort
+ 
 
-  // INT16 (*f) (INT16); -Wincompatible-function-pointer-types
-  // f = f6;
+  CpuDeadLoop ();
 
-  return EFI_SUCCESS;
+  return EFI_SUCCESS; ///< Unreachable
 }

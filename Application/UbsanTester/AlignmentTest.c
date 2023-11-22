@@ -21,11 +21,9 @@ Check (
   INT32  n
   )
 {
-  INT8  c[] __attribute__ ((aligned (8))) = { 0, 0, 0, 0, 1, 2, 3, 4, 5 };
-
-  // Pointer value may be unspecified here, but behavior is not undefined.
-  INT32     *p = (INT32 *)&c[4 + n];
-  struct S  *s = (struct S *)p;
+  INT8      c[] __attribute__ ((aligned (8))) = { 0, 0, 0, 0, 1, 2, 3, 4, 5 };
+  INT32     *p                                = (INT32 *)&c[4 + n];
+  struct S  *s                                = (struct S *)p;
 
   (VOID)*p; // ok!
   DEBUG ((DEBUG_WARN, "UBT: Everything is fine here\n\n"));
@@ -39,7 +37,6 @@ Check (
       memcpy (&x, p, sizeof (x));
       return x && 0;
     }
-
     case 's':
     {
       *p = 1;
@@ -51,10 +48,10 @@ Check (
       memcpy (p, &x, sizeof (x));
       break;
     }
-
     case 'm':
+    {
       return s->k && 0;
-
+    }
     case 'f':
     {
       s->f = F;

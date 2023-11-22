@@ -14,9 +14,7 @@ PointerOverflowCheck (
   VOID
   )
 {
-  // mb need to separate code
-
-  DEBUG ((DEBUG_INFO, "UBT: Pointer overflow\n\n\n"));
+  DEBUG ((DEBUG_INFO, "UBT: Pointer overflow...\n\n\n"));
 
   INT8  *Base, *Result;
 
@@ -85,7 +83,7 @@ PointerOverflowCheck (
   Result = Base - 1ULL;
   DEBUG ((DEBUG_WARN, "UBT: Applying non-zero offset -1 to null pointer\n\n"));
 
-  DEBUG ((DEBUG_INFO, "\nUBT: Pointer overflow checks are done.\n\n\n"));
+  DEBUG ((DEBUG_INFO, "\nUBT: Pointer overflow checks are done...\n\n\n"));
 }
 
 INT32
@@ -122,13 +120,6 @@ NullCheck3 (
   return q[0];
 }
 
-/*
-  INT32* Check2 (INT32** p) {
-      INT32 *r;
-      r = *p;
-      return r;
-  }
-*/
 INT32
 NullCheck1 (
   struct S  *s
@@ -137,7 +128,7 @@ NullCheck1 (
   return s->k;
 }
 
-VOID
+VOID __attribute__ ((no_sanitize ("bounds")))
 NullPointerCheck (
   VOID
   )
@@ -155,17 +146,10 @@ NullPointerCheck (
   NullCheck1 (s);
   DEBUG ((DEBUG_WARN, "UBT: Member access within null pointer of type 'S'\n\n"));
 
-  /*
-    Check2(q); Only in c++?
-    DEBUG ((DEBUG_WARN, "UBT: Reference binding to null pointer of type
-    'INT32'\n\n"));
-  */
-
-  NullCheck3 ();  // It works, but throws assert /:
-  // *p = 1;
+  NullCheck3 ();
   DEBUG ((DEBUG_WARN, "UBT: Store to null pointer of type 'INT32'\n\n"));
 
-  DEBUG ((DEBUG_INFO, "UBT: Checks with null pointer are done.\n\n\n\n\n"));
+  DEBUG ((DEBUG_INFO, "UBT: Checks with null pointer are done...\n\n\n\n\n"));
 }
 
 VOID
