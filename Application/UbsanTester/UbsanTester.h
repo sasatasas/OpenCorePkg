@@ -8,7 +8,6 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <stdarg.h>
-#include <string.h>
 
 /* Implicit conversion group of checks. */
 VOID

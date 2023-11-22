@@ -211,7 +211,7 @@ TestSignedIncdec (
   VOID
   )
 {
-  signed char  x;
+  INT8  x;
 
   x = -128;
   x++;
@@ -277,8 +277,10 @@ CheckIncDec (
   VOID
   )
 {
+  DEBUG ((DEBUG_INFO, "UBT: Start testing cases with integer conversion inc dec...\n\n"));
   TestSignedIncdec ();
   TestUnsignedIncdec ();
+  DEBUG ((DEBUG_INFO, "UBT: Checks with  integer conversion inc dec are done...\n\n\n\n\n"));
 }
 
 VOID
@@ -303,7 +305,7 @@ CheckIntegerOverflowWithAbs (
   // negation of -[[#]] cannot be represented in type 'long long'; cast to an unsigned type to negate this value to itself
   q = __builtin_llabs (INT64_MIN);
   q = llabs (INT64_MIN);
-  DEBUG ((DEBUG_INFO, "UBT: Done.\n\n\n"));
+  DEBUG ((DEBUG_INFO, "UBT: Checks with integer overflow with abs are done...\n\n\n\n\n"));
 }
 
 // TODO: mb need to separate the cases
