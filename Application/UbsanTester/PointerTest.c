@@ -16,7 +16,7 @@ PointerOverflowCheck (
 {
   // mb need to separate code
 
-  DEBUG ((DEBUG_WARN, "UBT: Pointer overflow\n\n\n"));
+  DEBUG ((DEBUG_INFO, "UBT: Pointer overflow\n\n\n"));
 
   INT8  *Base, *Result;
 
@@ -142,7 +142,7 @@ NullPointerCheck (
   VOID
   )
 {
-  DEBUG ((DEBUG_WARN, "UBT: Null pointer...\n\n"));
+  DEBUG ((DEBUG_INFO, "UBT: Null pointer...\n\n"));
   INT32     *p = 0;
   struct S  *s = 0;
 
