@@ -358,7 +358,7 @@ static void HandleMissingReturn(bool isFatal, struct CUnreachableData *pData);
 static void HandleNonnullArg(bool isFatal, struct CNonNullArgData *pData);
 static void HandleNonnullReturn(bool isFatal, struct CNonNullReturnData *pData, struct CSourceLocation *pLocationPointer);
 static void HandlePointerOverflow(bool isFatal, struct CPointerOverflowData *pData, unsigned long ulBase, unsigned long ulResult);
-static void HandleAlignmentAssumption(bool isFatal, struct CAlignmentAssumptionData *pData, unsigned long ulPointer,unsigned long ulPointer, unsigned long ulAlignment, unsigned long ulOffset);
+static void HandleAlignmentAssumption(bool isFatal, struct CAlignmentAssumptionData *pData, unsigned long ulPointer, unsigned long ulAlignment, unsigned long ulOffset);
 
 static void
 HandleOverflow(bool isFatal, struct COverflowData *pData, unsigned long ulLHS, unsigned long ulRHS, const char *szOperation)
@@ -732,7 +732,7 @@ HandlePointerOverflow(bool isFatal, struct CPointerOverflowData *pData, unsigned
 }
 
 static void
-HandleAlignmentAssumption(bool isFatal, struct CAlignmentAssumptionData *pData, unsigned long ulPointer,unsigned long ulPointer, unsigned long ulAlignment, unsigned long ulOffset)
+HandleAlignmentAssumption(bool isFatal, struct CAlignmentAssumptionData *pData, unsigned long ulPointer, unsigned long ulAlignment, unsigned long ulOffset)
 {
 	char szLocation[LOCATION_MAXLEN];
 	char szAssumptionLocation[LOCATION_MAXLEN];
