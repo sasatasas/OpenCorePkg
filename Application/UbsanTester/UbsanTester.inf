@@ -1,7 +1,14 @@
 ## @file
 #  Ubsan Tester
 #
-#  TODO:
+#  Copyright (c) 2020, #Brumbaer. All rights reserved.<BR>
+#
+#  This program and the accompanying materials
+#  are licensed and made available under the terms and conditions of the BSD License
+#  which accompanies this distribution.  The full text of the license may be found at
+#  http://opensource.org/licenses/bsd-license.php
+#  THE PROGRAM IS DISTRIBUTED UNDER THE BSD LICENSE ON AN "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR REPRESENTATIONS OF ANY KIND, EITHER EXPRESS OR IMPLIED.
 #
 ##
 
@@ -49,5 +56,7 @@
 [BuildOptions] 
   *_CLANGDWARF_*_CC_FLAGS = -fsanitize=undefined -fno-sanitize-link-runtime
   *_CLANGDWARF_*_DLINK_FLAGS = -fsanitize=undefined
-  #*_CLANGDWARF_*_CC_FLAGS = -fsanitize=bounds,null,pointer-overflow,nonnull-attribute,returns-nonnull-attribute,function,integer -fno-sanitize-link-runtime
-  #*_CLANGDWARF_*_DLINK_FLAGS = -fsanitize=bounds,null,pointer-overflow,nonnull-attribute,returns-nonnull-attribute,integer
+  # *_CLANGDWARF_*_CC_FLAGS = -fsanitize=integer -fno-sanitize-link-runtime
+  # *_CLANGDWARF_*_DLINK_FLAGS = -fsanitize=integer
+  # *_CLANGDWARF_*_CC_FLAGS = -fsanitize=bounds,null,pointer-overflow,nonnull-attribute,returns-nonnull-attribute,function,integer -fno-sanitize-link-runtime
+  # *_CLANGDWARF_*_DLINK_FLAGS = -fsanitize=bounds,null,pointer-overflow,nonnull-attribute,returns-nonnull-attribute,integer
