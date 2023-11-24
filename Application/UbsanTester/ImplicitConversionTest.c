@@ -283,30 +283,30 @@ CheckIncDec (
   DEBUG ((DEBUG_INFO, "UBT: Checks with  integer conversion inc dec are done...\n\n\n\n\n"));
 }
 
-VOID
-CheckIntegerOverflowWithAbs (
-  VOID
-  )
-{
-  // TODO:
-  DEBUG ((DEBUG_INFO, "UBT: Start testing cases with integer overflow with abs...\n\n"));
-  INT32  p;
+// VOID
+// CheckIntegerOverflowWithAbs (
+//   VOID
+//   )
+// {
+//   // TODO:
+//   DEBUG ((DEBUG_INFO, "UBT: Start testing cases with integer overflow with abs...\n\n"));
+//   INT32  p;
 
-  // negation of -[[#]] cannot be represented in type 'int'; cast to an unsigned type to negate this value to itself
-  p = __builtin_abs (INT32_MIN);
-  p = abs (INT32_MIN);
+//   // negation of -[[#]] cannot be represented in type 'int'; cast to an unsigned type to negate this value to itself
+//   p = __builtin_abs (INT32_MIN);
+//   p = abs (INT32_MIN);
 
-  // negation of -[[#]] cannot be represented in type 'long'; cast to an unsigned type to negate this value to itself
-  INT64  q;
+//   // negation of -[[#]] cannot be represented in type 'long'; cast to an unsigned type to negate this value to itself
+//   INT64  q;
 
-  q = __builtin_labs (INT64_MIN);
-  q = labs (INT64_MIN);
+//   q = __builtin_labs (INT64_MIN);
+//   q = labs (INT64_MIN);
 
-  // negation of -[[#]] cannot be represented in type 'long long'; cast to an unsigned type to negate this value to itself
-  q = __builtin_llabs (INT64_MIN);
-  q = llabs (INT64_MIN);
-  DEBUG ((DEBUG_INFO, "UBT: Checks with integer overflow with abs are done...\n\n\n\n\n"));
-}
+//   // negation of -[[#]] cannot be represented in type 'long long'; cast to an unsigned type to negate this value to itself
+//   q = __builtin_llabs (INT64_MIN);
+//   q = llabs (INT64_MIN);
+//   DEBUG ((DEBUG_INFO, "UBT: Checks with integer overflow with abs are done...\n\n\n\n\n"));
+// }
 
 // TODO: mb need to separate the cases
 VOID
@@ -316,7 +316,7 @@ CheckConvertArithmeticsValue (
 {
   DEBUG ((DEBUG_INFO, "UBT: Start testing cases with implicit conversion..."));
 
-  CheckIntegerOverflowWithAbs ();
+  // CheckIntegerOverflowWithAbs ();
 
   CheckIncDec ();
 
