@@ -9,6 +9,7 @@
  * Use -fsanitize=implicit-conversion
  */
 UINT32
+EFIAPI
 ConvertUnsignedIntToUnsignedInt (
   UINT32  x
   )
@@ -18,6 +19,7 @@ ConvertUnsignedIntToUnsignedInt (
 }
 
 UINT8
+EFIAPI
 ConvertUnsignedCharToUnsignedChar (
   UINT8  x
   )
@@ -27,6 +29,7 @@ ConvertUnsignedCharToUnsignedChar (
 }
 
 INT32
+EFIAPI
 ConvertSignedIntToSignedInt (
   INT32  x
   )
@@ -36,6 +39,7 @@ ConvertSignedIntToSignedInt (
 }
 
 INT8
+EFIAPI
 ConvertSignedCharToSignedChar (
   INT8  x
   )
@@ -45,6 +49,7 @@ ConvertSignedCharToSignedChar (
 }
 
 UINT8
+EFIAPI
 ConvertUnsignedIntToUnsignedChar (
   UINT32  x
   )
@@ -54,6 +59,7 @@ ConvertUnsignedIntToUnsignedChar (
 }
 
 UINT32
+EFIAPI
 ConvertUnsignedCharToUnsignedInt (
   UINT8  x
   )
@@ -63,6 +69,7 @@ ConvertUnsignedCharToUnsignedInt (
 }
 
 INT32
+EFIAPI
 ConvertUnsignedCharToSignedInt (
   UINT8  x
   )
@@ -72,6 +79,7 @@ ConvertUnsignedCharToSignedInt (
 }
 
 INT32
+EFIAPI
 ConvertSignedCharToSignedInt (
   INT8  x
   )
@@ -81,6 +89,7 @@ ConvertSignedCharToSignedInt (
 }
 
 INT32
+EFIAPI
 ConvertUnsignedIntToSignedInt (
   UINT32  x
   )
@@ -90,6 +99,7 @@ ConvertUnsignedIntToSignedInt (
 }
 
 UINT32
+EFIAPI
 ConvertSignedIntToUnsignedInt (
   INT32  x
   )
@@ -99,6 +109,7 @@ ConvertSignedIntToUnsignedInt (
 }
 
 UINT8
+EFIAPI
 ConvertSignedIntToUnsignedChar (
   INT32  x
   )
@@ -108,6 +119,7 @@ ConvertSignedIntToUnsignedChar (
 }
 
 UINT8
+EFIAPI
 ConvertSignedCharToUnsignedChar (
   INT8  x
   )
@@ -117,6 +129,7 @@ ConvertSignedCharToUnsignedChar (
 }
 
 INT8
+EFIAPI
 ConvertUnsignedCharToSignedChar (
   UINT8  x
   )
@@ -126,6 +139,7 @@ ConvertUnsignedCharToSignedChar (
 }
 
 UINT32
+EFIAPI
 ConvertSignedCharToUnsignedInt (
   INT8  x
   )
@@ -135,6 +149,7 @@ ConvertSignedCharToUnsignedInt (
 }
 
 INT8
+EFIAPI
 ConvertUnsignedIntToSignedChar (
   UINT32  x
   )
@@ -144,6 +159,7 @@ ConvertUnsignedIntToSignedChar (
 }
 
 INT8
+EFIAPI
 ConvertSignedIntToSignedChar (
   INT32  x
   )
@@ -153,6 +169,7 @@ ConvertSignedIntToSignedChar (
 }
 
 VOID
+EFIAPI
 TestUnsignedIncdec (
   VOID
   )
@@ -207,6 +224,7 @@ TestUnsignedIncdec (
 }
 
 VOID
+EFIAPI
 TestSignedIncdec (
   VOID
   )
@@ -273,6 +291,7 @@ TestSignedIncdec (
 }
 
 VOID
+EFIAPI
 CheckIncDec (
   VOID
   )
@@ -283,33 +302,28 @@ CheckIncDec (
   DEBUG ((DEBUG_INFO, "UBT: Checks with  integer conversion inc dec are done...\n\n\n\n\n"));
 }
 
-// VOID
-// CheckIntegerOverflowWithAbs (
-//   VOID
-//   )
-// {
-//   // TODO:
-//   DEBUG ((DEBUG_INFO, "UBT: Start testing cases with integer overflow with abs...\n\n"));
-//   INT32  p;
+VOID
+CheckIntegerOverflowWithAbs (
+  VOID
+  )
+{
+  // TODO:
+  DEBUG ((DEBUG_INFO, "UBT: Start testing cases with integer overflow with abs...\n\n"));
+  INT32  P;
 
-//   // negation of -[[#]] cannot be represented in type 'int'; cast to an unsigned type to negate this value to itself
-//   p = __builtin_abs (INT32_MIN);
-//   p = abs (INT32_MIN);
+  P = __builtin_abs (INT32_MIN);
 
-//   // negation of -[[#]] cannot be represented in type 'long'; cast to an unsigned type to negate this value to itself
-//   INT64  q;
+  INT64  Q;
 
-//   q = __builtin_labs (INT64_MIN);
-//   q = labs (INT64_MIN);
+  Q = __builtin_labs (INT64_MIN);
+  Q = __builtin_llabs (INT64_MIN);
 
-//   // negation of -[[#]] cannot be represented in type 'long long'; cast to an unsigned type to negate this value to itself
-//   q = __builtin_llabs (INT64_MIN);
-//   q = llabs (INT64_MIN);
-//   DEBUG ((DEBUG_INFO, "UBT: Checks with integer overflow with abs are done...\n\n\n\n\n"));
-// }
+  DEBUG ((DEBUG_INFO, "UBT: Checks with integer overflow with abs are done...\n\n\n\n\n"));
+}
 
 // TODO: mb need to separate the cases
 VOID
+EFIAPI
 CheckConvertArithmeticsValue (
   VOID
   )
