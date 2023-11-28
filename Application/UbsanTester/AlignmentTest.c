@@ -1,7 +1,8 @@
 #include "UbsanTester.h"
 
 INT32
-F (
+EFIAPI
+FMember (
   VOID
   )
 {
@@ -9,24 +10,22 @@ F (
 }
 
 struct S {
-  INT32    (*f) (
+  INT32 EFIAPI    (*F) (
     VOID
     );
-  INT32    k;
+  INT32           k;
 };
 
 INT32
+EFIAPI
 Check (
   INT8   Type,
   INT32  n
   )
 {
-  INT8      c[] __attribute__ ((aligned (8))) = { 0, 0, 0, 0, 1, 2, 3, 4, 5 };
-  INT32     *p                                = (INT32 *)&c[4 + n];
-  struct S  *s                                = (struct S *)p;
-
-  (VOID)*p; // ok!
-  DEBUG ((DEBUG_WARN, "UBT: Everything is fine here\n\n"));
+  INT8      c[] __attribute__ ((aligned (16))) = { 0, 0, 0, 0, 1, 2, 3, 4, 5, 0, 0, 0, 0, 1, 2, 3, 4, 5 };
+  INT32     *p                                 = (INT32 *)&c[4 + n];
+  struct S  *s                                 = (struct S *)p;
 
   switch (Type) {
     case 'l':
@@ -54,8 +53,8 @@ Check (
     }
     case 'f':
     {
-      s->f = F;
-      return s->f () && 0;
+      s->F = FMember;
+      return s->F () && 0;
     }
   }
 
@@ -63,13 +62,18 @@ Check (
 }
 
 VOID
+EFIAPI
 AlignmentCheck (
   VOID
   )
 {
-  DEBUG ((DEBUG_INFO, "UBT: Start testing cases with alignment...\n"));
-  Check ('l', 0);
-  DEBUG ((DEBUG_WARN, "UBT: Load of misaligned address [[PTR:0x[0-9a-f]*]] for type 'INT32', which requires 4 byte alignment\n\n"));
+  DEBUG (
+         (
+          DEBUG_INFO,
+          "UBT: Start testing cases with alignment...\n\n\n"
+         )
+         );
+  Check ('l', 0); // Correct
   Check ('l', 1);
   DEBUG ((DEBUG_WARN, "UBT: Load of misaligned address [[PTR:0x[0-9a-f]*]] for type 'INT32', which requires 4 byte alignment\n\n"));
   Check ('L', 1); // Doesn't work
@@ -83,7 +87,5 @@ AlignmentCheck (
   Check ('f', 1);
   DEBUG ((DEBUG_WARN, "UBT: Member call on misaligned address [[PTR:0x[0-9a-f]*]] for type 'S', which requires 4 byte alignment\n\n"));
 
-  DEBUG (
-         (DEBUG_INFO, "UBT: Completing testing cases with alignment...\n\n\n\n\n")
-         );
+  DEBUG ((DEBUG_INFO, "UBT: Completing testing cases with alignment...\n\n\n\n\n"));
 }

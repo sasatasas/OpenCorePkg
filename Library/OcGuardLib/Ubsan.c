@@ -923,7 +923,7 @@ __ubsan_handle_invalid_builtin(struct CInvalidBuiltinData *pData)
 
 	ASSERT(pData);
 
-	HandleInvalidBuiltin(true, pData);
+	HandleInvalidBuiltin(false, pData); // Maybe it should be fatal?
 }
 
 void

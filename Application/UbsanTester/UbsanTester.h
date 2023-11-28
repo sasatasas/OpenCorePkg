@@ -20,18 +20,21 @@
 
 /* Implicit conversion group of checks. */
 VOID
+EFIAPI
 CheckConvertArithmeticsValue (
   VOID
   );
 
 /* Pointer overflow. */
 VOID
+EFIAPI
 PointerCheck (
   VOID
   );
 
 /* Alignment. */
 VOID
+EFIAPI
 AlignmentCheck (
   VOID
   );
