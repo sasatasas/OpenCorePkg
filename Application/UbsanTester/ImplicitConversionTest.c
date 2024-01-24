@@ -10,6 +10,7 @@
  */
 UINT32
 EFIAPI
+__attribute__((no_sanitize("undefined")))
 ConvertUnsignedIntToUnsignedInt (
   UINT32  x
   )
@@ -20,6 +21,7 @@ ConvertUnsignedIntToUnsignedInt (
 
 UINT8
 EFIAPI
+__attribute__((no_sanitize("undefined")))
 ConvertUnsignedCharToUnsignedChar (
   UINT8  x
   )
@@ -30,6 +32,7 @@ ConvertUnsignedCharToUnsignedChar (
 
 INT32
 EFIAPI
+__attribute__((no_sanitize("undefined")))
 ConvertSignedIntToSignedInt (
   INT32  x
   )
@@ -40,6 +43,7 @@ ConvertSignedIntToSignedInt (
 
 INT8
 EFIAPI
+__attribute__((no_sanitize("undefined")))
 ConvertSignedCharToSignedChar (
   INT8  x
   )
@@ -50,6 +54,7 @@ ConvertSignedCharToSignedChar (
 
 UINT8
 EFIAPI
+__attribute__((no_sanitize("undefined")))
 ConvertUnsignedIntToUnsignedChar (
   UINT32  x
   )
@@ -60,6 +65,7 @@ ConvertUnsignedIntToUnsignedChar (
 
 UINT32
 EFIAPI
+__attribute__((no_sanitize("undefined")))
 ConvertUnsignedCharToUnsignedInt (
   UINT8  x
   )
@@ -70,6 +76,7 @@ ConvertUnsignedCharToUnsignedInt (
 
 INT32
 EFIAPI
+__attribute__((no_sanitize("undefined")))
 ConvertUnsignedCharToSignedInt (
   UINT8  x
   )
@@ -80,6 +87,7 @@ ConvertUnsignedCharToSignedInt (
 
 INT32
 EFIAPI
+__attribute__((no_sanitize("undefined")))
 ConvertSignedCharToSignedInt (
   INT8  x
   )
@@ -90,6 +98,7 @@ ConvertSignedCharToSignedInt (
 
 INT32
 EFIAPI
+__attribute__((no_sanitize("undefined")))
 ConvertUnsignedIntToSignedInt (
   UINT32  x
   )
@@ -100,6 +109,7 @@ ConvertUnsignedIntToSignedInt (
 
 UINT32
 EFIAPI
+__attribute__((no_sanitize("undefined")))
 ConvertSignedIntToUnsignedInt (
   INT32  x
   )
@@ -110,6 +120,7 @@ ConvertSignedIntToUnsignedInt (
 
 UINT8
 EFIAPI
+__attribute__((no_sanitize("undefined")))
 ConvertSignedIntToUnsignedChar (
   INT32  x
   )
@@ -120,6 +131,7 @@ ConvertSignedIntToUnsignedChar (
 
 UINT8
 EFIAPI
+__attribute__((no_sanitize("undefined")))
 ConvertSignedCharToUnsignedChar (
   INT8  x
   )
@@ -130,6 +142,7 @@ ConvertSignedCharToUnsignedChar (
 
 INT8
 EFIAPI
+__attribute__((no_sanitize("undefined")))
 ConvertUnsignedCharToSignedChar (
   UINT8  x
   )
@@ -140,6 +153,7 @@ ConvertUnsignedCharToSignedChar (
 
 UINT32
 EFIAPI
+__attribute__((no_sanitize("undefined")))
 ConvertSignedCharToUnsignedInt (
   INT8  x
   )
@@ -150,6 +164,7 @@ ConvertSignedCharToUnsignedInt (
 
 INT8
 EFIAPI
+__attribute__((no_sanitize("undefined")))
 ConvertUnsignedIntToSignedChar (
   UINT32  x
   )
@@ -160,6 +175,7 @@ ConvertUnsignedIntToSignedChar (
 
 INT8
 EFIAPI
+__attribute__((no_sanitize("undefined")))
 ConvertSignedIntToSignedChar (
   INT32  x
   )
@@ -170,6 +186,7 @@ ConvertSignedIntToSignedChar (
 
 VOID
 EFIAPI
+__attribute__((no_sanitize("undefined")))
 TestUnsignedIncdec (
   VOID
   )
@@ -225,6 +242,7 @@ TestUnsignedIncdec (
 
 VOID
 EFIAPI
+__attribute__((no_sanitize("undefined")))
 TestSignedIncdec (
   VOID
   )
@@ -292,6 +310,7 @@ TestSignedIncdec (
 
 VOID
 EFIAPI
+__attribute__((no_sanitize("undefined")))
 CheckIncDec (
   VOID
   )
@@ -303,6 +322,8 @@ CheckIncDec (
 }
 
 VOID
+EFIAPI
+__attribute__((no_sanitize("undefined")))
 CheckIntegerOverflowWithAbs (
   VOID
   )
@@ -321,14 +342,59 @@ CheckIntegerOverflowWithAbs (
   DEBUG ((DEBUG_INFO, "UBT: Checks with integer overflow with abs are done...\n\n\n\n\n"));
 }
 
+VOID
+EFIAPI
+__attribute__((no_sanitize("undefined")))
+ShiftOutOfBoundsCheck (
+  VOID
+  )
+{
+  UINT16  p = 1;
+
+  DEBUG ((DEBUG_INFO, "UBT: Start testing cases with shift out of bounds...\n\n\n"));
+
+  INT32  i = 32;
+
+  p >>= i;
+  DEBUG ((DEBUG_WARN, "UBT: Shift exponent 32 is too large for 16-bit type\n\n"));
+
+  p   = 1;
+  i   = -1;
+  p >>= i;
+  DEBUG ((DEBUG_WARN, "UBT: Shift exponent -1 is negative\n\n"));
+
+  p   = 1;
+  i   = 32;
+  p <<= i;
+  DEBUG ((DEBUG_WARN, "UBT: Shift exponent 32 is too large for 16-bit type\n\n"));
+
+  p   = 1;
+  i   = -1;
+  p <<= i;
+  DEBUG ((DEBUG_WARN, "UBT: Shift exponent -1 is negative\n\n"));
+
+  i = 31;
+  i = 1 << i;
+  DEBUG ((DEBUG_WARN, "UBT: Left shift of 1 by 31 places cannot be represented in 32-bit type \n\n"));
+
+  INT32  q = -1;
+
+  i   = 5;
+  q <<= i;
+  DEBUG ((DEBUG_WARN, "UBT: Left shift of negative value -1\n\n"));
+
+  DEBUG ((DEBUG_INFO, "\nUBT: Checks with shift out of bounds are done...\n\n\n\n\n"));
+}
+
 // TODO: mb need to separate the cases
 VOID
 EFIAPI
+__attribute__((no_sanitize("undefined")))
 CheckConvertArithmeticsValue (
   VOID
   )
 {
-  DEBUG ((DEBUG_INFO, "UBT: Start testing cases with implicit conversion..."));
+  DEBUG ((DEBUG_INFO, "UBT: Start testing cases with integer..."));
 
   // CheckIntegerOverflowWithAbs ();
 
@@ -620,5 +686,7 @@ CheckConvertArithmeticsValue (
   // 1600: implicit conversion from type '{{.*}}' (aka 'int') of value 2147483519 (32-bit, signed) to type '{{.*}}' (aka '{{(signed )?}}char') changed the value to 127 (8-bit, signed)
   DEBUG ((DEBUG_INFO, "UBT: Done.\n\n\n"));
 
-  DEBUG ((DEBUG_INFO, "UBT: Completing testing cases with implicit convercion...\n\n\n\n\n"));
+  ShiftOutOfBoundsCheck ();
+
+  DEBUG ((DEBUG_INFO, "UBT: Completing testing cases with integer...\n\n\n\n\n"));
 }

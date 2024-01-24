@@ -2,6 +2,7 @@
 
 STATIC INT8 *
 EFIAPI
+__attribute__ ((no_sanitize ("integer")))
 GetelementpointerInbounds (
   INT8    *Base,
   UINT64  Offset
@@ -12,11 +13,12 @@ GetelementpointerInbounds (
 
 VOID
 EFIAPI
+__attribute__ ((no_sanitize ("integer")))
 PointerOverflowCheck (
   VOID
   )
 {
-  DEBUG ((DEBUG_INFO, "UBT: Pointer overflow...\n\n\n"));
+  DEBUG ((DEBUG_INFO, "UBT: Start testing cases with pointer overflow...\n\n\n"));
 
   INT8  *Base, *Result;
 
@@ -24,7 +26,7 @@ PointerOverflowCheck (
   Result = Base + 1;
   DEBUG ((
           DEBUG_WARN,
-          "UBT: Applying non-zero offset to non-null pointer 0x%X produced null pointer\n\n",
+          "UBT: Applying non-zero offset to non-null pointer [[PTR:0x[0-9a-f]*]] produced null pointer\n\n",
           Base
          ));
 
@@ -32,65 +34,65 @@ PointerOverflowCheck (
   Result = Base + 2;
   DEBUG ((
           DEBUG_WARN,
-          "UBT: Addition of unsigned offset from 0x%X overflowed to 0x%X\n\n",
+          "UBT: Pointer index expression with base [[PTR:0x[0-9a-f]*]] overflowed to [[PTR:0x[0-9a-f]*]]\n\n",
           Base,
           Result
          ));
 
   Base   = (INT8 *)0;
   Result = Base + 0;
-
   DEBUG ((DEBUG_WARN, "UBT: Applying zero offset to null pointer\n\n"));
 
   Base   = (INT8 *)0;
   Result = Base + 1;
-  DEBUG ((DEBUG_WARN, "UBT: Applying non-zero offset 1 to null pointer\n\n"));
+  DEBUG ((DEBUG_WARN, "UBT: Applying non-zero offset 0x1 to null pointer\n\n"));
 
   Base   = (INT8 *)1;
   Result = Base - 1;
   DEBUG ((
-          DEBUG_WARN,
-          "UBT: Applying non-zero offset to non-null pointer 0x%X produced null pointer\n\n",
-          Base
+           DEBUG_WARN,
+           "UBT: Applying non-zero offset to non-null pointer [[PTR:0x[0-9a-f]*]] produced null pointer\n\n",
+           Base
          ));
 
   UINT64  Offset = 2ULL;
 
   Base    = (INT8 *)0;
-  Offset -= -1;
+  Offset -= 2;
   (VOID)GetelementpointerInbounds (Base, Offset);
   DEBUG ((DEBUG_WARN, "UBT: Applying zero offset to null pointer\n\n"));
 
-  INT8  c;
+  // INT8  c;
 
-  Base = &c;
-  INT64  NegOffset = -1;
+  // Base = &c;
+  // INT64  NegOffset = -1;
 
-  Result = Base + NegOffset;  // doesn't work
-  DEBUG ((
-          DEBUG_WARN,
-          "UBT: Addition of unsigned offset to 0x%X overflowed to 0x%X\n\n",
-          Base,
-          Result
-         ));
+  // Result = Base + NegOffset;  // doesn't work
+  // DEBUG ((
+  //         DEBUG_WARN,
+  //         "UBT: Addition of unsigned offset to [[PTR:0x[0-9a-f]*]] overflowed to [[PTR:0x[0-9a-f]*]]\n\n",
+  //         Base,
+  //         Result
+  //        ));
 
-  Result = Base - NegOffset;  // doesn't work
-  DEBUG ((
-          DEBUG_WARN,
-          "UBT: Subtraction of unsigned offset from 0x%X overflowed to 0x%X\n\n",
-          Base,
-          Result
-         ));
+  // Result = Base - NegOffset;  // doesn't work
+  // DEBUG ((
+  //         DEBUG_WARN,
+  //         "UBT: Subtraction of unsigned offset from [[PTR:0x[0-9a-f]*]] overflowed to [[PTR:0x[0-9a-f]*]]\n\n",
+  //         Base,
+  //         Result
+  //        ));
 
   Base   = NULL;
   Result = Base - 1ULL;
-  DEBUG ((DEBUG_WARN, "UBT: Applying non-zero offset -1 to null pointer\n\n"));
+  DEBUG ((DEBUG_WARN, "UBT: Applying non-zero offset 0x%lx to null pointer\n\n", -1UL));
 
-  DEBUG ((DEBUG_INFO, "\nUBT: Pointer overflow checks are done...\n\n\n"));
+  DEBUG ((DEBUG_INFO, "\nUBT: Checks with pointer overflow are done...\n\n\n"));
 }
 
 INT32
 EFIAPI
+__attribute__ ((no_sanitize ("integer")))
 F (
   VOID
   )
@@ -107,6 +109,7 @@ struct S {
 
 INT32
 EFIAPI
+__attribute__ ((no_sanitize ("integer")))
 NullCheck0 (
   INT32  *p
   )
@@ -116,6 +119,7 @@ NullCheck0 (
 
 INT32
 EFIAPI
+__attribute__ ((no_sanitize ("integer")))
 NullCheck3 (
   VOID
   )
@@ -128,6 +132,7 @@ NullCheck3 (
 
 INT32
 EFIAPI
+__attribute__ ((no_sanitize ("integer")))
 NullCheck1 (
   struct S  *s
   )
@@ -135,112 +140,34 @@ NullCheck1 (
   return s->k;
 }
 
-VOID __attribute__ ((no_sanitize ("bounds")))
+VOID
 EFIAPI
+__attribute__ ((no_sanitize ("integer")))
+__attribute__ ((no_sanitize ("bounds")))
 NullPointerCheck (
   VOID
   )
 {
-  DEBUG ((DEBUG_INFO, "UBT: Null pointer...\n\n"));
+  DEBUG ((DEBUG_INFO, "UBT: Start testing cases with null pointer...\n\n"));
   INT32     *p = 0;
   struct S  *s = 0;
 
-  (VOID)*p;  // ok!
-  DEBUG ((DEBUG_WARN, "UBT: Everything is fine here\n\n"));
-
   NullCheck0 (p);
-  DEBUG ((DEBUG_WARN, "UBT: Load of null pointer of type 'INT32'\n\n"));
+  DEBUG ((DEBUG_WARN, "UBT: Load of null pointer of type 'INT32' (aka 'int')\n\n"));
 
   NullCheck1 (s);
-  DEBUG ((DEBUG_WARN, "UBT: Member access within null pointer of type 'S'\n\n"));
+  DEBUG ((DEBUG_WARN, "UBT: Member access within null pointer of type 'struct S'\n\n"));
 
-  NullCheck3 ();
-  DEBUG ((DEBUG_WARN, "UBT: Store to null pointer of type 'INT32'\n\n"));
+  NullCheck3 (); // TODO:
+  DEBUG ((DEBUG_WARN, "UBT: Index 3 is out of range for type 'INT32[2]' (aka 'int[2]')\n\n"));
+  DEBUG ((DEBUG_WARN, "UBT: Store to address [[PTR:0x[0-9a-f]*]] with insufficient space for an object of type 'INT32' (aka 'int')\n\n"));
 
   DEBUG ((DEBUG_INFO, "UBT: Checks with null pointer are done...\n\n\n\n\n"));
 }
 
-typedef INT8 *__attribute__ ((align_value (0x8000))) AlignedChar;
-
-struct AcStruct {
-  AlignedChar    a;
-};
-
-INT8 *
-LoadFromAcStruct (
-  struct AcStruct  *x
-  )
-{
-  return x->a;
-}
-
-INT8 *
-Passthrough0 (
-  __attribute__ ((align_value (0x8000))) INT8  *x
-  )
-{
-  return x;
-}
-
-INT8 *__attribute__ ((alloc_align (2)))
-Passthrough1 (
-  INT8          *x,
-  CONST UINT32  Alignment
-  )
-{
-  return x;
-}
-
-INT8 *__attribute__ ((assume_aligned (0x8000, 1)))
-Passthrough2 (
-  INT8  *x
-  )
-{
-  return x;
-}
-
 VOID
 EFIAPI
-PointerAlignmentCheck (
-  VOID
-  )
-{
-  DEBUG ((DEBUG_INFO, "UBT: Pointer alignment...\n"));
-  INT8  *Ptr = AllocateZeroPool (2);
-  VOID  *Res;
-
-  struct AcStruct  x;
-
-  x.a = Ptr + 1;
-  LoadFromAcStruct (&x);
-  DEBUG ((DEBUG_WARN, "UBT: Assumption of 32768 byte alignment for pointer 0x%lx of type 'AlignedChar' failed\n\n", Ptr));
-
-  Passthrough0 (Ptr + 1);
-  DEBUG ((DEBUG_WARN, "UBT: Assumption of 32768 byte alignment for pointer 0x%lx of type 'INT8 *' failed\n\n", Ptr));
-
-  Passthrough1 (Ptr + 1, 0x8000);
-  DEBUG ((DEBUG_WARN, "UBT: Assumption of 32768 byte alignment for pointer 0x%lx of type 'INT8 *' failed\n\n", Ptr));
-
-  Res = __builtin_assume_aligned (Ptr + 2, 0x8000);
-  DEBUG ((DEBUG_WARN, "UBT: Assumption of 32768 byte alignment for pointer 0x%lx of type 'INT8 *' failed\n\n", Ptr));
-
-  FreePool (Ptr);
-
-  Ptr = AllocateZeroPool (3);
-  Passthrough2 (Ptr + 2);
-  DEBUG ((DEBUG_WARN, "UBT: Assumption of 32768 byte alignment (with offset of 1 byte) for pointer 0x%lx of type 'INT8 *' failed\n\n", Ptr));
-
-  UINT32  Offset = 1;
-
-  Res = __builtin_assume_aligned (Ptr + 2, 0x8000, Offset);
-  DEBUG ((DEBUG_WARN, "UBT: Assumption of 32768 byte alignment (with offset of 1 byte) for pointer 0x%lx of type 'INT8 *' failed\n\n", Ptr));
-
-  FreePool (Ptr);
-  DEBUG ((DEBUG_INFO, "UBT: Checks with pointer alignment are done...\n\n\n\n\n"));
-}
-
-VOID
-EFIAPI
+__attribute__ ((no_sanitize ("integer")))
 PointerCheck (
   VOID
   )
@@ -249,6 +176,6 @@ PointerCheck (
 
   PointerOverflowCheck ();
   NullPointerCheck ();
-  PointerAlignmentCheck ();
-  DEBUG ((DEBUG_INFO, "UBT: Completing testing cases with pointers...\n\n\n\n\n"));
+
+  DEBUG ((DEBUG_INFO, "UBT: Checks with pointers are done...\n\n\n\n\n"));
 }

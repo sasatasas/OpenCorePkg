@@ -266,7 +266,7 @@
   OpenCorePkg/Library/OcFirmwarePasswordLib/OcFirmwarePasswordLib.inf
   OpenCorePkg/Library/OcFirmwareVolumeLib/OcFirmwareVolumeLib.inf
   OpenCorePkg/Library/OcFlexArrayLib/OcFlexArrayLib.inf
-  OpenCorePkg/Library/OcGuardLib/OcGuardLib.inf
+  OpenCorePkg/Library/OcGuardLib/OcGuardLib.inf 
   OpenCorePkg/Library/OcHashServicesLib/OcHashServicesLib.inf
   OpenCorePkg/Library/OcHdaDevicesLib/OcHdaDevicesLib.inf
   OpenCorePkg/Library/OcHeciLib/OcHeciLib.inf
@@ -386,12 +386,36 @@
   gEfiMdePkgTokenSpaceGuid.PcdDebugPrintErrorLevel|0x80000002
   gEfiMdePkgTokenSpaceGuid.PcdFixedDebugPrintErrorLevel|0x80000002
 !else
+  gOpenCorePkgTokenSpaceGuid.PcdOcGuardUBSanTrapMode|FALSE
   # DEBUG_ASSERT_ENABLED | DEBUG_PRINT_ENABLED | DEBUG_CODE_ENABLED | CLEAR_MEMORY_ENABLED | ASSERT_DEADLOOP_ENABLED
   gEfiMdePkgTokenSpaceGuid.PcdDebugPropertyMask|0x2f
   # DEBUG_ERROR | DEBUG_WARN | DEBUG_INFO
   gEfiMdePkgTokenSpaceGuid.PcdDebugPrintErrorLevel|0x80000042
   gEfiMdePkgTokenSpaceGuid.PcdFixedDebugPrintErrorLevel|0x80000042
 !endif
+
+!ifdef $(ALIGNMENT)
+  gOpenCorePkgTokenSpaceGuid.PcdOcGuardUBSanCheckGroup|0x2
+!endif
+!ifdef $(BUILTIN)
+  gOpenCorePkgTokenSpaceGuid.PcdOcGuardUBSanCheckGroup|0x4
+!endif
+!ifdef $(BOUNDS)
+  gOpenCorePkgTokenSpaceGuid.PcdOcGuardUBSanCheckGroup|0x8
+!endif
+!ifdef $(IMPLICIT_CONVERSION)
+  gOpenCorePkgTokenSpaceGuid.PcdOcGuardUBSanCheckGroup|0x10
+!endif
+!ifdef $(INTEGER)
+  gOpenCorePkgTokenSpaceGuid.PcdOcGuardUBSanCheckGroup|0x20
+!endif
+!ifdef $(NONNULL)
+  gOpenCorePkgTokenSpaceGuid.PcdOcGuardUBSanCheckGroup|0x40
+!endif
+!ifdef $(POINTERS)
+  gOpenCorePkgTokenSpaceGuid.PcdOcGuardUBSanCheckGroup|0x80
+!endif
+
   gOpenCorePkgTokenSpaceGuid.PcdCanaryAllowRdtscFallback|TRUE
 
   # ImageLoader settings
