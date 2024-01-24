@@ -1,6 +1,7 @@
 #include "UbsanTester.h"
 
-__attribute__ ((nonnull)) INT32
+__attribute__ ((nonnull)) 
+INT32
 EFIAPI
 F1 (
   INT32  *Nonnull,
@@ -10,7 +11,8 @@ F1 (
   return *Nonnull;
 }
 
-__attribute__ ((nonnull)) CHAR8
+__attribute__ ((nonnull)) 
+CHAR8
 EFIAPI
 F2 (
   INT32  n,
@@ -28,7 +30,8 @@ F2 (
   return res;
 }
 
-__attribute__ ((returns_nonnull)) INT32 *
+__attribute__ ((returns_nonnull)) 
+INT32 *
 EFIAPI
 F3 (
   INT32  *Nonnull
@@ -37,7 +40,8 @@ F3 (
   return Nonnull;
 }
 
-__attribute__ ((returns_nonnull)) INT32 *
+__attribute__ ((returns_nonnull)) 
+INT32 *
 EFIAPI
 F4 (
   INT32  *Nonnull,
@@ -131,6 +135,7 @@ GetIntFromMultidemArr (
   return arr[i][j][k];
 }
 
+#ifdef TEST_BOUNDS
 VOID
 EFIAPI
 BoundsCheck (
@@ -142,17 +147,20 @@ BoundsCheck (
   DEBUG ((DEBUG_INFO, "UBT: Start testing cases with bounds...\n\n\n"));
 
   GetInt (Bar, i);
-  DEBUG ((DEBUG_WARN, "UBT: Index 2 out of bounds for type \'INT32 *\'...\n\n"));
+  DEBUG ((DEBUG_WARN, "UBT: Index 2 is out of range for type \'INT32 *\' (aka 'int *')\n\n"));
   GetIntFromMultidemArr (i, j - 1, k - 1);
-  DEBUG ((DEBUG_WARN, "UBT: Index 2 out of bounds for type \'INT32[2][3][4]\'...\n\n"));
+  DEBUG ((DEBUG_WARN, "UBT: Index 2 is out of range for type \'INT32[2][3][4]\' (aka 'int[2][3][4]')\n\n"));
   GetIntFromMultidemArr (i - 1, j, k - 1);
-  DEBUG ((DEBUG_WARN, "UBT: Index 2 out of bounds for type \'INT32[3][4]\'...\n\n"));
+  DEBUG ((DEBUG_WARN, "UBT: Index 3 is out of range for type \'INT32[3][4]\' (aka 'int[3][4]')\n\n"));
   GetIntFromMultidemArr (i - 1, j - 1, k);
-  DEBUG ((DEBUG_WARN, "UBT: Index 2 out of bounds for type \'INT32[4]\'...\n\n"));
+  DEBUG ((DEBUG_WARN, "UBT: Index 4 is out of range for type \'INT32[4]\' (aka 'int[4]')\n\n"));
 
   DEBUG ((DEBUG_INFO, "\nUBT: Checks with bounds are done...\n\n\n\n\n"));
 }
 
+#endif
+
+#ifdef TEST_NONNULL
 VOID
 EFIAPI
 NonnullCheck (
@@ -164,67 +172,29 @@ NonnullCheck (
   DEBUG ((DEBUG_INFO, "UBT: Start testing cases with nonnull atribute...\n\n\n"));
 
   F1 (p, 8);
-  DEBUG ((DEBUG_WARN, "UBT: Null pointer passed as argument 1, which is declared to never be null...\n\n"));
+  DEBUG ((DEBUG_WARN, "UBT: Null pointer passed as argument 1, which is declared to never be null\n\n"));
+  DEBUG ((DEBUG_WARN, "UBT: Load of null pointer of type 'INT32' (aka 'int')\n\n"));
   F2 (8, p);
-  DEBUG ((DEBUG_WARN, "UBT: Null pointer passed as argument 2, which is declared to never be null...\n\n"));
+  DEBUG ((DEBUG_WARN, "UBT: Null pointer passed as argument 2, which is declared to never be null\n\n"));
+  DEBUG ((DEBUG_WARN, "UBT: Load of null pointer of type 'CHAR8' (aka 'char')\n\n"));
   F3 (p);
-  DEBUG ((DEBUG_WARN, "UBT: Null pointer returned from function declared to never return null...\n\n"));
+  DEBUG ((DEBUG_WARN, "UBT: Null pointer returned from function declared to never return null\n\n"));
   F4 (p, 8);
-  DEBUG ((DEBUG_WARN, "UBT: Null pointer returned from function declared to never return null...\n\n"));
+  DEBUG ((DEBUG_WARN, "UBT: Null pointer returned from function declared to never return null\n\n"));
   F4 (p, -8);
-  DEBUG ((DEBUG_WARN, "UBT: Null pointer returned from function declared to never return null...\n\n"));
+  DEBUG ((DEBUG_WARN, "UBT: Null pointer returned from function declared to never return null\n\n"));
 
   NonnullReturn (NULL); // doesn't work
-  DEBUG ((DEBUG_WARN, "UBT: Null pointer returned from function declared to never return null... (_Nonnull)\n\n"));
+  DEBUG ((DEBUG_WARN, "UBT: Null pointer returned from function declared to never return null\n\n"));
   NonnullArg (p);
-  DEBUG ((DEBUG_WARN, "UBT: Null pointer passed as argument 1, which is declared to never be null... (_Nonnull)\n\n"));
+  DEBUG ((DEBUG_WARN, "UBT: Null pointer passed as argument 1, which is declared to never be null\n\n"));
 
   DEBUG ((DEBUG_INFO, "\nUBT: Checks with nonnull atribute are done...\n\n\n\n\n"));
 }
 
-VOID
-EFIAPI
-ShiftOutOfBoundsCheck (
-  VOID
-  )
-{
-  UINT16  p = 1;
+#endif
 
-  DEBUG ((DEBUG_INFO, "UBT: Start testing cases with shift out of bounds...\n\n\n"));
-
-  INT32  i = 32;
-
-  p >>= i;
-  DEBUG ((DEBUG_WARN, "UBT: Shift exponent 32 is too large for 16-bit type\n\n"));
-
-  p   = 1;
-  i   = -1;
-  p >>= i;
-  DEBUG ((DEBUG_WARN, "UBT: Shift exponent -1 is negative\n\n"));
-
-  p   = 1;
-  i   = 32;
-  p <<= i;
-  DEBUG ((DEBUG_WARN, "UBT: Shift exponent 32 is too large for 16-bit type\n\n"));
-
-  p   = 1;
-  i   = -1;
-  p <<= i;
-  DEBUG ((DEBUG_WARN, "UBT: Shift exponent -1 is negative\n\n"));
-
-  i = 31;
-  i = 1 << i;
-  DEBUG ((DEBUG_WARN, "UBT: Left shift of 1 by 31 places cannot be represented in 32-bit type \n\n"));
-
-  INT32  q = -1;
-
-  i   = 5;
-  q <<= i;
-  DEBUG ((DEBUG_WARN, "UBT: Left shift of negative value -1\n\n"));
-
-  DEBUG ((DEBUG_INFO, "\nUBT: Checks with shift out of bounds are done...\n\n\n\n\n"));
-}
-
+#ifdef TEST_BUILTIN
 VOID
 EFIAPI
 BuiltinCheck (
@@ -234,30 +204,35 @@ BuiltinCheck (
   DEBUG ((DEBUG_INFO, "UBT: Start testing cases with builtin...\n\n\n"));
   F6 (0);
   DEBUG ((DEBUG_WARN, "UBT: Passing zero to ctz(), which is not a valid argument\n\n"));
-  F7 (0);
-  DEBUG ((DEBUG_WARN, "UBT: Passing zero to ctzll(), which is not a valid argument\n\n"));
+  F7 (0); // in ubsan in llvm also not unique message for ctzll
+  DEBUG ((DEBUG_WARN, "UBT: Passing zero to ctz(), which is not a valid argument\n\n"));
   F8 (0);
   DEBUG ((DEBUG_WARN, "UBT: Passing zero to clz(), which is not a valid argument\n\n"));
   F9 (0);
-  DEBUG ((DEBUG_WARN, "UBT: Passing zero to clzll(), which is not a valid argument\n\n"));
+  DEBUG ((DEBUG_WARN, "UBT: Passing zero to clz(), which is not a valid argument\n\n"));
 
   DEBUG ((DEBUG_INFO, "\nUBT: Checks with builtin are done...\n\n\n\n\n"));
 }
 
-BOOLEAN
-EFIAPI
-BooleanCheck (
-  VOID
-  )
-{
-  UINT8    NotABool = 123;
-  BOOLEAN  *P       = (BOOLEAN *)&NotABool;
-  BOOLEAN  B        = *P;
+#endif
 
-  DEBUG ((DEBUG_WARN, "UBT: Load of value 123, which is not a valid value for type 'BOOLEAN'\n\n"));
+// #ifdef TEST_BOOLEAN
+// BOOLEAN
+// EFIAPI
+// BooleanCheck (
+//   VOID
+//   )
+// {
+//   UINT8    NotABool = 123;
+//   BOOLEAN  *P       = (BOOLEAN *)&NotABool;
+//   BOOLEAN  B        = *P;
+//   DEBUG ((DEBUG_INFO, "UBT: Start testing cases with boolean...\n\n\n"));
+//   DEBUG ((DEBUG_WARN, "UBT: Load of value 123, which is not a valid value for type 'BOOLEAN'\n\n"));
+//   DEBUG ((DEBUG_INFO, "\nUBT: Checks with boolean are done...\n\n\n\n\n"));
 
-  return B;
-}
+//   return B;
+// }
+// #endif
 
 EFI_STATUS
 EFIAPI
@@ -266,22 +241,34 @@ UefiMain (
   IN EFI_SYSTEM_TABLE  *SystemTable
   )
 {
+  // TODO: delete me
+  // Print (L"\nUBT: Trap mode %d, %d...\n\n", (INT32) UBSAN_ALWAYS_FATAL, (INT32) FixedPcdGetBool (PcdOcGuardUBSanTrapMode));
+  // DEBUG ((DEBUG_INFO, "\nUBT: Trap mode %d, %d...\n\n", (INT32) UBSAN_ALWAYS_FATAL, (INT32) FixedPcdGetBool (PcdOcGuardUBSanTrapMode)));
+
+ #ifdef TEST_ALIGNMENT
   AlignmentCheck ();
+ #endif
+ #ifdef TEST_NONNULL
   NonnullCheck ();
-  ShiftOutOfBoundsCheck ();
+ #endif
+ #ifdef TEST_BOUNDS
   BoundsCheck ();
+ #endif
+ #ifdef TEST_POINTER
   PointerCheck ();
+ #endif
+ #ifdef TEST_BUILTIN
   BuiltinCheck ();
-  BooleanCheck (); // TODO: doesn't work
+ #endif
 
-  /*
-    Implicit conversion + Integer
-    Doesnt work with the tests above
-  */
-  // CheckConvertArithmeticsValue ();
+  // #ifdef TEST_BOOLEAN
+  //   BooleanCheck (); // TODO: doesn't work
+  // #endif
 
+ #ifdef TEST_IMPLICIT_CONVERSION
+  CheckConvertArithmeticsValue ();
+ #endif
   DEBUG ((DEBUG_INFO, "\nUBT: All tests are done...\n\n"));
-  CpuDeadLoop ();
 
-  return EFI_SUCCESS; ///< Unreachable
+  return EFI_SUCCESS;
 }

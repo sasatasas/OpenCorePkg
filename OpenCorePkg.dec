@@ -471,7 +471,7 @@
   ## Include/Microsoft/Guid/MicrosoftVariable.h
   gMicrosoftVariableGuid                     = { 0x77FA9ABD, 0x0359, 0x4D32, { 0xBD, 0x60, 0x28, 0xF4, 0xE7, 0x8F, 0x78, 0x4B }}
 
-  ## Include/Shim/Guid/ShimLock.h
+## Include/Shim/Guid/ShimLock.h
   gShimLockGuid                              = { 0x605DAB50, 0xE046, 0x4300, { 0xAB, 0xB6, 0x3D, 0xD8, 0x10, 0xDD, 0x8B, 0x23 }}
 
 [Protocols]
@@ -786,6 +786,26 @@
   ## @Prompt Allow saving early logs when log protocol has not yet arrived.
   gOpenCorePkgTokenSpaceGuid.PcdDebugLibProtocolBufferEarlyLog|TRUE|BOOLEAN|0x00000608
 
+  ## Indicates, whether sanitizers are executing a trap instruction. If the signal is not
+  ##  caught, the program will typically terminate due to a SIGILL or SIGTRAP signal.<BR><BR>
+  ##   TRUE  - All checks in the sanitizer are put into trap mode.<BR>
+  ##   FALSE - All checks in the sanitizer are not put into trap mode.<BR>
+  ## @Prompt TODO:
+  gOpenCorePkgTokenSpaceGuid.PcdOcGuardUBSanTrapMode|TRUE|BOOLEAN|0x00000609
+
+  ## TODO: Defines the allowed OcCryptoLib signature hashing algorihtms by OR'ing the
+  ##  types' Bit indices.<BR><BR>
+  ##   Bit 0 - Undefined (-fsanitize=undefined)
+  ##   Bit 1 - Alignment (-fsanitize=alignment)
+  ##   Bit 2 - Builtin (-fsanitize=builtin)
+  ##   Bit 3 - Bounds (-fsanitize=bounds)  
+  ##   Bit 4 - Implicit conversion (-fsanitize=implicit-conversion) 
+  ##   Bit 5 - Integer (-fsanitize=integer) 
+  ##   Bit 6 - Nonnull (-fsanitize=nullability-*)  
+  ##   Bit 7 - Pointers (-fsanitize=null, -fsanitize=pointer-overflow)
+  ## @Prompt TODO:
+  gOpenCorePkgTokenSpaceGuid.PcdOcGuardUBSanCheckGroup|0x1|UINT8|0x00000610
+
 [LibraryClasses]
   ##  @libraryclass
   OcAcpiLib|Include/Acidanthera/Library/OcAcpiLib.h
@@ -888,6 +908,9 @@
 
   ##  @libraryclass
   OcFlexArrayLib|Include/Acidanthera/Library/OcFlexArrayLib.h
+
+  ##  @libraryclass
+  OcGuardLib|Include/Acidanthera/Library/OcGuardLib.h
 
   ##  @libraryclass
   OcHashServicesLib|Include/Acidanthera/Library/OcHashServicesLib.h
