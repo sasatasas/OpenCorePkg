@@ -189,6 +189,7 @@ package() {
       "DnsDxe.efi"
       "DpcDxe.efi"
       "Ext4Dxe.efi"
+      "FirmwareSettingsEntry.efi"
       "HiiDatabase.efi"
       "HttpBootDxe.efi"
       "HttpDxe.efi"
@@ -377,11 +378,11 @@ if [ "$ARCHS" = "" ]; then
 fi
 SELFPKG=OpenCorePkg
 NO_ARCHIVES=0
-DISCARD_PACKAGES=OpenCorePkg
+DISCARD_SUBMODULES=OpenCorePkg
 
 export SELFPKG
 export NO_ARCHIVES
-export DISCARD_PACKAGES
+export DISCARD_SUBMODULES
 
 src=$(curl -LfsS https://raw.githubusercontent.com/acidanthera/ocbuild/master/efibuild.sh) && eval "$src" || exit 1
 

@@ -200,7 +200,7 @@ PeCoffTestLoadFull (
   UINT32                        DestinationAlignment;
   UINT8                         HashContext;
 
-  Status = PeCoffInitializeContext (&Context, FileBuffer, FileSize);
+  Status = PeCoffInitializeContext (&Context, FileBuffer, FileSize, UefiImageOriginFv);
   if (EFI_ERROR (Status)) {
     return EFI_UNSUPPORTED;
   }
@@ -290,6 +290,11 @@ ENTRY_POINT (
 
   PcdGet32 (PcdFixedDebugPrintErrorLevel) |= DEBUG_INFO;
   PcdGet32 (PcdDebugPrintErrorLevel)      |= DEBUG_INFO;
+
+  //
+  // Images may be not 4KBi aligned.
+  //
+  PcdGet32 (PcdImageProtectionPolicy) = 0x00;
 
   // PcdGet32 (PcdFixedDebugPrintErrorLevel) |= DEBUG_POOL | DEBUG_PAGE;
   // PcdGet32 (PcdDebugPrintErrorLevel)      |= DEBUG_POOL | DEBUG_PAGE;
