@@ -38,7 +38,6 @@
 #define TEST_BOUNDS // -fsanitize=local-bounds also include
 #define TEST_POINTER
 #define TEST_BUILTIN
-#define TEST_BOOLEAN
 #endif
 
 #define INT64_MIN  ((INT64)0xFFFFFFFFFFFFFFFFULL)
@@ -49,21 +48,54 @@
 #define INT32_MAX  ((INT32)0x7FFFFFFF)
 #define INT8_MAX   ((INT8)0x7F)
 
-/* Implicit conversion group of checks. */
+/* 
+ * Implicit conversion check group.
+ *
+ * -fsanitize=implicit-conversion
+ *
+ * Checks for suspicious behavior of implicit conversions.
+ */
 VOID
 EFIAPI
-CheckConvertArithmeticsValue (
+ImplicitConversionCheck (
   VOID
   );
 
-/* Pointer overflow. */
+/* 
+ * Integer check groups.
+ *
+ * -fsanitize=integer
+ *
+ * Checks for undefined or suspicious integer behavior.
+ */
+VOID
+EFIAPI
+IntegerCheck (
+  VOID
+);
+
+/* 
+ * Pointer check groups.
+ *
+ * -fsanitize=pointer-overflow,null
+ *
+ * Use of a null pointer or creation of a null reference.
+ * Performing pointer arithmetic which overflows, or where either 
+ * the old or/and new pointer value is a null pointer.
+ */
 VOID
 EFIAPI
 PointerCheck (
   VOID
   );
 
-/* Alignment. */
+/* 
+ * Alignment check group. 
+ *
+ * -fsanitize=alignment
+ *
+ * Use of a misaligned pointer or creation of a misaligned reference.
+ */
 VOID
 EFIAPI
 AlignmentCheck (
