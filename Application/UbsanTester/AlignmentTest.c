@@ -3,45 +3,45 @@
 typedef INT8 *__attribute__ ((align_value (0x8000))) AlignedChar;
 
 struct AcStruct {
-  AlignedChar    a;
+  AlignedChar    A;
 };
 
 INT8 *
 LoadFromAcStruct (
-  struct AcStruct  *x
+  struct AcStruct  *X
   )
 {
-  return x->a;
+  return X->A;
 }
 
 INT8 *
 EFIAPI
 Passthrough0 (
-  __attribute__ ((align_value (0x8000))) INT8  *x
+  __attribute__ ((align_value (0x8000))) INT8  *X
   )
 {
-  return x;
+  return X;
 }
 
 INT8 *
 EFIAPI
 __attribute__ ((alloc_align (2)))
 Passthrough1 (
-  INT8          *x,
+  INT8          *X,
   CONST UINT32  Alignment
   )
 {
-  return x;
+  return X;
 }
 
 INT8 *
 EFIAPI
 __attribute__ ((assume_aligned (0x8000, 1)))
 Passthrough2 (
-  INT8  *x
+  INT8  *X
   )
 {
-  return x;
+  return X;
 }
 
 VOID
@@ -54,10 +54,10 @@ PointerAlignmentCheck (
   INT8  *Ptr = AllocateZeroPool (2);
   VOID  *Res;
 
-  struct AcStruct  x;
+  struct AcStruct  X;
 
-  x.a = Ptr + 1;
-  LoadFromAcStruct (&x); // why offsey 0x0?
+  X.A = Ptr + 1;
+  LoadFromAcStruct (&X); // why offsey 0x0?
   DEBUG ((DEBUG_WARN, "UBT: Alignment assumption of 0x8000 for pointer 0x%lx\n\n", Ptr + 0x1));
 
   Passthrough0 (Ptr + 1);
@@ -97,7 +97,7 @@ struct S {
   INT32 EFIAPI    (*F) (
     VOID
     );
-  INT32           k;
+  INT32           K;
 };
 
 INT32 *
@@ -122,41 +122,41 @@ INT32
 EFIAPI
 Check (
   INT8   Type,
-  INT32  n
+  INT32  N
   )
 {
   INT8      c[] __attribute__ ((aligned (16))) = { 0, 0, 0, 0, 1, 2, 3, 4, 5, 0, 0, 0, 0, 1, 2, 3, 4, 5 };
-  INT32     *p                                 = (INT32 *)&c[4 + n];
-  struct S  *s                                 = (struct S *)p;
+  INT32     *P                                 = (INT32 *)&c[4 + N];
+  struct S  *S                                 = (struct S *)P;
 
   switch (Type) {
     case 'l':
-      return *p && 0;
+      return *P && 0;
     case 'L':
     {
-      INT32  x;
-      MyMemCpy (&x, p, sizeof (x));
-      return x && 0;
+      INT32  X;
+      MyMemCpy (&X, P, sizeof (X));
+      return X && 0;
     }
     case 's':
     {
-      *p = 1;
+      *P = 1;
       break;
     }
     case 'S':
     {
-      INT32  x = 1;
-      MyMemCpy (p, &x, sizeof (x));
+      INT32  X = 1;
+      MyMemCpy (P, &X, sizeof (X));
       break;
     }
     case 'm':
     {
-      return s->k && 0;
+      return S->K && 0;
     }
     case 'f':
     {
-      s->F = FMember;
-      return s->F () && 0;
+      S->F = FMember;
+      return S->F () && 0;
     }
   }
 

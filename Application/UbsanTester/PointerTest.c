@@ -103,37 +103,25 @@ struct S {
   INT32    (*F)(
     VOID
     );
-  INT32    k;
+  INT32    K;
 };
 
 INT32
 EFIAPI
 NullCheck0 (
-  INT32  *p
+  INT32  *P
   )
 {
-  return *p;
+  return *P;
 }
-
-// INT32
-// EFIAPI
-// NullCheck3 (
-//   VOID
-//   )
-// {
-//   INT32  q[] = { 0, 1 };
-
-//   q[3] = 2;
-//   return q[0];
-// }
 
 INT32
 EFIAPI
 NullCheck1 (
-  struct S  *s
+  struct S  *S
   )
 {
-  return s->k;
+  return S->K;
 }
 
 VOID 
@@ -143,18 +131,14 @@ NullPointerCheck (
   )
 {
   DEBUG ((DEBUG_INFO, "UBT: Start testing cases with null pointer...\n\n"));
-  INT32     *p = 0;
-  struct S  *s = 0;
+  INT32     *P = 0;
+  struct S  *S = 0;
 
-  NullCheck0 (p);
+  NullCheck0 (P);
   DEBUG ((DEBUG_WARN, "UBT: Load of null pointer of type 'INT32' (aka 'int')\n\n"));
 
-  NullCheck1 (s); 
+  NullCheck1 (S); 
   DEBUG ((DEBUG_WARN, "UBT: Member access within null pointer of type 'struct S'\n\n"));
-
-  // NullCheck3 (); // TODO:
-  // DEBUG ((DEBUG_WARN, "UBT: Index 3 is out of range for type 'INT32[2]' (aka 'int[2]')\n\n"));
-  // DEBUG ((DEBUG_WARN, "UBT: Store to address [[PTR:0x[0-9a-f]*]] with insufficient space for an object of type 'INT32' (aka 'int')\n\n"));
 
   DEBUG ((DEBUG_INFO, "UBT: Checks with null pointer are done...\n\n\n\n\n"));
 }

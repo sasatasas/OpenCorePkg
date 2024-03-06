@@ -25,6 +25,7 @@
   UbsanTester.h
   UbsanTester.c
   ImplicitConversionTest.c
+  IntegerTest.c
   PointerTest.c
   AlignmentTest.c
 
@@ -47,7 +48,5 @@
 
 
 [BuildOptions] 
-  *_CLANGDWARF_*_CC_FLAGS = -fsanitize=undefined,nullability-arg,nullability-assign,nullability-return,implicit-conversion -fno-sanitize-link-runtime
-  *_CLANGDWARF_*_DLINK_FLAGS = -fsanitize=undefined,nullability-arg,nullability-assign,nullability-return,implicit-conversion
-  # *_CLANGDWARF_*_CC_FLAGS = -fsanitize=undefined,unsigned-integer-overflow,implicit-conversion,local-bounds -fno-sanitize-link-runtime
-  # *_CLANGDWARF_*_DLINK_FLAGS = -fsanitize=undefined,unsigned-integer-overflow,implicit-conversion,local-bounds
+  *_CLANGDWARF_*_CC_FLAGS = -O0 -fsanitize=undefined,nullability-arg,nullability-assign,nullability-return,unsigned-integer-overflow,implicit-conversion,local-bounds -fno-sanitize-link-runtime
+  *_CLANGDWARF_*_DLINK_FLAGS = -O0 -fsanitize=undefined,nullability-arg,nullability-assign,nullability-return,unsigned-integer-overflow,implicit-conversion,local-bounds
