@@ -4,7 +4,7 @@ __attribute__ ((nonnull)) INT32
 EFIAPI
 Nonnull1 (
   INT32  *Nonnull,
-  INT32  n
+  INT32  N
   )
 {
   return *Nonnull;
@@ -13,19 +13,19 @@ Nonnull1 (
 __attribute__ ((nonnull)) CHAR8
 EFIAPI
 Nonnull2 (
-  INT32  n,
+  INT32  N,
   ...
   )
 {
   VA_LIST  Args;
 
-  VA_START (Args, n);
+  VA_START (Args, N);
 
   CHAR8  *Nonnull = VA_ARG (Args, CHAR8 *);
-  CHAR8  res      = *Nonnull;
+  CHAR8  Res      = *Nonnull;
 
   VA_END (Args);
-  return res;
+  return Res;
 }
 
 __attribute__ ((returns_nonnull)) INT32 *
@@ -41,10 +41,10 @@ __attribute__ ((returns_nonnull)) INT32 *
 EFIAPI
 Nonnull4 (
   INT32  *Nonnull,
-  INT32  n
+  INT32  N
   )
 {
-  if (n > 0) {
+  if (N > 0) {
     return Nonnull;
   } else {
     return Nonnull;
@@ -54,16 +54,16 @@ Nonnull4 (
 INT32 *_Nonnull
 EFIAPI
 NonnullReturn (
-  INT32  *p
+  INT32  *P
   )
 {
-  return p;
+  return P;
 }
 
 VOID
 EFIAPI
 NonnullArg (
-  INT32 *_Nonnull  p
+  INT32 *_Nonnull  P
   )
 {
 }
@@ -71,51 +71,51 @@ NonnullArg (
 INT32
 EFIAPI
 Bultin1 (
-  INT32  n
+  INT32  N
   )
 {
-  n = __builtin_ctz (n);
+  N = __builtin_ctz (N);
   return 0;
 }
 
 INT64
 EFIAPI
 Bultin2 (
-  INT64  n
+  INT64  N
   )
 {
-  n = __builtin_ctzll (n);
+  N = __builtin_ctzll (N);
   return 0;
 }
 
 INT32
 EFIAPI
 Bultin3 (
-  INT32  n
+  INT32  N
   )
 {
-  n = __builtin_clz (n);
+  N = __builtin_clz (N);
   return 0;
 }
 
 INT64
 EFIAPI
 Bultin4 (
-  INT64  n
+  INT64  N
   )
 {
-  n = __builtin_clzll (n);
+  N = __builtin_clzll (N);
   return 0;
 }
 
 INT32
 EFIAPI
 GetInt (
-  INT32 *CONST  p __attribute__ ((pass_object_size (0))),
-  INT32         i
+  INT32 *CONST  P __attribute__ ((pass_object_size (0))),
+  INT32         I
   )
 {
-  return p[i];
+  return P[I];
 }
 
 #ifdef TEST_BOUNDS
@@ -125,20 +125,20 @@ BoundsCheck (
   VOID
   )
 {
-  INT32  Bar[2], i = 2;
+  INT32  Bar[2], I = 2;
 
   // INT32  Arr[2][3][4] = { };
   // INT32  Res, j = 3, k = 4;
 
   DEBUG ((DEBUG_INFO, "UBT: Start testing cases with bounds...\n\n\n"));
 
-  GetInt (Bar, i);
+  GetInt (Bar, I);
   DEBUG ((DEBUG_WARN, "UBT: Index 2 is out of range for type \'INT32 *\' (aka 'int *')\n\n"));
-  // // Res = Arr[i][j - 1][k - 1];
+  // // Res = Arr[I][j - 1][k - 1];
   // // DEBUG ((DEBUG_WARN, "UBT: Index 2 is out of range for type \'INT32[2][3][4]\' (aka 'int[2][3][4]')\n\n"));
-  // // Res = Arr[i - 1][j][k - 1];
+  // // Res = Arr[I - 1][j][k - 1];
   // // DEBUG ((DEBUG_WARN, "UBT: Index 3 is out of range for type \'INT32[3][4]\' (aka 'int[3][4]')\n\n"));
-  // Res = Arr[i - 1][j - 1][k];
+  // Res = Arr[I - 1][j - 1][k];
   // DEBUG ((DEBUG_WARN, "UBT: Index 4 is out of range for type \'INT32[4]\' (aka 'int[4]')\n\n"));
 
   DEBUG ((DEBUG_INFO, "\nUBT: Checks with bounds are done...\n\n\n\n\n"));
@@ -153,26 +153,26 @@ NonnullCheck (
   VOID
   )
 {
-  INT32  *p = 0;
+  INT32  *P = 0;
 
   DEBUG ((DEBUG_INFO, "UBT: Start testing cases with nonnull atribute...\n\n\n"));
 
-  Nonnull1 (p, 8);
+  Nonnull1 (P, 8);
   DEBUG ((DEBUG_WARN, "UBT: Null pointer passed as argument 1, which is declared to never be null\n\n"));
   DEBUG ((DEBUG_WARN, "UBT: Load of null pointer of type 'INT32' (aka 'int')\n\n"));
-  Nonnull2 (8, p);
+  Nonnull2 (8, P);
   DEBUG ((DEBUG_WARN, "UBT: Null pointer passed as argument 2, which is declared to never be null\n\n"));
   DEBUG ((DEBUG_WARN, "UBT: Load of null pointer of type 'CHAR8' (aka 'char')\n\n"));
-  Nonnull3 (p);
+  Nonnull3 (P);
   DEBUG ((DEBUG_WARN, "UBT: Null pointer returned from function declared to never return null\n\n"));
-  Nonnull4 (p, 8);
+  Nonnull4 (P, 8);
   DEBUG ((DEBUG_WARN, "UBT: Null pointer returned from function declared to never return null\n\n"));
-  Nonnull4 (p, -8);
+  Nonnull4 (P, -8);
   DEBUG ((DEBUG_WARN, "UBT: Null pointer returned from function declared to never return null\n\n"));
 
   NonnullReturn (NULL);
   DEBUG ((DEBUG_WARN, "UBT: Null pointer returned from function declared to never return null\n\n"));
-  NonnullArg (p);
+  NonnullArg (P);
   DEBUG ((DEBUG_WARN, "UBT: Null pointer passed as argument 1, which is declared to never be null\n\n"));
 
   DEBUG ((DEBUG_INFO, "\nUBT: Checks with nonnull atribute are done...\n\n\n\n\n"));
