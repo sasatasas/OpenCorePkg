@@ -520,9 +520,9 @@ HandleImplicitConversion(bool isFatal, struct CImplicitConversionData *pData, un
 	DeserializeLocation(szLocation, LOCATION_MAXLEN, &pData->mLocation);
 	DeserializeNumber(szLocation, szFrom, NUMBER_MAXLEN, pData->mFromType, ulFrom);
 	DeserializeNumber(szLocation, szTo, NUMBER_MAXLEN, pData->mToType, ulTo);
-
-	Report(isFatal, "UBSan: Undefined Behavior in %s, %s from %s to %s\n",
-	       szLocation, DeserializeImplicitConversionCheckKind(pData->mKind), pData->mFromType->mTypeName, pData->mToType->mTypeName);
+	
+	Report (isFatal, "UBSan: Undefined Behavior in %s, %s from type %s of value %s to type %s changed the value to %s\n",
+            szLocation, DeserializeImplicitConversionCheckKind(pData->mKind), pData->mFromType->mTypeName, szFrom, pData->mToType->mTypeName, szTo);
 }
 
 static void
