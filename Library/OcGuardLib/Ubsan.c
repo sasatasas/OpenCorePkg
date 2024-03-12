@@ -85,7 +85,7 @@ __RCSID("$NetBSD: ubsan.c,v 1.6 2019/06/17 18:55:37 kamil Exp $");
 #define CLR(t, f)	((t) &= ~(f))
 #endif
 
-#ifdef UBSAN_ALWAYS_FATAL
+#if UBSAN_ALWAYS_FATAL == 1 
 static const bool alwaysFatal = true;
 #else
 static const bool alwaysFatal = false;
@@ -727,8 +727,39 @@ HandlePointerOverflow(bool isFatal, struct CPointerOverflowData *pData, unsigned
 
 	DeserializeLocation(szLocation, LOCATION_MAXLEN, &pData->mLocation);
 
-	Report(isFatal, "UBSan: Undefined Behavior in %s, pointer expression with base %#lx overflowed to %#lx\n",
-	       szLocation, ulBase, ulResult);
+	if (ulBase == 0 && ulResult == 0)
+	{
+		Report(isFatal, "UBSan: Undefined Behavior in %s, applying zero offset to null pointer\n",
+			   szLocation);
+	}
+	else if (ulBase == 0 && ulResult != 0)
+	{
+		Report(isFatal, "UBSan: Undefined Behavior in %s, applying non-zero offset %#lx to null pointer\n",
+			   szLocation, ulResult);
+	}
+	else if (ulBase != 0 && ulResult == 0)
+	{
+		Report(isFatal, "UBSan: Undefined Behavior in %s, applying non-zero offset to non-null pointer %#lx produced null pointer\n",
+			   szLocation, ulBase);
+	}
+	else if (((long) ulBase >= 0) == ((long) (ulResult) >= 0))
+	{
+		if (ulBase > ulResult)
+		{
+			Report(isFatal, "UBSan: Undefined Behavior in %s, addition of unsigned offset to %#lx overflowed to %#lx\n",
+				   szLocation, ulBase, ulResult);
+		}
+		else
+		{
+			Report(isFatal, "UBSan: Undefined Behavior in %s, subtraction of unsigned offset from %#lx overflowed to %#lx\n",
+				   szLocation, ulBase, ulResult);
+		}
+	}
+	else
+	{
+		Report(isFatal, "UBSan: Undefined Behavior in %s, pointer index expression with base %#lx overflowed to %#lx\n",
+			   szLocation, ulBase, ulResult);
+	}
 }
 
 static void
