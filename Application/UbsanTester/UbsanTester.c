@@ -127,21 +127,10 @@ BoundsCheck (
 {
   INT32  Bar[2], I = 2;
 
-  // INT32  Arr[2][3][4] = { };
-  // INT32  Res, j = 3, k = 4;
-
-  DEBUG ((DEBUG_INFO, "UBT: Start testing cases with bounds...\n\n\n"));
-
+  DEBUG ((DEBUG_INFO, "\nUBT: Start testing cases with bounds...\n\n"));
   GetInt (Bar, I);
-  DEBUG ((DEBUG_WARN, "UBT: Index 2 is out of range for type \'INT32 *\' (aka 'int *')\n\n"));
-  // // Res = Arr[I][j - 1][k - 1];
-  // // DEBUG ((DEBUG_WARN, "UBT: Index 2 is out of range for type \'INT32[2][3][4]\' (aka 'int[2][3][4]')\n\n"));
-  // // Res = Arr[I - 1][j][k - 1];
-  // // DEBUG ((DEBUG_WARN, "UBT: Index 3 is out of range for type \'INT32[3][4]\' (aka 'int[3][4]')\n\n"));
-  // Res = Arr[I - 1][j - 1][k];
-  // DEBUG ((DEBUG_WARN, "UBT: Index 4 is out of range for type \'INT32[4]\' (aka 'int[4]')\n\n"));
-
-  DEBUG ((DEBUG_INFO, "\nUBT: Checks with bounds are done...\n\n\n\n\n"));
+  DEBUG ((DEBUG_WARN, "\nUBT: Index 2 is out of range for type \'INT32 *\' (aka 'int *')\n"));
+  DEBUG ((DEBUG_INFO, "\n\nUBT: Checks with bounds are done...\n\n\n"));
 }
 
 #endif
@@ -155,27 +144,25 @@ NonnullCheck (
 {
   INT32  *P = 0;
 
-  DEBUG ((DEBUG_INFO, "UBT: Start testing cases with nonnull atribute...\n\n\n"));
+  DEBUG ((DEBUG_INFO, "\nUBT: Start testing cases with nonnull atribute...\n\n"));
 
   Nonnull1 (P, 8);
-  DEBUG ((DEBUG_WARN, "UBT: Null pointer passed as argument 1, which is declared to never be null\n\n"));
-  DEBUG ((DEBUG_WARN, "UBT: Load of null pointer of type 'INT32' (aka 'int')\n\n"));
+  DEBUG ((DEBUG_WARN, "\nUBT: Null pointer passed as argument 1, which is declared to never be null\n"));
   Nonnull2 (8, P);
-  DEBUG ((DEBUG_WARN, "UBT: Null pointer passed as argument 2, which is declared to never be null\n\n"));
-  DEBUG ((DEBUG_WARN, "UBT: Load of null pointer of type 'CHAR8' (aka 'char')\n\n"));
+  DEBUG ((DEBUG_WARN, "\nUBT: Null pointer passed as argument 2, which is declared to never be null\n"));
   Nonnull3 (P);
-  DEBUG ((DEBUG_WARN, "UBT: Null pointer returned from function declared to never return null\n\n"));
+  DEBUG ((DEBUG_WARN, "\nUBT: Null pointer returned from function declared to never return null\n"));
   Nonnull4 (P, 8);
-  DEBUG ((DEBUG_WARN, "UBT: Null pointer returned from function declared to never return null\n\n"));
+  DEBUG ((DEBUG_WARN, "\nUBT: Null pointer returned from function declared to never return null\n"));
   Nonnull4 (P, -8);
-  DEBUG ((DEBUG_WARN, "UBT: Null pointer returned from function declared to never return null\n\n"));
+  DEBUG ((DEBUG_WARN, "\nUBT: Null pointer returned from function declared to never return null\n"));
 
   NonnullReturn (NULL);
-  DEBUG ((DEBUG_WARN, "UBT: Null pointer returned from function declared to never return null\n\n"));
+  DEBUG ((DEBUG_WARN, "\nUBT: Null pointer returned from function declared to never return null\n"));
   NonnullArg (P);
-  DEBUG ((DEBUG_WARN, "UBT: Null pointer passed as argument 1, which is declared to never be null\n\n"));
+  DEBUG ((DEBUG_WARN, "\nUBT: Null pointer passed as argument 1, which is declared to never be null\n"));
 
-  DEBUG ((DEBUG_INFO, "\nUBT: Checks with nonnull atribute are done...\n\n\n\n\n"));
+  DEBUG ((DEBUG_INFO, "\n\nUBT: Checks with nonnull atribute are done...\n\n\n"));
 }
 
 #endif
@@ -187,17 +174,17 @@ BuiltinCheck (
   VOID
   )
 {
-  DEBUG ((DEBUG_INFO, "UBT: Start testing cases with builtin...\n\n\n"));
+  DEBUG ((DEBUG_INFO, "\nUBT: Start testing cases with builtin...\n\n"));
   Bultin1 (0);
-  DEBUG ((DEBUG_WARN, "UBT: Passing zero to ctz(), which is not a valid argument\n\n"));
+  DEBUG ((DEBUG_WARN, "\nUBT: Passing zero to ctz(), which is not a valid argument\n"));
   Bultin2 (0); // in ubsan in llvm also not unique message for ctzll
-  DEBUG ((DEBUG_WARN, "UBT: Passing zero to ctz(), which is not a valid argument\n\n"));
+  DEBUG ((DEBUG_WARN, "\nUBT: Passing zero to ctz(), which is not a valid argument\n"));
   Bultin3 (0);
-  DEBUG ((DEBUG_WARN, "UBT: Passing zero to clz(), which is not a valid argument\n\n"));
+  DEBUG ((DEBUG_WARN, "\nUBT: Passing zero to clz(), which is not a valid argument\n"));
   Bultin4 (0);
-  DEBUG ((DEBUG_WARN, "UBT: Passing zero to clz(), which is not a valid argument\n\n"));
+  DEBUG ((DEBUG_WARN, "\nUBT: Passing zero to clz(), which is not a valid argument\n"));
 
-  DEBUG ((DEBUG_INFO, "\nUBT: Checks with builtin are done...\n\n\n\n\n"));
+  DEBUG ((DEBUG_INFO, "\n\nUBT: Checks with builtin are done...\n\n\n"));
 }
 
 #endif
@@ -230,7 +217,7 @@ UefiMain (
  #ifdef TEST_INTEGER
   IntegerCheck ();
  #endif
-  DEBUG ((DEBUG_INFO, "\nUBT: All tests are done...\n\n"));
+  DEBUG ((DEBUG_INFO, "\n\nUBT: All tests are done...\n"));
 
   return EFI_SUCCESS;
 }

@@ -114,6 +114,7 @@
   OcHeciLib|OpenCorePkg/Library/OcHeciLib/OcHeciLib.inf
   OcHiiDatabaseLocalLib|OpenCorePkg/Library/OcHiiDatabaseLib/OcHiiDatabaseLocalLib.inf
   OcInputLib|OpenCorePkg/Library/OcInputLib/OcInputLib.inf
+  OcLegacyThunkLib|OpenCorePkg/Library/OcLegacyThunkLib/OcLegacyThunkLib.inf
   OcLogAggregatorLib|OpenCorePkg/Library/OcLogAggregatorLib/OcLogAggregatorLib.inf
   OcMachoLib|OpenCorePkg/Library/OcMachoLib/OcMachoLib.inf
   OcMacInfoLib|OpenCorePkg/Library/OcMacInfoLib/OcMacInfoLib.inf
@@ -183,7 +184,7 @@
   MdeModulePkg/Bus/Pci/XhciDxe/XhciDxe.inf {
     <LibraryClasses>
       !if $(TARGET) == RELEASE
-        DebugLib|OpenCorePkg/Library/OcDebugLibNull/OcDebugLibNull.inf
+        DebugLib|MdePkg/Library/BaseDebugLibNull/BaseDebugLibNull.inf
       !endif
   }
   MdeModulePkg/Bus/Isa/Ps2MouseDxe/Ps2MouseDxe.inf
@@ -266,7 +267,7 @@
   OpenCorePkg/Library/OcFirmwarePasswordLib/OcFirmwarePasswordLib.inf
   OpenCorePkg/Library/OcFirmwareVolumeLib/OcFirmwareVolumeLib.inf
   OpenCorePkg/Library/OcFlexArrayLib/OcFlexArrayLib.inf
-  OpenCorePkg/Library/OcGuardLib/OcGuardLib.inf 
+  OpenCorePkg/Library/OcGuardLib/OcGuardLib.inf
   OpenCorePkg/Library/OcHashServicesLib/OcHashServicesLib.inf
   OpenCorePkg/Library/OcHdaDevicesLib/OcHdaDevicesLib.inf
   OpenCorePkg/Library/OcHeciLib/OcHeciLib.inf
@@ -299,6 +300,7 @@
   OpenCorePkg/Legacy/BootPlatform/BiosVideo/BiosVideo.inf
   OpenCorePkg/Platform/CrScreenshotDxe/CrScreenshotDxe.inf
   OpenCorePkg/Platform/OpenCanopy/OpenCanopy.inf
+  OpenCorePkg/Platform/OpenLegacyBoot/OpenLegacyBoot.inf
   OpenCorePkg/Platform/OpenLinuxBoot/OpenLinuxBoot.inf
   OpenCorePkg/Platform/OpenNtfsDxe/OpenNtfsDxe.inf
   OpenCorePkg/Platform/OpenPartitionDxe/PartitionDxe.inf
@@ -320,7 +322,6 @@
       DebugLib|OpenCorePkg/Library/OcDebugLibNull/OcDebugLibNull.inf
       NULL|OpenCorePkg/Library/OcVariableRuntimeLib/OcVariableRuntimeLib.inf
   }
-  OpenCorePkg/Platform/FirmwareSettingsEntry/FirmwareSettingsEntry.inf
   OpenCorePkg/Platform/ResetNvramEntry/ResetNvramEntry.inf
   OpenCorePkg/Platform/ToggleSipEntry/ToggleSipEntry.inf
   OpenCorePkg/Staging/AudioDxe/AudioDxe.inf

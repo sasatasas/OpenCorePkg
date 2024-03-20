@@ -50,38 +50,38 @@ PointerAlignmentCheck (
   VOID
   )
 {
-  DEBUG ((DEBUG_INFO, "UBT: Start testing cases with pointer alignment...\n"));
+  DEBUG ((DEBUG_INFO, "\nUBT: Start testing cases with pointer alignment...\n"));
   INT8  *Ptr = AllocateZeroPool (2);
   VOID  *Res;
 
   struct AcStruct  X;
 
   X.A = Ptr + 1;
-  LoadFromAcStruct (&X); // why offsey 0x0?
-  DEBUG ((DEBUG_WARN, "UBT: Alignment assumption of 0x8000 for pointer 0x%lx\n\n", Ptr + 0x1));
+  LoadFromAcStruct (&X);
+  DEBUG ((DEBUG_WARN, "\nUBT: Alignment assumption of 0x8000 for pointer 0x%lx\n", Ptr + 0x1));
 
   Passthrough0 (Ptr + 1);
-  DEBUG ((DEBUG_WARN, "UBT: Alignment assumption of 0x8000 for pointer 0x%lx\n\n", Ptr + 0x1));
+  DEBUG ((DEBUG_WARN, "\nUBT: Alignment assumption of 0x8000 for pointer 0x%lx\n", Ptr + 0x1));
 
   Passthrough1 (Ptr + 2, 0x8000);
-  DEBUG ((DEBUG_WARN, "UBT: Alignment assumption of 0x8000 for pointer 0x%lx\n\n", Ptr + 0x2));
+  DEBUG ((DEBUG_WARN, "\nUBT: Alignment assumption of 0x8000 for pointer 0x%lx\n", Ptr + 0x2));
 
   Res = __builtin_assume_aligned (Ptr + 2, 0x8000);
-  DEBUG ((DEBUG_WARN, "UBT: Alignment assumption of 0x8000 for pointer 0x%lx\n\n", Ptr + 0x2));
+  DEBUG ((DEBUG_WARN, "\nUBT: Alignment assumption of 0x8000 for pointer 0x%lx\n", Ptr + 0x2));
 
   FreePool (Ptr);
 
   Ptr = AllocateZeroPool (3);
   Passthrough2 (Ptr + 2);
-  DEBUG ((DEBUG_WARN, "UBT: Alignment assumption of 0x8000 for pointer 0x%lx\n\n", Ptr + 0x1)); // why Ptr + 1
+  DEBUG ((DEBUG_WARN, "\nUBT: Alignment assumption of 0x8000 for pointer 0x%lx\n", Ptr + 0x1)); // why Ptr + 1
 
   UINT32  Offset = 1;
 
   Res = __builtin_assume_aligned (Ptr + 2, 0x8000, Offset);
-  DEBUG ((DEBUG_WARN, "UBT: Alignment assumption of 0x8000 for pointer 0x%lx\n\n\n\n", Ptr + 0x1));
+  DEBUG ((DEBUG_WARN, "\nUBT: Alignment assumption of 0x8000 for pointer 0x%lx\n\n", Ptr + 0x1));
 
   FreePool (Ptr);
-  DEBUG ((DEBUG_INFO, "UBT: Checks with pointer alignment are done...\n\n\n\n\n"));
+  DEBUG ((DEBUG_INFO, "\nUBT: Checks with pointer alignment are done...\n\n\n"));
 }
 
 INT32
@@ -169,29 +169,30 @@ AlignmentCheck (
   VOID
   )
 {
-  DEBUG ((
+  DEBUG (
+         (
           DEBUG_INFO,
-          "UBT: Start testing cases with alignment...\n\n\n"
-         ));
+          "\nUBT: Start testing cases with alignment...\n\n"
+         )
+         );
   Check ('l', 0); // Correct
   Check ('l', 1);
-  DEBUG ((DEBUG_WARN, "UBT: Load of misaligned address [[PTR:0x[0-9a-f]*]] for type 'INT32' (aka 'int') which requires 4 byte alignment\n\n"));
-  Check ('L', 1); // how to do this for CONST INT32 *
-  DEBUG ((DEBUG_WARN, "UBT: Load of misaligned address [[PTR:0x[0-9a-f]*]] for type 'CONST INT32' (aka 'const int') which requires 4 byte alignment\n\n"));
+  DEBUG ((DEBUG_WARN, "\nUBT: Load of misaligned address [[PTR:0x[0-9a-f]*]] for type 'INT32' (aka 'int') which requires 4 byte alignment\n"));
+  Check ('L', 1);
+  DEBUG ((DEBUG_WARN, "\nUBT: Load of misaligned address [[PTR:0x[0-9a-f]*]] for type 'CONST INT32' (aka 'const int') which requires 4 byte alignment\n"));
   Check ('s', 1);
-  DEBUG ((DEBUG_WARN, "UBT: Store to misaligned address [[PTR:0x[0-9a-f]*]] for type 'INT32' (aka 'int') which requires 4 byte alignment\n\n"));
+  DEBUG ((DEBUG_WARN, "\nUBT: Store to misaligned address [[PTR:0x[0-9a-f]*]] for type 'INT32' (aka 'int') which requires 4 byte alignment\n"));
   Check ('S', 1);
-  DEBUG ((DEBUG_WARN, "UBT: Store to misaligned address [[PTR:0x[0-9a-f]*]] for type 'INT32' (aka 'int') which requires 4 byte alignment\n\n"));
+  DEBUG ((DEBUG_WARN, "\nUBT: Store to misaligned address [[PTR:0x[0-9a-f]*]] for type 'INT32' (aka 'int') which requires 4 byte alignment\n"));
   Check ('m', 1);
-  DEBUG ((DEBUG_WARN, "UBT: Member access within misaligned address [[PTR:0x[0-9a-f]*]] for type 'struct S' which requires 8 byte alignment\n\n"));
-  DEBUG ((DEBUG_WARN, "UBT: Load of misaligned address [[PTR:0x[0-9a-f]*]] for type 'INT32' (aka 'int') which requires 8 byte alignment\n\n"));
+  DEBUG ((DEBUG_WARN, "\nUBT: Member access within misaligned address [[PTR:0x[0-9a-f]*]] for type 'struct S' which requires 8 byte alignment\n"));
+  DEBUG ((DEBUG_WARN, "\nUBT: Load of misaligned address [[PTR:0x[0-9a-f]*]] for type 'INT32' (aka 'int') which requires 8 byte alignment\n"));
   Check ('f', 1);
-  DEBUG ((DEBUG_WARN, "UBT: Member access within misaligned address [[PTR:0x[0-9a-f]*]] for type 'struct S' which requires 8 byte alignment\n\n"));
-  DEBUG ((DEBUG_WARN, "UBT: Store to misaligned address [[PTR:0x[0-9a-f]*]] for type 'EFIAPI INT32 ((*))(void) __attribute__((ms_abi))' (aka 'int (*)(void) __attribute__((ms_abi))') which requires 8 byte alignment\n\n"));
-  DEBUG ((DEBUG_WARN, "UBT: Member access within misaligned address [[PTR:0x[0-9a-f]*]] for type 'struct S' which requires 8 byte alignment\n\n"));
-  DEBUG ((DEBUG_WARN, "UBT: Load of misaligned address [[PTR:0x[0-9a-f]*]] for type 'EFIAPI INT32 ((*))(void) __attribute__((ms_abi))' (aka 'int (*)(void) __attribute__((ms_abi))') which requires 8 byte alignment\n\n"));
+  DEBUG ((DEBUG_WARN, "\nUBT: Member access within misaligned address [[PTR:0x[0-9a-f]*]] for type 'struct S' which requires 8 byte alignment\n"));
+  DEBUG ((DEBUG_WARN, "\nUBT: Store to misaligned address [[PTR:0x[0-9a-f]*]] for type 'EFIAPI INT32 ((*))(void) __attribute__((ms_abi))' (aka 'int (*)(void) __attribute__((ms_abi))') which requires 8 byte alignment\n"));
+  DEBUG ((DEBUG_WARN, "\nUBT: Load of misaligned address [[PTR:0x[0-9a-f]*]] for type 'EFIAPI INT32 ((*))(void) __attribute__((ms_abi))' (aka 'int (*)(void) __attribute__((ms_abi))') which requires 8 byte alignment\n"));
 
-  DEBUG ((DEBUG_INFO, "UBT: Checks with alignment are done...\n\n\n\n\n"));
+  DEBUG ((DEBUG_INFO, "\nUBT: Checks with alignment are done...\n\n\n"));
 
   PointerAlignmentCheck ();
 }
