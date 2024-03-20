@@ -16,14 +16,11 @@ env:
 jobs:
   build-linux-clangdwarf:
     name: Linux CLANGDWARF
-    strategy:
-      matrix:
-        groups: [UBSAN, ALIGNMENT, BUILTIN, BOUNDS, IMPLICIT_CONVERSION, INTEGER, NONNULL, POINTERS]
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3
         with:
-          repository: sasatasas/audk
+          repository: acidanthera/audk
           ref: master
           path: ./
           submodules: recursive
@@ -46,7 +43,6 @@ jobs:
           TOOLCHAINS: CLANGDWARF
           ARCHS: IA32
           # Without RELEASE, because it turns on -fsanitize-trap=all
-          # TARGETS: RELEASE,DEBUG,NOOPT
           TARGETS: DEBUG,NOOPT
           SKIP_TESTS: 1
           SKIP_PACKAGE: 1
@@ -61,25 +57,9 @@ jobs:
           TOOLCHAINS: CLANGDWARF
           ARCHS: X64
           # Without RELEASE, because it turns on -fsanitize-trap=all
-          # TARGETS: RELEASE,DEBUG,NOOPT
           TARGETS: DEBUG,NOOPT
           SKIP_TESTS: 1
           SKIP_PACKAGE: 1
-      
-      - name: Build OpenCorePkg
-        if: always()
-        run: docker compose run build-package
-        env:
-          SELFPKG: OpenCorePkg
-          SELFPKG_DIR: OpenCorePkg
-          TOOLCHAINS: CLANGDWARF
-          ARCHS: IA32,X64
-          # Without RELEASE, because it turns on -fsanitize-trap=all
-          # TARGETS: RELEASE,DEBUG,NOOPT
-          TARGETS: DEBUG,NOOPT
-          SKIP_TESTS: 1
-          SKIP_PACKAGE: 1
-          BUILD_ARGUMENTS: -D ${{ matrix.groups }}
 
       - name: Prepare artifacts with firmwares
         if: always()
@@ -88,8 +68,8 @@ jobs:
           IFS=', ' read -r -a ARCHS <<< "$ARCHS"
           for target in "${TARGETS[@]}"; do
             for arch in "${ARCHS[@]}"; do
-              mkdir -p ./firmware_artifacts/Ovmf/"$arch"/"$target"_"$TOOLCHAIN"
-              cp ./Build/Ovmf"$arch"/"$target"_"$TOOLCHAIN"/FV/OVMF.fd ./firmware_artifacts/Ovmf/"$arch"/"$target"_"$TOOLCHAIN"/FW.fd
+              mkdir -p ./firmware_artifacts/Ovmf"$arch"/"$target"_"$TOOLCHAIN"
+              cp ./Build/Ovmf"$arch"/"$target"_"$TOOLCHAIN"/FV/OVMF.fd ./firmware_artifacts/Ovmf"$arch"/"$target"_"$TOOLCHAIN"/FV/FW.fd
             done
           done
         env:
@@ -106,36 +86,6 @@ jobs:
           name: CLANGDWARF Firmware Artifacts
           path: CLANGDWARF_fw_artifacts.zip
 
-      - name: Prepare Artifacts with Ubsan
-        if: always()
-        run: |
-          IFS=', ' read -r -a TARGETS <<< "$TARGETS"
-          IFS=', ' read -r -a ARCHS <<< "$ARCHS"
-          for target in "${TARGETS[@]}"; do
-            for arch in "${ARCHS[@]}"; do
-              for group in "${GROUPS[@]}"; do
-                mkdir -p ./ubsan_artifacts/OpenCorePkg/"$target"_"$TOOLCHAIN"/"$arch"/"$group"/EFI/BOOT
-                cp ./Build/OpenCorePkg/"$target"_"$TOOLCHAIN"/"$arch"/UbsanTester.efi ./ubsan_artifacts/OpenCorePkg/"$target"_"$TOOLCHAIN"/"$arch"/"$group"/UbsanTester.efi
-                cp ./ubsan_artifacts/OpenCorePkg/"$target"_"$TOOLCHAIN"/"$arch"/UbsanTester.efi ./ubsan_artifacts/OpenCorePkg/"$target"_"$TOOLCHAIN"/"$arch"/"$group"/EFI/BOOT/BOOT"$arch".efi
-              done
-            done
-          done
-        env:
-          ARCHS: Ia32,X64
-          TARGETS: DEBUG,NOOPT
-          TOOLCHAIN: CLANGDWARF
-          GROUPS: ${{ matrix.groups }}
-
-      - name: Zip Ubsan artifacts
-        run: zip UbsanTester_artifacts.zip ./ubsan_artifacts/* -r
-
-      - name: Upload Ubsan to Artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: UBSan Tester Artifacts
-          path: UbsanTester_artifacts.zip
-
-
   test-firmwares:
     name: Test
     runs-on: ubuntu-22.04
@@ -145,13 +95,6 @@ jobs:
       fail-fast: false
 
     steps:
-      - name: Checkout ocbuild repository
-        uses: actions/checkout@v3
-        with:
-          repository: sasatasas/ocbuild
-          ref: master
-          path: ./
-
       - name: Install dependencies
         run: |
           sudo apt-get update
@@ -176,22 +119,24 @@ jobs:
       - name: Unzip artifacts
         run: |
           unzip CLANGDWARF_fw_artifacts.zip
-          unzip UbsanTester_artifacts.zip
       
       - name: Run TestUbsan
         run: |
-          IFS=', ' read -r -a TARGETS <<< "$TARGETS"
-          IFS=', ' read -r -a ARCHS <<< "$ARCHS"
-          for target in "${TARGETS[@]}"; do
-            for arch in "${ARCHS[@]}"; do
-              for group in "${GROUPS[@]}"; do
-                echo Checking Ovmf"$arch" "$target"_"$TOOLCHAIN"
-                python3 test_ubsan.py ./firmware_artifacts/Ovmf/"$arch"/"$target"_"$TOOLCHAIN"/FW.fd --build-path ./ubsan_artifacts/OpenCorePkg/"$target"_"$TOOLCHAIN"/"$arch"/"$group"/ --fw-arch "$arch"
-              done
-            done
+          IFS=', ' read -r -a GROUPS <<< "$GROUPS"
+          for group in "${GROUPS[@]}"; do
+            GROUP="$group"
+            export GROUP
+            ./build_sanitizers.tool
           done
         env:
-          ARCHS: Ia32,X64
-          TARGETS: DEBUG,NOOPT
-          TOOLCHAIN: CLANGDWARF
-          GROUPS: UBSAN,ALIGNMENT,BUILTIN,BOUNDS,IMPLICIT_CONVERSION,INTEGER,NONNULL,POINTERS
+          GROUPS: UNDEFINED,ALIGNMENT,BUILTIN,BOUNDS,IMPLICIT_CONVERSION,INTEGER,NONNULL,POINTERS
+          OVMF_PATH: ./firmware_artifacts
+
+      - name: Zip Tests Output
+        run: zip ubsan_tests.zip ./TestsOutput/* -r
+
+      - name: Upload Sanitizers Tests to Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: CLANGDWARF Sanitizers Artifacts
+          path: ubsan_tests.zip
