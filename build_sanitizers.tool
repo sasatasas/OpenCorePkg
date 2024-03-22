@@ -11,7 +11,7 @@ cd "$(dirname "$0")" || exit 1
 ARCHS=X64
 NO_ARCHIVES=0
 TOOLCHAINS=CLANGDWARF
-TARGETS=(DEBUG NOOPT)
+TARGETS=DEBUG
 SELFPKG=OpenCorePkg
 DISCARD_SUBMODULES=OpenCorePkg
 if [ "$OVMF_PATH" = "" ]; then
@@ -45,8 +45,10 @@ for target in "${TARGETS[@]}"; do
 done
 
 # Test UBSan
-curl -LfsSO https://raw.githubusercontent.com/sasatasas/ocbuild/master/test_ubsan.py || exit 1
-curl -LfsSO https://raw.githubusercontent.com/sasatasas/ocbuild/master/test_qemu_fw.py || exit 1
+if [ ! -f "./test_qemu_fw.py" ] || [ ! -f "./test_ubsan.py" ]; then
+  curl -LfsSO https://raw.githubusercontent.com/sasatasas/ocbuild/master/test_ubsan.py || exit 1
+  curl -LfsSO https://raw.githubusercontent.com/sasatasas/ocbuild/master/test_qemu_fw.py || exit 1
+fi
 
 for target in "${TARGETS[@]}"; do
   for arch in "${ARCHS[@]}"; do

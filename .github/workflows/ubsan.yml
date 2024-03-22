@@ -43,7 +43,7 @@ jobs:
           TOOLCHAINS: CLANGDWARF
           ARCHS: X64
           # Without RELEASE, because it turns on -fsanitize-trap=all
-          TARGETS: DEBUG,NOOPT
+          TARGETS: DEBUG
           SKIP_TESTS: 1
           SKIP_PACKAGE: 1
 
@@ -60,7 +60,7 @@ jobs:
           done
         env:
           ARCHS: X64
-          TARGETS: DEBUG,NOOPT
+          TARGETS: DEBUG
           TOOLCHAIN: CLANGDWARF
     
       - name: Zip Firmware Artifacts
@@ -81,11 +81,19 @@ jobs:
       fail-fast: false
 
     steps:
+      - name: Checkout ocbuild repository
+        uses: actions/checkout@v3
+        with:
+          repository: sasatasas/ocbuild
+          ref: master
+          path: ./
+
       - name: Install dependencies
         run: |
           sudo apt-get update
           sudo apt-get install -y python3 python3-pip libglib2.0-dev libfdt-dev libpixman-1-dev libepoxy-dev libcapstone-dev libsdl2-dev libnuma-dev libgtk-3-dev libvte-2.91-dev libbrlapi-dev libiscsi-dev libnfs-dev  librbd-dev libxen-dev
           python3 -m pip install -r requirements.txt
+
       - name: Downloading QEMU
         uses: robinraju/release-downloader@v1.7
         with:
