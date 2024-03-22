@@ -8,7 +8,6 @@ abort() {
 cd "$(dirname "$0")" || exit 1
 
 # Build OpenCorePkg 
-# ARCHS=(X64 IA32)
 ARCHS=X64
 NO_ARCHIVES=0
 TOOLCHAINS=CLANGDWARF

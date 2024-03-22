@@ -199,7 +199,6 @@
         NULL|OpenCorePkg/Library/OcConsoleControlEntryModeLib/OcConsoleControlEntryModeGenericLib.inf
       !endif
   }
-  OpenCorePkg/Application/UbsanTester/UbsanTester.inf
   OpenCorePkg/Application/ChipTune/ChipTune.inf
   OpenCorePkg/Application/CleanNvram/CleanNvram.inf
   OpenCorePkg/Application/CsrUtil/CsrUtil.inf
@@ -375,6 +374,9 @@
   #
   !include NetworkPkg/NetworkComponents.dsc.inc
 
+[Components.X64]
+  OpenCorePkg/Application/UbsanTester/UbsanTester.inf
+  
 [LibraryClasses]
   NULL|OpenCorePkg/Library/OcCompilerIntrinsicsLib/OcCompilerIntrinsicsLib.inf
 
