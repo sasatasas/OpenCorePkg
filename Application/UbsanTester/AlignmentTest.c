@@ -169,12 +169,7 @@ AlignmentCheck (
   VOID
   )
 {
-  DEBUG (
-         (
-          DEBUG_INFO,
-          "\nUBT: Start testing cases with alignment...\n\n"
-         )
-         );
+  DEBUG ((DEBUG_INFO, "\nUBT: Start testing cases with alignment...\n\n"));
   Check ('l', 0); // Correct
   Check ('l', 1);
   DEBUG ((DEBUG_WARN, "\nUBT: Load of misaligned address [[PTR:0x[0-9a-f]*]] for type 'INT32' (aka 'int') which requires 4 byte alignment\n"));

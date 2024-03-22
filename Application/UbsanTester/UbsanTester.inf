@@ -21,6 +21,10 @@
   VERSION_STRING                 = 1.0
   ENTRY_POINT                    = UefiMain
 
+#
+#  VALID_ARCHITECTURES           = X64
+#
+
 [Sources]
   UbsanTester.h
   UbsanTester.c

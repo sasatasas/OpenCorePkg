@@ -1,4 +1,5 @@
 #include <Library/BaseMemoryLib.h>
+#include <Library/BaseLib.h>
 #include <Library/DebugLib.h>
 #include <Library/MemoryAllocationLib.h>
 #include <Library/UefiApplicationEntryPoint.h>
@@ -39,14 +40,6 @@
 #define TEST_POINTER
 #define TEST_BUILTIN
 #endif
-
-#define INT64_MIN  ((INT64)0x8000000000000000ULL)
-#define INT32_MIN  ((INT32)0x80000000)
-#define INT16_MIN  ((INT16)0x8000)
-#define INT8_MIN   ((INT8)0x80)
-
-#define INT32_MAX  ((INT32)0x7FFFFFFF)
-#define INT8_MAX   ((INT8)0x7F)
 
 /*
  * Implicit conversion check group.
