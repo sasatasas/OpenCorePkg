@@ -89,7 +89,12 @@ jobs:
           sudo apt-get update
           curl -o ./requirements.txt https://raw.githubusercontent.com/acidanthera/ocbuild/master/requirements.txt || exit 1
           sudo apt-get install -y python3 python3-pip libglib2.0-dev libfdt-dev libpixman-1-dev libepoxy-dev libcapstone-dev libsdl2-dev libnuma-dev libgtk-3-dev libvte-2.91-dev libbrlapi-dev libiscsi-dev libnfs-dev  librbd-dev libxen-dev
-          sudo apt-get install -y lsb-release software-properties-common gnupg build-essential nasm uuid-dev libssl-dev iasl
+          sudo apt-get install -y lsb-release wget software-properties-common gnupg build-essential nasm uuid-dev libssl-dev iasl curl git zip
+          wget https://apt.llvm.org/llvm.sh
+          chmod +x llvm.sh
+          yes '' | sudo ./llvm.sh 15
+          rm -f llvm.sh
+          echo "/usr/lib/llvm-15/bin" >> $GITHUB_PATH
           python3 -m pip install -r requirements.txt
 
       - name: Downloading QEMU
