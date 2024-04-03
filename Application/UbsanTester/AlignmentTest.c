@@ -1,5 +1,7 @@
 #include "UbsanTester.h"
 
+#if defined (__clang__)
+
 typedef INT8 *__attribute__ ((align_value (0x8000))) AlignedChar;
 
 struct AcStruct {
@@ -191,3 +193,5 @@ AlignmentCheck (
 
   PointerAlignmentCheck ();
 }
+
+#endif

@@ -41,6 +41,8 @@
 #define TEST_BUILTIN
 #endif
 
+#if defined (__clang__)
+
 /*
  * Implicit conversion check group.
  *
@@ -94,3 +96,5 @@ EFIAPI
 AlignmentCheck (
   VOID
   );
+
+#endif
