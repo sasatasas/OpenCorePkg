@@ -113,6 +113,7 @@ jobs:
       
       - name: Run TestUbsan
         run: |
+          chmod +x ./build_sanitizers.tool
           IFS=', ' read -r -a GROUPS <<< "$GROUPS"
           for group in "${GROUPS[@]}"; do
             GROUP="$group"
