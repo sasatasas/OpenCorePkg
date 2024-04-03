@@ -52,5 +52,6 @@
 
 
 [BuildOptions] 
-  *_CLANGDWARF_*_CC_FLAGS = -O0 -Wno-error=unused-but-set-variable -fsanitize=undefined,nullability-arg,nullability-assign,nullability-return,unsigned-integer-overflow,implicit-conversion,local-bounds -fno-sanitize-link-runtime
+  *_CLANGDWARF_*_CC_FLAGS = -O0 -fsanitize=undefined,nullability-arg,nullability-assign,nullability-return,unsigned-integer-overflow,implicit-conversion,local-bounds -fno-sanitize-link-runtime
   *_CLANGDWARF_*_DLINK_FLAGS = -O0 -fsanitize=undefined,nullability-arg,nullability-assign,nullability-return,unsigned-integer-overflow,implicit-conversion,local-bounds
+  XCODE:*_*_*_CC_FLAGS = -O0 -Wno-error=unused-but-set-variable
