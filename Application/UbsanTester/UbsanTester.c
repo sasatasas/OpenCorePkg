@@ -1,5 +1,7 @@
 #include "UbsanTester.h"
 
+#if defined (__clang__)
+
 __attribute__ ((nonnull)) INT32
 EFIAPI
 Nonnull1 (
@@ -118,7 +120,7 @@ GetInt (
   return P[I];
 }
 
-#ifdef TEST_BOUNDS
+  #ifdef TEST_BOUNDS
 VOID
 EFIAPI
 BoundsCheck (
@@ -133,9 +135,9 @@ BoundsCheck (
   DEBUG ((DEBUG_INFO, "\n\nUBT: Checks with bounds are done...\n\n\n"));
 }
 
-#endif
+  #endif
 
-#ifdef TEST_NONNULL
+  #ifdef TEST_NONNULL
 VOID
 EFIAPI
 NonnullCheck (
@@ -165,9 +167,9 @@ NonnullCheck (
   DEBUG ((DEBUG_INFO, "\n\nUBT: Checks with nonnull atribute are done...\n\n\n"));
 }
 
-#endif
+  #endif
 
-#ifdef TEST_BUILTIN
+  #ifdef TEST_BUILTIN
 VOID
 EFIAPI
 BuiltinCheck (
@@ -187,7 +189,7 @@ BuiltinCheck (
   DEBUG ((DEBUG_INFO, "\n\nUBT: Checks with builtin are done...\n\n\n"));
 }
 
-#endif
+  #endif
 
 EFI_STATUS
 EFIAPI
@@ -221,3 +223,18 @@ UefiMain (
 
   return EFI_SUCCESS;
 }
+
+#else
+EFI_STATUS
+EFIAPI
+UefiMain (
+  IN EFI_HANDLE        ImageHandle,
+  IN EFI_SYSTEM_TABLE  *SystemTable
+  )
+{
+  DEBUG ((DEBUG_INFO, "\n\nUBT: Use CLANGDWARF toolchain...\n"));
+
+  return EFI_SUCCESS;
+}
+
+#endif

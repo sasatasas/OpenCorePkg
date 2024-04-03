@@ -1,5 +1,7 @@
 #include "UbsanTester.h"
 
+#if defined (__clang__)
+
 /*
  * Implicit conversion group of checks.
  *
@@ -440,3 +442,5 @@ ImplicitConversionCheck (
 
   DEBUG ((DEBUG_INFO, "\nUBT: Checks with implicit conversion are done...\n\n\n"));
 }
+
+#endif

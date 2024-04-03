@@ -1,5 +1,7 @@
 #include "UbsanTester.h"
 
+#if defined (__clang__)
+
 STATIC INT8 *
 EFIAPI
 GetelementpointerInbounds (
@@ -155,3 +157,5 @@ PointerCheck (
 
   DEBUG ((DEBUG_INFO, "\nUBT: Checks with pointers are done...\n\n\n"));
 }
+
+#endif

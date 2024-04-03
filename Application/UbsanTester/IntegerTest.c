@@ -1,5 +1,7 @@
 #include "UbsanTester.h"
 
+#if defined (__clang__)
+
 VOID
 EFIAPI
 ShiftOutOfBoundsCheck (
@@ -289,3 +291,5 @@ IntegerCheck (
   UnsignedMulOverflow ();
   DEBUG ((DEBUG_INFO, "\nUBT: Checks with integer are done...\n\n\n"));
 }
+
+#endif
