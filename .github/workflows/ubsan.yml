@@ -83,14 +83,11 @@ jobs:
     steps:
       - name: Checkout ocbuild repository
         uses: actions/checkout@v3
-        with:
-          repository: sasatasas/ocbuild
-          ref: master
-          path: ./
 
       - name: Install dependencies
         run: |
           sudo apt-get update
+          curl -o ./requirements.txt https://raw.githubusercontent.com/acidanthera/ocbuild/master/requirements.txt || exit 1
           sudo apt-get install -y python3 python3-pip libglib2.0-dev libfdt-dev libpixman-1-dev libepoxy-dev libcapstone-dev libsdl2-dev libnuma-dev libgtk-3-dev libvte-2.91-dev libbrlapi-dev libiscsi-dev libnfs-dev  librbd-dev libxen-dev
           python3 -m pip install -r requirements.txt
 
