@@ -203,7 +203,7 @@ UnsignedSubOverflow (
   UINT32  K1 = 1;
 
   K1 -= 2;
-  DEBUG ((DEBUG_INFO, "\nUBT: Unsigned integer overflow: 1 - 2 cannot be represented in type 'UINT32' (aka 'unsigned int')\n"));
+  DEBUG ((DEBUG_INFO, "\nUBT: Unsigned integer overflow: 1 - 2 cannot be represented in type\n"));
 
   UINT64  K2 = (UINT64)(8000000000000000000ULL);
 
