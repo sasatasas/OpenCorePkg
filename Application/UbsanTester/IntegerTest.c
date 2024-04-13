@@ -84,7 +84,7 @@ AddOverflow (
   INT64  K2 = (INT64)8000000000000000000LL;
 
   K2 += (INT64)2000000000000000000LL;
-  DEBUG ((DEBUG_INFO, "\nUBT: Signed integer overflow: 8000000000000000000 + 2000000000000000000 cannot be represented in type 'INT64' (aka 'long')\n"));
+  DEBUG ((DEBUG_INFO, "\nUBT: Signed integer overflow: 8000000000000000000 + 2000000000000000000 cannot be represented in type\n"));
   DEBUG ((DEBUG_INFO, "\nUBT: Checks with addition integer overflow are done...\n\n\n"));
 }
 
@@ -108,7 +108,7 @@ SubOverflow (
   INT64  K2 = (INT64)(-8000000000000000000LL);
 
   K2 -= (INT64)(2000000000000000000LL);
-  DEBUG ((DEBUG_INFO, "\nUBT: Signed integer overflow: -8000000000000000000 - 2000000000000000000 cannot be represented in type 'INT64' (aka 'long')\n"));
+  DEBUG ((DEBUG_INFO, "\nUBT: Signed integer overflow: -8000000000000000000 - 2000000000000000000 cannot be represented in type\n"));
   DEBUG ((DEBUG_INFO, "\nUBT: Checks with substraction integer overflow are done...\n\n\n"));
 }
 
@@ -184,7 +184,7 @@ UnsignedAddOverflow (
   UINT64  K2 = (UINT64)10000000000000000000ULL;
 
   K2 += (UINT64)9000000000000000000ULL;
-  DEBUG ((DEBUG_INFO, "\nUBT: Unsigned integer overflow: 10000000000000000000 + 9000000000000000000 cannot be represented in type 'uint64' (aka 'unsigned long')\n"));
+  DEBUG ((DEBUG_INFO, "\nUBT: Unsigned integer overflow: 10000000000000000000 + 9000000000000000000 cannot be represented in type\n"));
   DEBUG ((DEBUG_INFO, "\nUBT: Checks with unsigned addition integer overflow are done...\n\n\n"));
 }
 
@@ -208,7 +208,7 @@ UnsignedSubOverflow (
   UINT64  K2 = (UINT64)(8000000000000000000ULL);
 
   K2 -= (UINT64)(9000000000000000000ULL);
-  DEBUG ((DEBUG_INFO, "\nUBT: Unsigned integer overflow: 8000000000000000000 - 9000000000000000000 cannot be represented in type 'UINT64' (aka 'unsigned long')\n"));
+  DEBUG ((DEBUG_INFO, "\nUBT: Unsigned integer overflow: 8000000000000000000 - 9000000000000000000 cannot be represented in type\n"));
   DEBUG ((DEBUG_INFO, "\nUBT: Checks with unsigned substraction integer overflow are done...\n\n\n"));
 }
 
