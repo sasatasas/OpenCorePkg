@@ -187,6 +187,7 @@ AlignmentCheck (
   Check ('f', 1);
   DEBUG ((DEBUG_WARN, "\nUBT: Member access within misaligned address [[PTR:0x[0-9a-f]*]] for type 'struct S' which requires 8 byte alignment\n"));
   DEBUG ((DEBUG_WARN, "\nUBT: Store to misaligned address [[PTR:0x[0-9a-f]*]] for type 'EFIAPI INT32 ((*))(void) __attribute__((ms_abi))' (aka 'int (*)(void) __attribute__((ms_abi))') which requires 8 byte alignment\n"));
+  DEBUG ((DEBUG_WARN, "\nUBT: Member access within misaligned address [[PTR:0x[0-9a-f]*]] for type 'struct S' which requires 8 byte alignment\n\n"));
   DEBUG ((DEBUG_WARN, "\nUBT: Load of misaligned address [[PTR:0x[0-9a-f]*]] for type 'EFIAPI INT32 ((*))(void) __attribute__((ms_abi))' (aka 'int (*)(void) __attribute__((ms_abi))') which requires 8 byte alignment\n"));
 
   DEBUG ((DEBUG_INFO, "\nUBT: Checks with alignment are done...\n\n\n"));
