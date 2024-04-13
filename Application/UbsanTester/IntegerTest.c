@@ -265,7 +265,7 @@ UnsignedMulOverflow (
   UINT32  M3 = 0xffffffff, M4 = 0x2;
 
   (VOID)(M3 * M4);
-  DEBUG ((DEBUG_INFO, "\nUBT: Unsigned integer overflow: 4294967295 * 2 cannot be represented in type 'UINT32' (aka 'unsigned int')\n"));
+  DEBUG ((DEBUG_INFO, "\nUBT: Unsigned integer overflow: 4294967295 * 2 cannot be represented in type\n"));
   DEBUG ((DEBUG_INFO, "\nUBT: Checks with multiplication integer overflow are done...\n\n\n"));
 }
 
