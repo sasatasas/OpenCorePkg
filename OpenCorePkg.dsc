@@ -420,6 +420,13 @@
   gOpenCorePkgTokenSpaceGuid.PcdOcGuardUBSanCheckGroup|0x80
 !endif
 
+!ifdef $(SANITIZE_TRAP)
+  gOpenCorePkgTokenSpaceGuid.PcdOcGuardUBSanTrapMode|TRUE
+!endif
+!ifdef $(NO_SANITIZE_TRAP)
+  gOpenCorePkgTokenSpaceGuid.PcdOcGuardUBSanTrapMode|FALSE
+!endif
+
   gOpenCorePkgTokenSpaceGuid.PcdCanaryAllowRdtscFallback|TRUE
 
   # ImageLoader settings

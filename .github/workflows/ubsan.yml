@@ -42,8 +42,7 @@ jobs:
           SELFPKG_DIR: OvmfPkg
           TOOLCHAINS: CLANGDWARF
           ARCHS: X64
-          # Without RELEASE, because it turns on -fsanitize-trap=all
-          TARGETS: DEBUG
+          TARGETS: DEBUG,NOOPT
           SKIP_TESTS: 1
           SKIP_PACKAGE: 1
 
@@ -60,7 +59,7 @@ jobs:
           done
         env:
           ARCHS: X64
-          TARGETS: DEBUG
+          TARGETS: DEBUG,NOOPT
           TOOLCHAIN: CLANGDWARF
     
       - name: Zip Firmware Artifacts
@@ -121,6 +120,11 @@ jobs:
         run: |
           chmod +x ./build_sanitizers.tool
           IFS=', ' read -r -a GROUPS <<< "$GROUPS"
+          IFS=', ' read -r -a TARGETS <<< "$TARGETS"
+          export TARGETS
+          export TOOLCHAINS
+          export OVMF_PATH
+
           for group in "${GROUPS[@]}"; do
             GROUP="$group"
             export GROUP
@@ -129,6 +133,8 @@ jobs:
         env:
           GROUPS: UNDEFINED,ALIGNMENT,BUILTIN,BOUNDS,IMPLICIT_CONVERSION,INTEGER,NONNULL,POINTERS
           OVMF_PATH: ./firmware_artifacts
+          TARGETS: DEBUG,NOOPT
+          TOOLCHAINS: CLANGDWARF
 
       - name: Zip Tests Output
         run: zip ubsan_tests.zip ./TestsOutput/* -r
