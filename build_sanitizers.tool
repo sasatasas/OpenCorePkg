@@ -10,15 +10,20 @@ cd "$(dirname "$0")" || exit 1
 # Build OpenCorePkg 
 ARCHS=X64
 NO_ARCHIVES=0
-TOOLCHAINS=CLANGDWARF
-TARGETS=DEBUG
 SELFPKG=OpenCorePkg
 DISCARD_SUBMODULES=OpenCorePkg
+
 if [ "$OVMF_PATH" = "" ]; then
   OVMF_PATH='./UDK/Build'
 fi
 if [ "$GROUP" = "" ]; then
   GROUP=UNDEFINED
+fi
+if [ "$TARGETS" = "" ]; then
+  TARGETS=DEBUG
+fi
+if [ "$TOOLCHAINS" = "" ]; then
+  TOOLCHAINS=CLANGDWARF
 fi
 
 export ARCHS
@@ -29,7 +34,7 @@ export SELFPKG
 export DISCARD_SUBMODULES
 export GROUP
 
-BUILD_ARGUMENTS=-D"$GROUP"
+BUILD_ARGUMENTS="-D$GROUP -DNO_SANITIZE_TRAP"
 export BUILD_ARGUMENTS
 
 src=$(curl -LfsS https://raw.githubusercontent.com/acidanthera/ocbuild/master/efibuild.sh) || exit 1
