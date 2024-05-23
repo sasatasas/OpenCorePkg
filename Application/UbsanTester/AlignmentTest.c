@@ -1,8 +1,7 @@
 #include "UbsanTester.h"
 
-#if defined (__clang__)
-
-typedef INT8 *__attribute__ ((align_value (0x8000))) AlignedChar;
+#ifdef __clang__
+typedef INT8 *__attribute__ ((align_value (0x20))) AlignedChar;
 
 struct AcStruct {
   AlignedChar    A;
@@ -19,7 +18,7 @@ LoadFromAcStruct (
 INT8 *
 EFIAPI
 Passthrough0 (
-  __attribute__ ((align_value (0x8000))) INT8  *X
+  __attribute__ ((align_value (0x20))) INT8  *X
   )
 {
   return X;
@@ -38,7 +37,7 @@ Passthrough1 (
 
 INT8 *
 EFIAPI
-__attribute__ ((assume_aligned (0x8000, 1)))
+__attribute__ ((assume_aligned (0x20, 1)))
 Passthrough2 (
   INT8  *X
   )
@@ -60,31 +59,33 @@ PointerAlignmentCheck (
 
   X.A = Ptr + 1;
   LoadFromAcStruct (&X);
-  DEBUG ((DEBUG_WARN, "\nUBT: Alignment assumption of 0x8000 for pointer 0x%lx\n", Ptr + 0x1));
+  DEBUG ((DEBUG_WARN, "\nUBT: Alignment assumption of 0x20 for pointer 0x%lx\n", Ptr + 0x1));
 
   Passthrough0 (Ptr + 1);
-  DEBUG ((DEBUG_WARN, "\nUBT: Alignment assumption of 0x8000 for pointer 0x%lx\n", Ptr + 0x1));
+  DEBUG ((DEBUG_WARN, "\nUBT: Alignment assumption of 0x20 for pointer 0x%lx\n", Ptr + 0x1));
 
-  Passthrough1 (Ptr + 2, 0x8000);
-  DEBUG ((DEBUG_WARN, "\nUBT: Alignment assumption of 0x8000 for pointer 0x%lx\n", Ptr + 0x2));
+  Passthrough1 (Ptr + 2, 0x20);
+  DEBUG ((DEBUG_WARN, "\nUBT: Alignment assumption of 0x20 for pointer 0x%lx\n", Ptr + 0x2));
 
-  Res = __builtin_assume_aligned (Ptr + 2, 0x8000);
-  DEBUG ((DEBUG_WARN, "\nUBT: Alignment assumption of 0x8000 for pointer 0x%lx\n", Ptr + 0x2));
+  Res = __builtin_assume_aligned (Ptr + 2, 0x20);
+  DEBUG ((DEBUG_WARN, "\nUBT: Alignment assumption of 0x20 for pointer 0x%lx\n", Res));
 
   FreePool (Ptr);
 
   Ptr = AllocateZeroPool (3);
   Passthrough2 (Ptr + 2);
-  DEBUG ((DEBUG_WARN, "\nUBT: Alignment assumption of 0x8000 for pointer 0x%lx\n", Ptr + 0x1)); // why Ptr + 1
+  DEBUG ((DEBUG_WARN, "\nUBT: Alignment assumption of 0x20 for pointer 0x%lx\n", Ptr + 0x1)); // why Ptr + 1
 
   UINT32  Offset = 1;
 
-  Res = __builtin_assume_aligned (Ptr + 2, 0x8000, Offset);
-  DEBUG ((DEBUG_WARN, "\nUBT: Alignment assumption of 0x8000 for pointer 0x%lx\n\n", Ptr + 0x1));
+  Res = __builtin_assume_aligned (Ptr + 2, 0x20, Offset);
+  DEBUG ((DEBUG_WARN, "\nUBT: Alignment assumption of 0x20 for pointer 0x%lx\n\n", Res));
 
   FreePool (Ptr);
   DEBUG ((DEBUG_INFO, "\nUBT: Checks with pointer alignment are done...\n\n\n"));
 }
+
+#endif
 
 INT32
 EFIAPI
@@ -127,9 +128,9 @@ Check (
   INT32  N
   )
 {
-  INT8      c[] __attribute__ ((aligned (16))) = { 0, 0, 0, 0, 1, 2, 3, 4, 5, 0, 0, 0, 0, 1, 2, 3, 4, 5 };
-  INT32     *P                                 = (INT32 *)&c[4 + N];
-  struct S  *S                                 = (struct S *)P;
+  INT8      c[] __attribute__ ((aligned (0x10))) = { 0, 0, 0, 0, 1, 2, 3, 4, 5, 0, 0, 0, 0, 1, 2, 3, 4, 5 };
+  INT32     *P                                   = (INT32 *)&c[4 + N];
+  struct S  *S                                   = (struct S *)P;
 
   switch (Type) {
     case 'l':
@@ -190,9 +191,9 @@ AlignmentCheck (
   DEBUG ((DEBUG_WARN, "\nUBT: Member access within misaligned address [[PTR:0x[0-9a-f]*]] for type 'struct S' which requires 8 byte alignment\n\n"));
   DEBUG ((DEBUG_WARN, "\nUBT: Load of misaligned address [[PTR:0x[0-9a-f]*]] for type 'EFIAPI INT32 ((*))(void) __attribute__((ms_abi))' (aka 'int (*)(void) __attribute__((ms_abi))') which requires 8 byte alignment\n"));
 
-  DEBUG ((DEBUG_INFO, "\nUBT: Checks with alignment are done...\n\n\n"));
-
+ #ifdef __clang__
   PointerAlignmentCheck ();
-}
+ #endif
 
-#endif
+  DEBUG ((DEBUG_INFO, "\nUBT: Checks with alignment are done...\n\n\n"));
+}

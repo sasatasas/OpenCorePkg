@@ -1,7 +1,5 @@
 #include "UbsanTester.h"
 
-#if defined (__clang__)
-
 VOID
 EFIAPI
 ShiftOutOfBoundsCheck (
@@ -47,7 +45,7 @@ ShiftOutOfBoundsCheck (
 
 VOID
 EFIAPI
-__attribute__ ((no_sanitize ("implicit-conversion")))
+// __attribute__ ((no_sanitize ("implicit-conversion")))
 NegateOverflow (
   VOID
   )
@@ -57,7 +55,7 @@ NegateOverflow (
   INT32  K = 0x7fffffff, N;
 
   N = -(UINT32)(-K - 1);
-  DEBUG ((DEBUG_INFO, "\nUBT: Negation of 2147483648 cannot be represented in type 'UINT32' (aka 'unsigned int')\n"));
+  DEBUG ((DEBUG_INFO, "\nUBT: Negation of %d cannot be represented in type 'UINT32' (aka 'unsigned int')\n", N));
   N = -(-K - 1);
   DEBUG ((DEBUG_INFO, "\nUBT: Negation of -2147483648 cannot be represented in type 'int'\n"));
 
@@ -150,17 +148,17 @@ MulOverflow (
   DEBUG ((DEBUG_INFO, "\nUBT: Start testing cases with multiplication integer overflow...\n\n"));
 
   // These promote to 'int'.
-  INT32  K;
+  // INT32  K;
 
-  K = ((INT8)-2 * (INT8)0x7f);
-  K = ((INT16)0x7fff * (INT16)0x7fff);
-  K = ((UINT16)0xffff * (INT16)0x7fff);
-  K = ((UINT16)0xffff * (UINT16)0x8000);
+  // K = ((INT8)-2 * (INT8)0x7f);
+  // K = ((INT16)0x7fff * (INT16)0x7fff);
+  // K = ((UINT16)0xffff * (INT16)0x7fff);
+  // K = ((UINT16)0xffff * (UINT16)0x8000);
 
   UINT16  M1 = 0xffff, M2 = 0x8001;
 
   (VOID)(M1 * M2);
-  DEBUG ((DEBUG_INFO, "\nUBT: Signed integer overflow: 65535 * 32769 cannot be represented in type 'int'\n"));
+  DEBUG ((DEBUG_INFO, "\nUBT: Signed integer overflow: %d * %d cannot be represented in type 'int'\n", M1, M2));
   DEBUG ((DEBUG_INFO, "\nUBT: Checks with multiplication integer overflow are done...\n\n\n"));
 }
 
@@ -243,7 +241,7 @@ UnsignedIncDecOverflow (
 
 VOID
 EFIAPI
-__attribute__ ((no_sanitize ("signed-integer-overflow")))
+// __attribute__ ((no_sanitize ("signed-integer-overflow")))
 UnsignedMulOverflow (
   VOID
   )
@@ -251,12 +249,12 @@ UnsignedMulOverflow (
   DEBUG ((DEBUG_INFO, "\nUBT: Start testing cases with multiplication integer overflow...\n\n"));
 
   // These promote to 'int'.
-  INT32  K;
+  // INT32  K;
 
-  K = ((INT8)-2 * (INT8)0x7f);
-  K = ((INT16)0x7fff * (INT16)0x7fff);
-  K = ((UINT16)0xffff * (INT16)0x7fff);
-  K = ((UINT16)0xffff * (UINT16)0x8000);
+  // K = ((INT8)-2 * (INT8)0x7f);
+  // K = ((INT16)0x7fff * (INT16)0x7fff);
+  // K = ((UINT16)0xffff * (INT16)0x7fff);
+  // K = ((UINT16)0xffff * (UINT16)0x8000);
 
   UINT16  M1 = 0xffff, M2 = 0x8001;
 
@@ -265,7 +263,7 @@ UnsignedMulOverflow (
   UINT32  M3 = 0xffffffff, M4 = 0x2;
 
   (VOID)(M3 * M4);
-  DEBUG ((DEBUG_INFO, "\nUBT: Unsigned integer overflow: 4294967295 * 2 cannot be represented in type\n"));
+  DEBUG ((DEBUG_INFO, "\nUBT: Unsigned integer overflow: %d * %d cannot be represented in type\n", M3, M4));
   DEBUG ((DEBUG_INFO, "\nUBT: Checks with multiplication integer overflow are done...\n\n\n"));
 }
 
@@ -291,5 +289,3 @@ IntegerCheck (
   UnsignedMulOverflow ();
   DEBUG ((DEBUG_INFO, "\nUBT: Checks with integer are done...\n\n\n"));
 }
-
-#endif

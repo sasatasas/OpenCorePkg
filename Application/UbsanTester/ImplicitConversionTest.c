@@ -1,7 +1,5 @@
 #include "UbsanTester.h"
 
-#if defined (__clang__)
-
 /*
  * Implicit conversion group of checks.
  *
@@ -172,7 +170,7 @@ ConvertSignedIntToSignedChar (
 
 VOID
 EFIAPI
-__attribute__ ((no_sanitize ("implicit-integer-sign-change")))
+// __attribute__ ((no_sanitize ("implicit-integer-sign-change")))
 ConversionAndTruncationCheck (
   VOID
   )
@@ -442,5 +440,3 @@ ImplicitConversionCheck (
 
   DEBUG ((DEBUG_INFO, "\nUBT: Checks with implicit conversion are done...\n\n\n"));
 }
-
-#endif
