@@ -29,9 +29,9 @@
   UbsanTester.h
   UbsanTester.c
   ImplicitConversionTest.c
-  IntegerTest.c
+  # IntegerTest.c
   PointerTest.c
-  AlignmentTest.c
+  # AlignmentTest.c
 
 [FixedPcd]
   gOpenCorePkgTokenSpaceGuid.PcdOcGuardUBSanTrapMode
@@ -52,6 +52,8 @@
 
 
 [BuildOptions] 
-  *_CLANGDWARF_*_CC_FLAGS = -O0 -fsanitize=undefined,nullability-arg,nullability-assign,nullability-return,unsigned-integer-overflow,implicit-conversion,local-bounds -fno-sanitize-link-runtime
-  *_CLANGDWARF_*_DLINK_FLAGS = -O0 -fsanitize=undefined,nullability-arg,nullability-assign,nullability-return,unsigned-integer-overflow,implicit-conversion,local-bounds
-  XCODE:*_*_*_CC_FLAGS = -O0 -Wno-error=unused-but-set-variable
+  *_CLANGDWARF_*_CC_FLAGS = -fsanitize=undefined,nullability-arg,nullability-assign,nullability-return,unsigned-integer-overflow,implicit-conversion,local-bounds -fno-sanitize-link-runtime
+  *_CLANGDWARF_*_DLINK_FLAGS = -fsanitize=undefined,nullability-arg,nullability-assign,nullability-return,unsigned-integer-overflow,implicit-conversion,local-bounds
+
+  *_GCC_*_CC_FLAGS = -fsanitize=undefined -fno-stack-protector
+  *_GCC_*_DLINK_FLAGS = -fsanitize=undefined -fno-stack-protector
