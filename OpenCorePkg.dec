@@ -793,8 +793,7 @@
   ## @Prompt TODO:
   gOpenCorePkgTokenSpaceGuid.PcdOcGuardUBSanTrapMode|TRUE|BOOLEAN|0x00000609
 
-  ## TODO: Defines the allowed OcCryptoLib signature hashing algorihtms by OR'ing the
-  ##  types' Bit indices.<BR><BR>
+  ## Defines the one check or one check group of UBSan testing. Bit indices.<BR><BR>
   ##   Bit 0 - Undefined (-fsanitize=undefined)
   ##   Bit 1 - Alignment (-fsanitize=alignment)
   ##   Bit 2 - Builtin (-fsanitize=builtin)
