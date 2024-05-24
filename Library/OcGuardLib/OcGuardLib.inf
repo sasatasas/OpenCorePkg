@@ -42,6 +42,18 @@
   UefiLib
 
 [BuildOptions]
-  XCODE:DEBUG_*_*_CC_FLAGS   = -fno-stack-protector
-  XCODE:NOOPT_*_*_CC_FLAGS   = -fno-stack-protector
-  XCODE:RELEASE_*_*_CC_FLAGS = -fno-stack-protector
+  XCODE:DEBUG_*_*_CC_FLAGS    = -fno-stack-protector 
+  XCODE:NOOPT_*_*_CC_FLAGS    = -fno-stack-protector
+  XCODE:RELEASE_*_*_CC_FLAGS  = -fno-stack-protector
+
+
+  # without -Wno-int-to-pointer-cast WARN in :
+  #  94 | #define REINTERPRET_CAST(__dt, __st)    ((__dt)(__st))
+  #     |                                          ^
+
+  GCC:DEBUG_*_*_CC_FLAGS      = -fno-stack-protector -Wno-int-to-pointer-cast
+  GCC:NOOPT_*_*_CC_FLAGS      = -fno-stack-protector -Wno-int-to-pointer-cast
+  GCC:RELEASE_*_*_CC_FLAGS    = -fno-stack-protector -Wno-int-to-pointer-cast
+  GCC:DEBUG_*_*_DLINK_FLAGS   = -Wno-int-to-pointer-cast
+  GCC:NOOPT_*_*_DLINK_FLAGS   = -Wno-int-to-pointer-cast
+  GCC:RELEASE_*_*_DLINK_FLAGS = -Wno-int-to-pointer-cast
