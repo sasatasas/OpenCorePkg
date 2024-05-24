@@ -7,39 +7,14 @@
 #include <Library/UefiLib.h>
 #include <../../Library/OcGuardLib/Ubsan.h>
 
-#define CHECK_GROUP  FixedPcdGet8 (PcdOcGuardUBSanCheckGroup)
-#if (CHECK_GROUP & (1U << 0))
-#define TEST_UNDEFINED
-#endif
-#if (FixedPcdGet8 (PcdOcGuardUBSanCheckGroup) & (1U << 1))
-#define TEST_ALIGNMENT
-#endif
-#if (FixedPcdGet8 (PcdOcGuardUBSanCheckGroup) & (1U << 2))
-#define TEST_BUILTIN
-#endif
-#if (FixedPcdGet8 (PcdOcGuardUBSanCheckGroup) & (1U << 3))
-#define TEST_BOUNDS
-#endif
-#if (FixedPcdGet8 (PcdOcGuardUBSanCheckGroup) & (1U << 4))
-#define TEST_IMPLICIT_CONVERSION
-#endif
-#if (FixedPcdGet8 (PcdOcGuardUBSanCheckGroup) & (1U << 5))
-#define TEST_INTEGER
-#endif
-#if (FixedPcdGet8 (PcdOcGuardUBSanCheckGroup) & (1U << 6))
-#define TEST_NONNULL
-#endif
-#if (FixedPcdGet8 (PcdOcGuardUBSanCheckGroup) & (1U << 7))
-#define TEST_POINTER
-#endif
-
-#ifdef TEST_UNDEFINED
-#define TEST_ALIGNMENT
-#define TEST_NONNULL
-#define TEST_BOUNDS // -fsanitize=local-bounds also include
-#define TEST_POINTER
-#define TEST_BUILTIN
-#endif
+#define UNDEFINED_TESTS_BIT            (1U << 0)
+#define ALIGNMENT_TESTS_BIT            (1U << 1)
+#define BUILTIN_TESTS_BIT              (1U << 2)
+#define BOUNDS_TESTS_BIT               (1U << 3)
+#define IMPLICIT_CONVERSION_TESTS_BIT  (1U << 4)
+#define INTEGER_TESTS_BIT              (1U << 5)
+#define NONNULL_TESTS_BIT              (1U << 6)
+#define POINTER_TESTS_BIT              (1U << 7)
 
 /*
  * Implicit conversion check group.

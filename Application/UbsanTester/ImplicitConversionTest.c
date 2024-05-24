@@ -1,6 +1,7 @@
 #include "UbsanTester.h"
 
 /*
+ * Only Clang
  * Implicit conversion group of checks.
  *
  * Enables implicit-unsigned-integer-truncation, implicit-signed-integer-truncation,
@@ -8,6 +9,9 @@
  *
  * Use -fsanitize=implicit-conversion
  */
+
+#ifdef __clang__
+
 UINT32
 EFIAPI
 ConvertUnsignedIntToUnsignedInt (
@@ -170,7 +174,7 @@ ConvertSignedIntToSignedChar (
 
 VOID
 EFIAPI
-// __attribute__ ((no_sanitize ("implicit-integer-sign-change")))
+__attribute__ ((no_sanitize ("implicit-integer-sign-change")))
 ConversionAndTruncationCheck (
   VOID
   )
@@ -440,3 +444,5 @@ ImplicitConversionCheck (
 
   DEBUG ((DEBUG_INFO, "\nUBT: Checks with implicit conversion are done...\n\n\n"));
 }
+
+#endif

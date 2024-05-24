@@ -1,5 +1,6 @@
 #include "UbsanTester.h"
 
+#ifdef __clang__
 __attribute__ ((nonnull)) INT32
 EFIAPI
 Nonnull1 (
@@ -51,7 +52,6 @@ Nonnull4 (
   }
 }
 
-#ifdef __clang__
 INT32 *_Nonnull
 EFIAPI
 NonnullReturn (
@@ -121,7 +121,6 @@ GetInt (
   return P[I];
 }
 
-#ifdef TEST_BOUNDS
 VOID
 EFIAPI
 BoundsCheck (
@@ -136,9 +135,7 @@ BoundsCheck (
   DEBUG ((DEBUG_INFO, "\n\nUBT: Checks with bounds are done...\n\n\n"));
 }
 
-#endif
-
-#ifdef TEST_NONNULL
+#ifdef __clang__
 VOID
 EFIAPI
 NonnullCheck (
@@ -149,14 +146,12 @@ NonnullCheck (
 
   DEBUG ((DEBUG_INFO, "\nUBT: Start testing cases with nonnull atribute...\n\n"));
 
- #ifdef __clang__
   Nonnull1 (P, 8);
   DEBUG ((DEBUG_WARN, "\nUBT: Null pointer passed as argument 1, which is declared to never be null\n\n"));
   DEBUG ((DEBUG_WARN, "\nUBT: Load of null pointer of type 'INT32' (aka 'int')\n\n"));
   Nonnull2 (8, P);
   DEBUG ((DEBUG_WARN, "\nUBT: Null pointer passed as argument 2, which is declared to never be null\n\n"));
   DEBUG ((DEBUG_WARN, "\nUBT: Load of null pointer of type 'CHAR8' (aka 'char')\n\n"));
- #endif
   Nonnull3 (P);
   DEBUG ((DEBUG_WARN, "\nUBT: Null pointer returned from function declared to never return null\n"));
   Nonnull4 (P, 8);
@@ -164,19 +159,17 @@ NonnullCheck (
   Nonnull4 (P, -8);
   DEBUG ((DEBUG_WARN, "\nUBT: Null pointer returned from function declared to never return null\n"));
 
- #ifdef __clang__
   NonnullReturn (P);
   DEBUG ((DEBUG_WARN, "\nUBT: Null pointer returned from function declared to never return null\n"));
   NonnullArg (P);
   DEBUG ((DEBUG_WARN, "\nUBT: Null pointer passed as argument 1, which is declared to never be null\n"));
- #endif
 
   DEBUG ((DEBUG_INFO, "\n\nUBT: Checks with nonnull atribute are done...\n\n\n"));
 }
 
 #endif
 
-#if defined (TEST_BUILTIN) && defined (__clang__)
+#ifdef __clang__
 VOID
 EFIAPI
 BuiltinCheck (
@@ -205,27 +198,46 @@ UefiMain (
   IN EFI_SYSTEM_TABLE  *SystemTable
   )
 {
-  //  #ifdef TEST_ALIGNMENT
-  //   AlignmentCheck ();
-  //  #endif
-  //  #ifdef TEST_NONNULL
-  //   NonnullCheck ();
-  //  #endif
-  //  #ifdef TEST_BOUNDS
-  //   BoundsCheck ();
-  //  #endif
- #ifdef TEST_POINTER
-  PointerCheck ();
+  UINT8  checkGroup = FixedPcdGet8 (PcdOcGuardUBSanCheckGroup);
+
+  if (checkGroup & UNDEFINED_TESTS_BIT) {
+    checkGroup |= ALIGNMENT_TESTS_BIT;
+    checkGroup |= BUILTIN_TESTS_BIT;
+    checkGroup |= NONNULL_TESTS_BIT;
+    checkGroup |= POINTER_TESTS_BIT;
+  }
+
+  if (checkGroup & ALIGNMENT_TESTS_BIT) {
+    AlignmentCheck ();
+  }
+
+  if (checkGroup & POINTER_TESTS_BIT) {
+    PointerCheck ();
+  }
+
+  if (checkGroup & BOUNDS_TESTS_BIT) {
+    BoundsCheck ();
+  }
+
+  if (checkGroup & INTEGER_TESTS_BIT) {
+    IntegerCheck ();
+  }
+
+ #ifdef __clang__
+  if (checkGroup & NONNULL_TESTS_BIT) {
+    NonnullCheck ();
+  }
+
+  if (checkGroup & BUILTIN_TESTS_BIT) {
+    BuiltinCheck ();
+  }
+
+  if (checkGroup & IMPLICIT_CONVERSION_TESTS_BIT) {
+    ImplicitConversionCheck ();
+  }
+
  #endif
-  //  #if defined (TEST_BUILTIN) && defined (__clang__)
-  //   BuiltinCheck ();
-  //  #endif
-  //  #ifdef TEST_IMPLICIT_CONVERSION
-  //   ImplicitConversionCheck ();
-  //  #endif
-  //  #ifdef TEST_INTEGER
-  //   IntegerCheck ();
-  //  #endif
+
   DEBUG ((DEBUG_INFO, "\n\nUBT: All tests are done...\n"));
 
   return EFI_SUCCESS;
