@@ -79,7 +79,7 @@ PointerAlignmentCheck (
   UINT32  Offset = 1;
 
   Res = __builtin_assume_aligned (Ptr + 2, 0x20, Offset);
-  DEBUG ((DEBUG_WARN, "\nUBT: Alignment assumption of 0x20 for pointer 0x%lx\n\n", Res));
+  DEBUG ((DEBUG_WARN, "\nUBT: Alignment assumption of 0x20 for pointer 0x%lx\n\n", Ptr + 0x1));
 
   FreePool (Ptr);
   DEBUG ((DEBUG_INFO, "\nUBT: Checks with pointer alignment are done...\n\n\n"));

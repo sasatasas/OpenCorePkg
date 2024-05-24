@@ -43,9 +43,11 @@ ShiftOutOfBoundsCheck (
   DEBUG ((DEBUG_INFO, "\n\nUBT: Checks with shift out of bounds are done...\n\n\n"));
 }
 
+#ifdef __clang__
+
 VOID
 EFIAPI
-// __attribute__ ((no_sanitize ("implicit-conversion")))
+__attribute__ ((no_sanitize ("implicit-conversion")))
 NegateOverflow (
   VOID
   )
@@ -55,9 +57,9 @@ NegateOverflow (
   INT32  K = 0x7fffffff, N;
 
   N = -(UINT32)(-K - 1);
-  DEBUG ((DEBUG_INFO, "\nUBT: Negation of %d cannot be represented in type 'UINT32' (aka 'unsigned int')\n", N));
+  DEBUG ((DEBUG_INFO, "\nUBT: Negation of %u cannot be represented in type 'UINT32' (aka 'unsigned int')\n", (UINT32)(-K - 1)));
   N = -(-K - 1);
-  DEBUG ((DEBUG_INFO, "\nUBT: Negation of -2147483648 cannot be represented in type 'int'\n"));
+  DEBUG ((DEBUG_INFO, "\nUBT: Negation of %d cannot be represented in type 'int'\n", N));
 
   DEBUG ((DEBUG_INFO, "\nUBT: Checks with negation integer overflow are done...\n\n\n"));
 }
@@ -158,7 +160,7 @@ MulOverflow (
   UINT16  M1 = 0xffff, M2 = 0x8001;
 
   (VOID)(M1 * M2);
-  DEBUG ((DEBUG_INFO, "\nUBT: Signed integer overflow: %d * %d cannot be represented in type 'int'\n", M1, M2));
+  DEBUG ((DEBUG_INFO, "\nUBT: Signed integer overflow: %u * %u cannot be represented in type 'int'\n", M1, M2));
   DEBUG ((DEBUG_INFO, "\nUBT: Checks with multiplication integer overflow are done...\n\n\n"));
 }
 
@@ -241,7 +243,7 @@ UnsignedIncDecOverflow (
 
 VOID
 EFIAPI
-// __attribute__ ((no_sanitize ("signed-integer-overflow")))
+__attribute__ ((no_sanitize ("signed-integer-overflow")))
 UnsignedMulOverflow (
   VOID
   )
@@ -263,9 +265,11 @@ UnsignedMulOverflow (
   UINT32  M3 = 0xffffffff, M4 = 0x2;
 
   (VOID)(M3 * M4);
-  DEBUG ((DEBUG_INFO, "\nUBT: Unsigned integer overflow: %d * %d cannot be represented in type\n", M3, M4));
+  DEBUG ((DEBUG_INFO, "\nUBT: Unsigned integer overflow: %u * %u cannot be represented in type\n", M3, M4));
   DEBUG ((DEBUG_INFO, "\nUBT: Checks with multiplication integer overflow are done...\n\n\n"));
 }
+
+#endif
 
 VOID
 EFIAPI
@@ -276,6 +280,8 @@ IntegerCheck (
   DEBUG ((DEBUG_INFO, "\nUBT: Start testing cases with integer...\n\n"));
 
   ShiftOutOfBoundsCheck ();
+
+ #ifdef __clang__
   NegateOverflow ();
 
   AddOverflow ();
@@ -287,5 +293,8 @@ IntegerCheck (
   UnsignedSubOverflow ();
   UnsignedIncDecOverflow ();
   UnsignedMulOverflow ();
+
+ #endif
+
   DEBUG ((DEBUG_INFO, "\nUBT: Checks with integer are done...\n\n\n"));
 }
