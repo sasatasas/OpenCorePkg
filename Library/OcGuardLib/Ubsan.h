@@ -29,7 +29,8 @@ WITHOUT WARRANTIES OR REPRESENTATIONS OF ANY KIND, EITHER EXPRESS OR IMPLIED.
 #define _KERNEL 1
 #endif
 
-#if !defined(HAVE_UBSAN_SUPPORT) && defined(__clang__)
+// TODO: mb __GNUC__ >= 11 or __GNUC__ >= 7
+#if !defined(HAVE_UBSAN_SUPPORT) && ((defined (__GNUC__) && __GNUC__ >= 9) || defined (__clang__))
 #define HAVE_UBSAN_SUPPORT 1
 #endif
 
