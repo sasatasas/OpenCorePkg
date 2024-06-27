@@ -129,10 +129,10 @@ BoundsCheck (
 {
   INT32  Bar[2], I = 2;
 
-  DEBUG ((DEBUG_INFO, "\nUBT: Start testing cases with bounds...\n\n"));
+  DEBUG ((DEBUG_WARN, "\nUBT: Start testing cases with bounds...\n\n"));
   GetInt (Bar, I);
   DEBUG ((DEBUG_WARN, "\nUBT: Index 2 is out of range for type \'INT32 *\' (aka 'int *')\n"));
-  DEBUG ((DEBUG_INFO, "\n\nUBT: Checks with bounds are done...\n\n\n"));
+  DEBUG ((DEBUG_WARN, "\n\nUBT: Checks with bounds are done...\n\n\n"));
 }
 
 #ifdef __clang__
@@ -144,7 +144,7 @@ NonnullCheck (
 {
   INT32  *P = 0;
 
-  DEBUG ((DEBUG_INFO, "\nUBT: Start testing cases with nonnull atribute...\n\n"));
+  DEBUG ((DEBUG_WARN, "\nUBT: Start testing cases with nonnull atribute...\n\n"));
 
   Nonnull1 (P, 8);
   DEBUG ((DEBUG_WARN, "\nUBT: Null pointer passed as argument 1, which is declared to never be null\n\n"));
@@ -164,19 +164,19 @@ NonnullCheck (
   NonnullArg (P);
   DEBUG ((DEBUG_WARN, "\nUBT: Null pointer passed as argument 1, which is declared to never be null\n"));
 
-  DEBUG ((DEBUG_INFO, "\n\nUBT: Checks with nonnull atribute are done...\n\n\n"));
+  DEBUG ((DEBUG_WARN, "\n\nUBT: Checks with nonnull atribute are done...\n\n\n"));
 }
 
 #endif
 
-#ifdef __clang__
+// #ifdef __clang__
 VOID
 EFIAPI
 BuiltinCheck (
   VOID
   )
 {
-  DEBUG ((DEBUG_INFO, "\nUBT: Start testing cases with builtin...\n\n"));
+  DEBUG ((DEBUG_WARN, "\nUBT: Start testing cases with builtin...\n\n"));
   Bultin1 (0);
   DEBUG ((DEBUG_WARN, "\nUBT: Passing zero to ctz(), which is not a valid argument\n"));
   Bultin2 (0); // in ubsan in llvm also not unique message for ctzll
@@ -186,10 +186,10 @@ BuiltinCheck (
   Bultin4 (0);
   DEBUG ((DEBUG_WARN, "\nUBT: Passing zero to clz(), which is not a valid argument\n"));
 
-  DEBUG ((DEBUG_INFO, "\n\nUBT: Checks with builtin are done...\n\n\n"));
+  DEBUG ((DEBUG_WARN, "\n\nUBT: Checks with builtin are done...\n\n\n"));
 }
 
-#endif
+// #endif
 
 EFI_STATUS
 EFIAPI
@@ -228,17 +228,17 @@ UefiMain (
     NonnullCheck ();
   }
 
-  if (checkGroup & BUILTIN_TESTS_BIT) {
-    BuiltinCheck ();
-  }
-
   if (checkGroup & IMPLICIT_CONVERSION_TESTS_BIT) {
     ImplicitConversionCheck ();
   }
 
  #endif
 
-  DEBUG ((DEBUG_INFO, "\n\nUBT: All tests are done...\n"));
+  if (checkGroup & BUILTIN_TESTS_BIT) {
+    BuiltinCheck ();
+  }
+
+  DEBUG ((DEBUG_WARN, "\n\nUBT: All tests are done...\n"));
 
   return EFI_SUCCESS;
 }

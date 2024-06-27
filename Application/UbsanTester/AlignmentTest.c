@@ -51,7 +51,7 @@ PointerAlignmentCheck (
   VOID
   )
 {
-  DEBUG ((DEBUG_INFO, "\nUBT: Start testing cases with pointer alignment...\n"));
+  DEBUG ((DEBUG_WARN, "\nUBT: Start testing cases with pointer alignment...\n"));
   INT8  *Ptr = AllocateZeroPool (2);
   VOID  *Res;
 
@@ -82,7 +82,7 @@ PointerAlignmentCheck (
   DEBUG ((DEBUG_WARN, "\nUBT: Alignment assumption of 0x20 for pointer 0x%lx\n\n", Ptr + 0x1));
 
   FreePool (Ptr);
-  DEBUG ((DEBUG_INFO, "\nUBT: Checks with pointer alignment are done...\n\n\n"));
+  DEBUG ((DEBUG_WARN, "\nUBT: Checks with pointer alignment are done...\n\n\n"));
 }
 
 #endif
@@ -172,7 +172,7 @@ AlignmentCheck (
   VOID
   )
 {
-  DEBUG ((DEBUG_INFO, "\nUBT: Start testing cases with alignment...\n\n"));
+  DEBUG ((DEBUG_WARN, "\nUBT: Start testing cases with alignment...\n\n"));
   Check ('l', 0); // Correct
   Check ('l', 1);
   DEBUG ((DEBUG_WARN, "\nUBT: Load of misaligned address [[PTR:0x[0-9a-f]*]] for type 'INT32' (aka 'int') which requires 4 byte alignment\n"));
@@ -195,5 +195,5 @@ AlignmentCheck (
   PointerAlignmentCheck ();
  #endif
 
-  DEBUG ((DEBUG_INFO, "\nUBT: Checks with alignment are done...\n\n\n"));
+  DEBUG ((DEBUG_WARN, "\nUBT: Checks with alignment are done...\n\n\n"));
 }

@@ -179,7 +179,7 @@ ConversionAndTruncationCheck (
   VOID
   )
 {
-  DEBUG ((DEBUG_INFO, "\nUBT: Start testing cases with implicit conversion when all bits are not set...\n\n"));
+  DEBUG ((DEBUG_WARN, "\nUBT: Start testing cases with implicit conversion when all bits are not set...\n\n"));
   ConvertUnsignedIntToUnsignedInt (0);
   ConvertUnsignedCharToUnsignedChar (0);
   ConvertSignedIntToSignedInt (0);
@@ -196,10 +196,10 @@ ConversionAndTruncationCheck (
   ConvertSignedCharToUnsignedInt (0);
   ConvertUnsignedIntToSignedChar (0);
   ConvertSignedIntToSignedChar (0);
-  DEBUG ((DEBUG_INFO, "\nUBT: Checks with implicit conversion when all bits are not set are done...\n\n\n"));
+  DEBUG ((DEBUG_WARN, "\nUBT: Checks with implicit conversion when all bits are not set are done...\n\n\n"));
 
   // One lowest bit set.
-  DEBUG ((DEBUG_INFO, "\nUBT: Start testing cases with implicit conversion when one lowest bit set...\n\n"));
+  DEBUG ((DEBUG_WARN, "\nUBT: Start testing cases with implicit conversion when one lowest bit set...\n\n"));
   ConvertUnsignedIntToUnsignedInt (1);
   ConvertUnsignedCharToUnsignedChar (1);
   ConvertSignedIntToSignedInt (1);
@@ -216,10 +216,10 @@ ConversionAndTruncationCheck (
   ConvertSignedCharToUnsignedInt (1);
   ConvertUnsignedIntToSignedChar (1);
   ConvertSignedIntToSignedChar (1);
-  DEBUG ((DEBUG_INFO, "\nUBT: Checks with implicit conversion when one lowest bit set are done...\n\n\n"));
+  DEBUG ((DEBUG_WARN, "\nUBT: Checks with implicit conversion when one lowest bit set are done...\n\n\n"));
 
   // All source bits set.
-  DEBUG ((DEBUG_INFO, "\nUBT: Start testing cases with implicit conversion when all source bits set...\n\n"));
+  DEBUG ((DEBUG_WARN, "\nUBT: Start testing cases with implicit conversion when all source bits set...\n\n"));
   ConvertUnsignedIntToUnsignedInt ((UINT32)MAX_UINT32);
   ConvertUnsignedCharToUnsignedChar ((UINT8)MAX_UINT8);
   ConvertSignedIntToSignedInt ((INT32)(UINT32)MAX_UINT32);
@@ -244,10 +244,10 @@ ConversionAndTruncationCheck (
   ConvertUnsignedIntToSignedChar ((UINT32)MAX_UINT32);
   DEBUG ((DEBUG_WARN, "\nUBT: '{{.*}}' from type 'UINT32' (aka 'unsigned int') of value 4294967295 to type 'INT8' (aka 'signed char') changed the value to -1\n"));
   ConvertSignedIntToSignedChar ((INT32)(UINT32)MAX_UINT32);
-  DEBUG ((DEBUG_INFO, "\nUBT: Checks with implicit conversion when all source bits set are done...\n\n\n"));
+  DEBUG ((DEBUG_WARN, "\nUBT: Checks with implicit conversion when all source bits set are done...\n\n\n"));
 
   // Source 'Sign' bit set.
-  DEBUG ((DEBUG_INFO, "\nUBT: Start testing cases with implicit conversion when source 'Sign' bit set...\n\n"));
+  DEBUG ((DEBUG_WARN, "\nUBT: Start testing cases with implicit conversion when source 'Sign' bit set...\n\n"));
   ConvertUnsignedIntToUnsignedInt ((UINT32)MIN_INT32);
   ConvertUnsignedCharToUnsignedChar ((UINT8)MIN_INT8);
   ConvertSignedIntToSignedInt ((INT32)(UINT32)MIN_INT32);
@@ -273,10 +273,10 @@ ConversionAndTruncationCheck (
   DEBUG ((DEBUG_WARN, "\nUBT: '{{.*}}' from type 'UINT32' (aka 'unsigned int') of value 2147483648 to type 'INT8' (aka 'signed char') changed the value to 0\n"));
   ConvertSignedIntToSignedChar ((INT32)(UINT32)MIN_INT32);
   DEBUG ((DEBUG_WARN, "\nUBT: '{{.*}}' from type 'INT32' (aka 'int') of value -2147483648 to type 'INT8' (aka 'signed char') changed the value to 0\n"));
-  DEBUG ((DEBUG_INFO, "\nUBT: Checks with implicit conversion when source 'Sign' bit set are done...\n\n\n"));
+  DEBUG ((DEBUG_WARN, "\nUBT: Checks with implicit conversion when source 'Sign' bit set are done...\n\n\n"));
 
   // All bits except the source 'Sign' bit are set.
-  DEBUG ((DEBUG_INFO, "\nUBT: Start testing cases with implicit conversion when all bits except the source 'Sign' bit are set...\n\n"));
+  DEBUG ((DEBUG_WARN, "\nUBT: Start testing cases with implicit conversion when all bits except the source 'Sign' bit are set...\n\n"));
   ConvertUnsignedIntToUnsignedInt ((UINT32)MAX_INT32);
   ConvertUnsignedCharToUnsignedChar ((UINT8)MAX_INT8);
   ConvertSignedIntToSignedInt ((INT32)(UINT32)MAX_INT32);
@@ -297,10 +297,10 @@ ConversionAndTruncationCheck (
   DEBUG ((DEBUG_WARN, "\nUBT: '{{.*}}' from type 'UINT32' (aka 'unsigned int') of value 2147483647 to type 'INT8' (aka 'signed char') changed the value to -1\n"));
   ConvertSignedIntToSignedChar ((INT32)(UINT32)MAX_INT32);
   DEBUG ((DEBUG_WARN, "\nUBT: '{{.*}}' from type 'INT32' (aka 'int') of value 2147483647 to type 'INT8' (aka 'signed char') changed the value to -1\n"));
-  DEBUG ((DEBUG_INFO, "\nUBT: Checks with implicit conversion when all bits except the source 'Sign' bit are set are done...\n\n\n"));
+  DEBUG ((DEBUG_WARN, "\nUBT: Checks with implicit conversion when all bits except the source 'Sign' bit are set are done...\n\n\n"));
 
   // All destination bits set.
-  DEBUG ((DEBUG_INFO, "\nUBT: Start testing cases with implicit conversion when all destination bits set...\n\n"));
+  DEBUG ((DEBUG_WARN, "\nUBT: Start testing cases with implicit conversion when all destination bits set...\n\n"));
   ConvertUnsignedIntToUnsignedInt ((UINT32)MAX_UINT8);
   ConvertUnsignedCharToUnsignedChar ((UINT8)MAX_UINT8);
   ConvertSignedIntToSignedInt ((INT32)(UINT32)MAX_UINT8);
@@ -322,10 +322,10 @@ ConversionAndTruncationCheck (
   DEBUG ((DEBUG_WARN, "\nUBT: '{{.*}}' from type 'UINT32' (aka 'unsigned int') of value 255 to type 'INT8' (aka 'signed char') changed the value to -1\n"));
   ConvertSignedIntToSignedChar ((INT32)(UINT32)MAX_UINT8);
   DEBUG ((DEBUG_WARN, "\nUBT: '{{.*}}' from type 'INT32' (aka 'int') of value 255 to type 'INT8' (aka 'signed char') changed the value to -1\n"));
-  DEBUG ((DEBUG_INFO, "\nUBT: Checks with implicit conversion when all destination bits set are done...\n\n\n"));
+  DEBUG ((DEBUG_WARN, "\nUBT: Checks with implicit conversion when all destination bits set are done...\n\n\n"));
 
   // Destination 'sign' bit set.
-  DEBUG ((DEBUG_INFO, "\nUBT: Start testing cases with implicit conversion when destination 'sign' bit set...\n\n"));
+  DEBUG ((DEBUG_WARN, "\nUBT: Start testing cases with implicit conversion when destination 'sign' bit set...\n\n"));
   ConvertUnsignedIntToUnsignedInt ((UINT32)(UINT8)MIN_INT8);
   ConvertUnsignedCharToUnsignedChar ((UINT8)(UINT8)MIN_INT8);
   ConvertSignedIntToSignedInt ((INT32)(UINT32)(UINT8)MIN_INT8);
@@ -347,10 +347,10 @@ ConversionAndTruncationCheck (
   DEBUG ((DEBUG_WARN, "\nUBT: '{{.*}}' from type 'UINT32' (aka 'unsigned int') of value 128 to type 'INT8' (aka 'signed char') changed the value to -128\n"));
   ConvertSignedIntToSignedChar ((INT32)(UINT32)(UINT8)MIN_INT8);
   DEBUG ((DEBUG_WARN, "\nUBT: '{{.*}}' from type 'INT32' (aka 'int') of value 128 to type 'INT8' (aka 'signed char') changed the value to -128\n"));
-  DEBUG ((DEBUG_INFO, "\nUBT: Checks with implicit conversion when destination 'sign' bit set are done...\n\n\n"));
+  DEBUG ((DEBUG_WARN, "\nUBT: Checks with implicit conversion when destination 'sign' bit set are done...\n\n\n"));
 
   // All bits except the destination 'sign' bit are set.
-  DEBUG ((DEBUG_INFO, "\nUBT: Start testing cases with implicit conversion when all bits except the destination 'sign' bit are set...\n\n"));
+  DEBUG ((DEBUG_WARN, "\nUBT: Start testing cases with implicit conversion when all bits except the destination 'sign' bit are set...\n\n"));
   ConvertUnsignedIntToUnsignedInt ((~((UINT32)(UINT8)MIN_INT8)));
   ConvertUnsignedCharToUnsignedChar ((UINT8)(UINT8)MIN_INT8);
   ConvertSignedIntToSignedInt ((INT32)(~((UINT32)(UINT8)MIN_INT8)));
@@ -376,10 +376,10 @@ ConversionAndTruncationCheck (
   DEBUG ((DEBUG_WARN, "\nUBT: '{{.*}}' from type 'UINT32' (aka 'unsigned int') of value 4294967167 to type 'INT8' (aka 'signed char') changed the value to 127\n"));
   ConvertSignedIntToSignedChar ((INT32)(~((UINT32)(UINT8)MIN_INT8)));
   DEBUG ((DEBUG_WARN, "\nUBT: '{{.*}}' from type 'INT32' (aka 'int') of value -129 to type 'INT8' (aka 'signed char') changed the value to 127\n"));
-  DEBUG ((DEBUG_INFO, "\nUBT: Checks with implicit conversion when all bits except the destination 'sign' bit are set are done...\n\n\n"));
+  DEBUG ((DEBUG_WARN, "\nUBT: Checks with implicit conversion when all bits except the destination 'sign' bit are set are done...\n\n\n"));
 
   // Only the source and destination sign bits are set.
-  DEBUG ((DEBUG_INFO, "\nUBT: Start testing cases with implicit conversion when only the source and destination sign bits are set...\n\n"));
+  DEBUG ((DEBUG_WARN, "\nUBT: Start testing cases with implicit conversion when only the source and destination sign bits are set...\n\n"));
   ConvertUnsignedIntToUnsignedInt ((UINT32)MIN_INT32);
   ConvertUnsignedCharToUnsignedChar ((UINT8)MIN_INT8);
   ConvertSignedIntToSignedInt ((INT32)MIN_INT32);
@@ -405,10 +405,10 @@ ConversionAndTruncationCheck (
   DEBUG ((DEBUG_WARN, "\nUBT: '{{.*}}' from type 'UINT32' (aka 'unsigned int') of value 2147483776 to type 'INT8' (aka 'signed char') changed the value to -128\n"));
   ConvertSignedIntToSignedChar ((INT32)(((UINT32)MIN_INT32) | ((UINT32)(UINT8)MIN_INT8)));
   DEBUG ((DEBUG_WARN, "\nUBT: '{{.*}}' from type 'INT32' (aka 'int') of value -2147483520 to type 'INT8' (aka 'signed char') changed the value to -128\n"));
-  DEBUG ((DEBUG_INFO, "\nUBT: Checks with implicit conversion when only the source and destination sign bits are set are done...\n\n\n"));
+  DEBUG ((DEBUG_WARN, "\nUBT: Checks with implicit conversion when only the source and destination sign bits are set are done...\n\n\n"));
 
   // All bits except the source and destination sign bits are set.
-  DEBUG ((DEBUG_INFO, "\nUBT: Start testing cases with implicit conversion when all bits except the source and destination sign bits are set...\n\n"));
+  DEBUG ((DEBUG_WARN, "\nUBT: Start testing cases with implicit conversion when all bits except the source and destination sign bits are set...\n\n"));
   ConvertUnsignedIntToUnsignedInt ((UINT32)MAX_INT32);
   ConvertUnsignedCharToUnsignedChar ((UINT8)MAX_INT8);
   ConvertSignedIntToSignedInt ((INT32)MAX_INT32);
@@ -429,7 +429,7 @@ ConversionAndTruncationCheck (
   DEBUG ((DEBUG_WARN, "\nUBT: '{{.*}}' from type 'UINT32' (aka 'unsigned int') of value 2147483519 to type 'INT8' (aka 'signed char') changed the value to 127\n"));
   ConvertSignedIntToSignedChar ((INT32) ~(((UINT32)MIN_INT32) | ((UINT32)(UINT8)MIN_INT8)));
   DEBUG ((DEBUG_WARN, "\nUBT: '{{.*}}' from type 'INT32' (aka 'int') of value 2147483519 to type 'INT8' (aka 'signed char') changed the value to 127\n"));
-  DEBUG ((DEBUG_INFO, "\nUBT: Checks with implicit conversion when all bits except the source and destination sign bits are set are done...\n\n\n"));
+  DEBUG ((DEBUG_WARN, "\nUBT: Checks with implicit conversion when all bits except the source and destination sign bits are set are done...\n\n\n"));
 }
 
 VOID
@@ -438,11 +438,11 @@ ImplicitConversionCheck (
   VOID
   )
 {
-  DEBUG ((DEBUG_INFO, "\nUBT: Start testing cases with implicit conversion...\n\n"));
+  DEBUG ((DEBUG_WARN, "\nUBT: Start testing cases with implicit conversion...\n\n"));
 
   ConversionAndTruncationCheck ();
 
-  DEBUG ((DEBUG_INFO, "\nUBT: Checks with implicit conversion are done...\n\n\n"));
+  DEBUG ((DEBUG_WARN, "\nUBT: Checks with implicit conversion are done...\n\n\n"));
 }
 
 #endif

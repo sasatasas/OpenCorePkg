@@ -16,7 +16,7 @@ PointerOverflowCheck (
   VOID
   )
 {
-  DEBUG ((DEBUG_INFO, "\nUBT: Start testing cases with pointer overflow...\n\n"));
+  DEBUG ((DEBUG_WARN, "\nUBT: Start testing cases with pointer overflow...\n\n"));
 
   INT8  *Base, *Result;
 
@@ -86,7 +86,7 @@ PointerOverflowCheck (
   Result = Base - 1ULL;
   DEBUG ((DEBUG_WARN, "\nUBT: Applying non-zero offset 0x%lx to null pointer\n", MAX_UINTN));
 
-  DEBUG ((DEBUG_INFO, "\n\nUBT: Checks with pointer overflow are done...\n\n"));
+  DEBUG ((DEBUG_WARN, "\n\nUBT: Checks with pointer overflow are done...\n\n"));
 }
 
 INT32
@@ -129,7 +129,7 @@ NullPointerCheck (
   VOID
   )
 {
-  DEBUG ((DEBUG_INFO, "\nUBT: Start testing cases with null pointer...\n"));
+  DEBUG ((DEBUG_WARN, "\nUBT: Start testing cases with null pointer...\n"));
   INT32     *P = 0;
   struct S  *S = 0;
 
@@ -139,7 +139,7 @@ NullPointerCheck (
   NullCheck1 (S);
   DEBUG ((DEBUG_WARN, "\nUBT: Member access within null pointer of type 'struct S'\n"));
 
-  DEBUG ((DEBUG_INFO, "\nUBT: Checks with null pointer are done...\n\n\n"));
+  DEBUG ((DEBUG_WARN, "\nUBT: Checks with null pointer are done...\n\n\n"));
 }
 
 VOID
@@ -148,11 +148,10 @@ PointerCheck (
   VOID
   )
 {
-  DEBUG ((DEBUG_INFO, "\nUBT: Start testing cases with pointers...\n"));
+  DEBUG ((DEBUG_WARN, "\nUBT: Start testing cases with pointers...\n"));
 
   PointerOverflowCheck ();
   NullPointerCheck ();
 
-  DEBUG ((DEBUG_INFO, "\nUBT: Checks with pointers are done...\n\n\n"));
+  DEBUG ((DEBUG_WARN, "\nUBT: Checks with pointers are done...\n\n\n"));
 }
-
