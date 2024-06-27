@@ -42,7 +42,7 @@ jobs:
           SELFPKG_DIR: OvmfPkg
           TOOLCHAINS: CLANGDWARF
           ARCHS: X64
-          TARGETS: DEBUG,NOOPT
+          TARGETS: DEBUG,NOOPT,RELEASE
           SKIP_TESTS: 1
           SKIP_PACKAGE: 1
 
@@ -59,7 +59,7 @@ jobs:
           done
         env:
           ARCHS: X64
-          TARGETS: DEBUG,NOOPT
+          TARGETS: DEBUG,NOOPT,RELEASE
           TOOLCHAIN: CLANGDWARF
     
       - name: Zip Firmware Artifacts
@@ -133,7 +133,7 @@ jobs:
         env:
           GROUPS: UNDEFINED,ALIGNMENT,BUILTIN,BOUNDS,IMPLICIT_CONVERSION,INTEGER,NONNULL,POINTERS
           OVMF_PATH: ./firmware_artifacts
-          TARGETS: DEBUG,NOOPT
+          TARGETS: DEBUG,NOOPT,RELEASE
           TOOLCHAINS: CLANGDWARF
 
       - name: Zip Tests Output

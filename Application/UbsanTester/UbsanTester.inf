@@ -61,11 +61,7 @@
   # # GCC:*_*_*_CC_FLAGS           = -fsanitize=undefined -fno-stack-protector
   # # GCC:*_*_*_DLINK_FLAGS        = -fsanitize=undefined -fno-stack-protector
 
-  *_CLANGDWARF_*_CC_FLAGS    = -fsanitize=undefined,nullability-arg,nullability-assign,nullability-return,unsigned-integer-overflow,implicit-conversion,local-bounds -fno-sanitize-link-runtime
-  *_CLANGDWARF_*_DLINK_FLAGS =  -fsanitize=undefined,nullability-arg,nullability-assign,nullability-return,unsigned-integer-overflow,implicit-conversion,local-bounds
-  *_CLANGPDB_*_CC_FLAGS      = -fsanitize=undefined,nullability-arg,nullability-assign,nullability-return,unsigned-integer-overflow,implicit-conversion,local-bounds -fno-sanitize-link-runtime
-  *_CLANGPDB_*_DLINK_FLAGS   =  -fsanitize=undefined,nullability-arg,nullability-assign,nullability-return,unsigned-integer-overflow,implicit-conversion,local-bounds
-  *_XCODE5_*_CC_FLAGS        = -fsanitize=undefined,nullability-arg,nullability-assign,nullability-return,unsigned-integer-overflow,implicit-conversion,local-bounds -fno-sanitize-link-runtime
-  *_XCODE5_*_DLINK_FLAGS     =  -fsanitize=undefined,nullability-arg,nullability-assign,nullability-return,unsigned-integer-overflow,implicit-conversion,local-bounds
-  *_GCC_*_CC_FLAGS           = -fsanitize=undefined
-  *_GCC_*_DLINK_FLAGS        =  -fsanitize=undefined
+  *_CLANGDWARF_*_CC_FLAGS    = -fsanitize=undefined,nullability-arg,nullability-assign,nullability-return,unsigned-integer-overflow,implicit-conversion,local-bounds -fno-sanitize-link-runtime -Wno-error=address-of-packed-member
+  *_CLANGDWARF_*_DLINK_FLAGS = -fsanitize=undefined,nullability-arg,nullability-assign,nullability-return,unsigned-integer-overflow,implicit-conversion,local-bounds -Wno-error=address-of-packed-member
+  *_GCC_*_CC_FLAGS           = -fsanitize=undefined -Wno-error=unused-but-set-variable -Wno-error=address-of-packed-member -Wno-error=attributes -O0
+  *_GCC_*_DLINK_FLAGS        = -fsanitize=undefined -Wno-error=unused-but-set-variable -Wno-error=address-of-packed-member -Wno-error=attributes -O0
