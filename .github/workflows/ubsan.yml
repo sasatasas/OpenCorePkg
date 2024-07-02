@@ -137,9 +137,11 @@ jobs:
           TOOLCHAINS: CLANGDWARF
 
       - name: Zip Tests Output
+        if: always()
         run: zip ubsan_tests.zip ./TestsOutput/* -r
 
       - name: Upload Sanitizers Tests to Artifacts
+        if: always()
         uses: actions/upload-artifact@v3
         with:
           name: CLANGDWARF Sanitizers Artifacts
