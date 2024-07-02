@@ -1,14 +1,14 @@
 #include "UbsanTester.h"
 
 #ifdef __clang__
-__attribute__ ((nonnull)) INT32
+__attribute__ ((nonnull)) INT32 *
 EFIAPI
 Nonnull1 (
   INT32  *Nonnull,
   INT32  N
   )
 {
-  return *Nonnull;
+  return Nonnull;
 }
 
 __attribute__ ((nonnull)) CHAR8
@@ -147,10 +147,9 @@ NonnullCheck (
   DEBUG ((DEBUG_WARN, "\nUBT: Start testing cases with nonnull atribute...\n\n"));
 
   Nonnull1 (P, 8);
-  DEBUG ((DEBUG_WARN, "\nUBT: Null pointer passed as argument 1, which is declared to never be null\n\n"));
-  DEBUG ((DEBUG_WARN, "\nUBT: Load of null pointer of type 'INT32' (aka 'int')\n\n"));
+  DEBUG ((DEBUG_WARN, "\nUBT: Null pointer passed as argument 1, which is declared to never be null\n"));
   Nonnull2 (8, P);
-  DEBUG ((DEBUG_WARN, "\nUBT: Null pointer passed as argument 2, which is declared to never be null\n\n"));
+  DEBUG ((DEBUG_WARN, "\nUBT: Null pointer passed as argument 2, which is declared to never be null\n"));
   DEBUG ((DEBUG_WARN, "\nUBT: Load of null pointer of type 'CHAR8' (aka 'char')\n\n"));
   Nonnull3 (P);
   DEBUG ((DEBUG_WARN, "\nUBT: Null pointer returned from function declared to never return null\n"));
