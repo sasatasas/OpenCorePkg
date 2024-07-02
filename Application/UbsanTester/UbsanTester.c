@@ -111,10 +111,11 @@ Bultin4 (
   return 0;
 }
 
+#ifdef __clang__
 INT32
 EFIAPI
 GetInt (
-  INT32 *CONST  P,
+  INT32 *CONST  P __attribute__ ((pass_object_size (0))),
   INT32         I
   )
 {
@@ -135,7 +136,6 @@ BoundsCheck (
   DEBUG ((DEBUG_WARN, "\n\nUBT: Checks with bounds are done...\n\n\n"));
 }
 
-#ifdef __clang__
 VOID
 EFIAPI
 NonnullCheck (
@@ -168,7 +168,6 @@ NonnullCheck (
 
 #endif
 
-// #ifdef __clang__
 VOID
 EFIAPI
 BuiltinCheck (
@@ -187,8 +186,6 @@ BuiltinCheck (
 
   DEBUG ((DEBUG_WARN, "\n\nUBT: Checks with builtin are done...\n\n\n"));
 }
-
-// #endif
 
 EFI_STATUS
 EFIAPI
@@ -214,15 +211,15 @@ UefiMain (
     PointerCheck ();
   }
 
-  if (checkGroup & BOUNDS_TESTS_BIT) {
-    BoundsCheck ();
-  }
-
   if (checkGroup & INTEGER_TESTS_BIT) {
     IntegerCheck ();
   }
 
  #ifdef __clang__
+  if (checkGroup & BOUNDS_TESTS_BIT) {
+    BoundsCheck ();
+  }
+
   if (checkGroup & NONNULL_TESTS_BIT) {
     NonnullCheck ();
   }
