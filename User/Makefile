@@ -80,12 +80,12 @@ endif
 
 ifeq ($(DIST),Darwin)
 	ifneq ($(FUZZ),1)
-		ifeq ($(UDK_ARCH),Ia32)
-			CFLAGS  += -mmacosx-version-min=10.6 --target=i386-apple-darwin
-			LDFLAGS += -mmacosx-version-min=10.6 --target=i386-apple-darwin
+		ifeq ($(FATBIN32),1)
+			CFLAGS  += -mmacosx-version-min=10.6 -arch x86_64 -arch i386
+			LDFLAGS += -mmacosx-version-min=10.6 -arch x86_64 -arch i386
 		else
-			CFLAGS  += -mmacosx-version-min=10.6 --target=x86_64-apple-darwin
-			LDFLAGS += -mmacosx-version-min=10.6 --target=x86_64-apple-darwin
+			CFLAGS  += -mmacosx-version-min=10.9 -arch x86_64 -arch arm64
+			LDFLAGS += -mmacosx-version-min=10.9 -arch x86_64 -arch arm64
 		endif
 	endif
 endif
