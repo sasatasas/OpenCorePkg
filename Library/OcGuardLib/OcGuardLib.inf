@@ -51,9 +51,9 @@
   #  94 | #define REINTERPRET_CAST(__dt, __st)    ((__dt)(__st))
   #     |                                          ^
 
-  GCC:DEBUG_*_*_CC_FLAGS      = -fno-stack-protector -Wno-int-to-pointer-cast
-  GCC:NOOPT_*_*_CC_FLAGS      = -fno-stack-protector -Wno-int-to-pointer-cast
-  GCC:RELEASE_*_*_CC_FLAGS    = -fno-stack-protector -Wno-int-to-pointer-cast
-  GCC:DEBUG_*_*_DLINK_FLAGS   = -Wno-int-to-pointer-cast
-  GCC:NOOPT_*_*_DLINK_FLAGS   = -Wno-int-to-pointer-cast
-  GCC:RELEASE_*_*_DLINK_FLAGS = -Wno-int-to-pointer-cast
+  GCC:DEBUG_*_*_CC_FLAGS      = -fno-stack-protector -Wno-int-to-pointer-cast -Wno-lto-type-mismatch
+  GCC:NOOPT_*_*_CC_FLAGS      = -fno-stack-protector -Wno-int-to-pointer-cast -Wno-lto-type-mismatch
+  GCC:RELEASE_*_*_CC_FLAGS    = -fno-stack-protector -Wno-int-to-pointer-cast -Wno-lto-type-mismatch
+  GCC:DEBUG_*_*_DLINK_FLAGS   = -Wno-int-to-pointer-cast -Wno-lto-type-mismatch
+  GCC:NOOPT_*_*_DLINK_FLAGS   = -Wno-int-to-pointer-cast -Wno-lto-type-mismatch
+  GCC:RELEASE_*_*_DLINK_FLAGS = -Wno-int-to-pointer-cast -Wno-lto-type-mismatch
