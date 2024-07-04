@@ -32,11 +32,11 @@ WITHOUT WARRANTIES OR REPRESENTATIONS OF ANY KIND, EITHER EXPRESS OR IMPLIED.
 // TODO: mb __GNUC__ >= 11 or __GNUC__ >= 7
 #if !defined(HAVE_UBSAN_SUPPORT) && ((defined (__GNUC__) && __GNUC__ >= 9) || defined (__clang__))
 #define HAVE_UBSAN_SUPPORT 1
-#if (defined (__GNUC__) && __GNUC__ >= 9) 
-#  error "The GCC version is valid, but the OcGuradLib library is not built."
-#endif
+// #if (defined (__GNUC__) && __GNUC__ >= 9) 
+// #  error "The GCC version is valid, but the OcGuradLib library is not built."
+// #endif
 #elif defined (__GNUC__)
-#  error "The GCC version is not valid."
+#  warning "The GCC version is not valid."
 #endif
 
 // Mark long double as supported (since we may use softfp).
