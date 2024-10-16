@@ -70,7 +70,7 @@ AddOverflow (
 {
   CONST CHAR16  UnknownType[] = L"unknown";
   CONST CHAR16  Type32[]      = L"int";
-  CONST CHAR16  Type64[]      = L"INT64";
+  CONST CHAR16  Type64[]      = L"long";
 
   DEBUG ((DEBUG_WARN, "\nUBT: Start testing cases with addition integer overflow...\n\n"));
 
@@ -98,7 +98,7 @@ SubOverflow (
 {
   CONST CHAR16  UnknownType[] = L"unknown";
   CONST CHAR16  Type32[]      = L"int";
-  CONST CHAR16  Type64[]      = L"INT64";
+  CONST CHAR16  Type64[]      = L"long";
 
   DEBUG ((DEBUG_WARN, "\nUBT: Start testing cases with substraction integer overflow...\n\n"));
 
@@ -181,7 +181,7 @@ UnsignedAddOverflow (
 {
   CONST CHAR16  UnknownType[] = L"unknown";
   CONST CHAR16  Type32[]      = L"unsigned int";
-  CONST CHAR16  Type64[]      = L"UINT64";
+  CONST CHAR16  Type64[]      = L"unsigned long";
 
   DEBUG ((DEBUG_WARN, "\nUBT: Start testing cases with unsigned addition integer overflow...\n\n"));
 
@@ -208,8 +208,8 @@ UnsignedSubOverflow (
   )
 {
   CONST CHAR16  UnknownType[] = L"unknown";
-  CONST CHAR16  Type32[]      = L"UINT32";
-  CONST CHAR16  Type64[]      = L"UINT64";
+  CONST CHAR16  Type32[]      = L"unsigned int";
+  CONST CHAR16  Type64[]      = L"unsigned long";
 
   DEBUG ((DEBUG_WARN, "\nUBT: Start testing cases with unsigned substraction integer overflow...\n\n"));
 
